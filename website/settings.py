@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'hbi@91&$)j#-lg-6=@3f+=#!!97)-#_q-3*+w3#pnqf=di1ch1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS =  ['ece3400.herokuapp.com']
+ALLOWED_HOSTS =  ['ece3400.herokuapp.com', '127.0.0.1']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

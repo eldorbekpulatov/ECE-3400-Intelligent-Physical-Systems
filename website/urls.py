@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import index
+from .views import index, about, contract
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+    path('about', about, name='about'),
+    path('contract', contract, name = 'contract')
 ]
 
 if settings.DEBUG:

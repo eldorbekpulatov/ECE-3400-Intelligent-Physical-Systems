@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -19,8 +20,35 @@
 
   </head>
   <body>
+    <!-- Site Header -->
+      <div class="site-header-bg">
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-6">
+                      <a href="{% url 'index'%}"><img src='{% static "images/logo.png" %}' alt="logo"></a>
+                  </div>
+                  <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                  </div>
+              </div>
+          </div>
+      </div>
     {% block content %}
     {% endblock %}
+    <!-- Footer -->
+        <section id="footer-widget" class="footer-widget">
+            <div class="container header-bg">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h3>External Links</h3>
+                        <ul>
+                            <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     <!-- Scripts -->
     <script src='{% static "js/jquery-1.12.3.min.js" %}'></script>
     <script src='{% static "js/bootstrap.min.js" %}'></script>

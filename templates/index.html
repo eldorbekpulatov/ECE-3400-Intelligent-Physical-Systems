@@ -1,19 +1,7 @@
-{% load static %}
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
-    <!-- Site Header -->
-        <div class="site-header-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="index.html"><img src='{% static "images/logo.png" %}' alt="logo"></a>
-                    </div>
-                    <div class="col-sm-3 col-sm-offset-3 text-right">
 
-                    </div>
-                </div>
-            </div>
-        </div>
 
     <!-- Header -->
         <section id="header" class="main-header">
@@ -32,9 +20,9 @@
 
                         <div class="collapse navbar-collapse" id="site-nav-bar">
                             <ul class="nav navbar-nav">
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li><a href="about.html">About</a></li>
-                                <li><a href="contract.html">Contract</a></li>
+                                <li class="active"><a href="{% url 'index'%}">Home</a></li>
+                                <li><a href="{% url 'about'%}">About</a></li>
+                                <li><a href="{% url 'contract'%}">Contract</a></li>
                                 <li><a href="404.html">Labs</a></li>
                                 <li><a href="404.html">Tutorials</a></li>
                             </ul>
@@ -81,25 +69,6 @@
                             <img class="img-responsive" src='{% static "images/product-3.jpg" %}' alt="product">
                             <h3 class="product-title">LAB 3</h3>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-    <!-- Footer -->
-        <section id="footer-widget" class="footer-widget">
-            <div class="container header-bg">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h3>External Links</h3>
-                        <ul>
-                            <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
