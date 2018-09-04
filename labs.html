@@ -85,7 +85,7 @@
                       <div class="col-sm-4">
                           <div class="porduct-box">
                               <img class="img-responsive" src='static/images/product-1.jpg' alt="product">
-                              <h3 class="product-title" data-toggle="modal" data-target=".bd-example-modal-lg">LAB 1</h3>
+                              <h3 class="product-title" data-toggle="modal" data-target="#lab1Modal">LAB 1</h3>
                           </div>
                       </div>
                       <div class="col-sm-4">
@@ -104,14 +104,24 @@
               </div>
           </section>
     <!-- Modal for lab1 -->
-  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button> -->
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div id="lab1Modal" class="modal modal-wide fade">
+    <div class="modal-dialog">
       <div class="modal-content">
-      hello
-      </div>
-    </div>
-  </div>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
     <!-- Footer -->
         <section id="footer-widget" class="footer-widget">
             <div class="container header-bg">
