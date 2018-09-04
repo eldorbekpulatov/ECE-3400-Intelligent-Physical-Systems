@@ -70,7 +70,7 @@
               <div class="nutral"></div>
           </section> <!-- /#header -->
 
-      <!-- Product -->
+      <!-- Labs -->
           <section id="product" class="product">
               <div class="container section-bg">
                   <div class="row">
@@ -85,7 +85,7 @@
                       <div class="col-sm-4">
                           <div class="porduct-box">
                               <img class="img-responsive" src='static/images/product-1.jpg' alt="product">
-                              <h3 class="product-title">LAB 1</h3>
+                              <h3 class="product-title" data-toggle="modal" data-target="#labModal1">LAB 1</h3>
                           </div>
                       </div>
                       <div class="col-sm-4">
@@ -103,7 +103,60 @@
                   </div>
               </div>
           </section>
+    <!-- Modal for lab1 -->
+    <div class="portfolio-modal modal fade show" id="labModal1" tabindex="-1" role="dialog" style="display: block; padding-left: 0px;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase text-left">Lab1 Microcontroller</h2>
+                  <p class="item-intro text-muted"> This lab is an introduction to the Aruidno IDE. The team is split into two subteams to perform the same tasks. In the end of the lab, both subteams were able to control the LED and servo, which are then used to build the robot below.</p>
+                  <img class="img-fluid d-block mx-auto" src="img/lab1/robot-resize.png" alt="">
 
+                  <h3> Communicating between Uno and IDE </h3>
+                  <p>The first task is to blink the LED on board on and off every second. The LED on board is connected to pin13, which is also defined as LED_BUILTIN in the macro. </p>
+                  <p>The Arduino program requires two functions: setup() and loop(). The function setup() is the initial function which enables input and outputs, then Arduino runs loop until the program is shut down. In the setup function we set LED_BUILTIN as output by the following line: [add code snippets]. Then int he main loop, we first turns the LED on by calling digitalWrite() to set LED_BUILTIN to HIGH delay it for 1000ms, then turns it off by writing LOW. [add code snippets]</p>
+                  <p>The code is an example from http://www.arduino.cc/en/Tutorial/Blink </p>
+
+                  <h3> Modify the blink sketch </h3>
+                  <p></p>
+
+                  <h3> The Serial Monitor and the Analog Pins </h3>
+                  <p></p>
+
+                  <h3> Analog Output </h3>
+                  <p></p>
+
+                  <h3> Parallax Servos </h3>
+                  <p></p>
+
+                  <h3> Assemble the Robot </h3>
+                  <p> [assembling] </p>
+                  <p> After we assemble the robot, we tried writing the value 90 to both of the servo, which is supposed to stop it. However, the servo instad rotates in the opposite direction. The TA then told us this is becasue the servos were not calibrated, and we have to tune it using a small screw on one side of the servo. The servos were tuned, and were able to travel in a straight line by writing 45 and 135 (since the servos have  opposite orientation) to each of the servo. </p>
+                  <p>At the end, the robot was able to travel almost in a square on its own, although it takes a 270 degree turn instead of 90 degree. To achieve this, we need four functions in the main loop: turn, delay, straight, delay. The delay function determines how much the robot turns, and is now set up be 3 seconds. Therefore, the experimental result shows that the robot turns at about 90 degree per second. This value is yet to be determined more previsely in future labs. The robot is then traveled in a straight line for 3 seconds at half of the maximum speed (value of +/- 45). In the future, we also need to determine the distance traveled associated with the speed and time. </p>
+
+
+                  <ul class="list-inline">
+                    <li>Last Updated: September 02, 2018</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fas fa-times"></i>
+                    Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Footer -->
         <section id="footer-widget" class="footer-widget">
             <div class="container header-bg">
