@@ -259,6 +259,7 @@ body{
     color: #fff;
     text-align: center;
     font-weight: 300;
+		cursor:pointer;
 }
 .classic-title{
 	margin-top: 100px;
