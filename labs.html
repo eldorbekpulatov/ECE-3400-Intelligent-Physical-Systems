@@ -218,13 +218,80 @@
         <h3>External LED</h3>
           <p>We connected the external LED to the Arduino by wiring it in series with a 1k ohm resistor, as seen in the image below.</p>
           <img src="lab01/images/externalLED_diagram.PNG" style="height:300px; width:400px;">
-          <img src=" lab01/images/externalLED.JPG" style="height:300px; width:400px;">
           <p>Afterwards, we adjusted the Blink template to make the external LED blink instead of the internal LED. See the code snippet below for more details.</p>
+          <pre>
+            void setup(){
+                pinMode(13, OUTPUT);
+            }
+            void loop(){
+	             digitalWrite(13, HIGH);
+	             delay(500);
+	             digitalWrite(13, LOW);
+	             delay(500);
+            }</pre>
+          <img src=" lab01/images/externalLED.gif" style="height:300px; width:500px;">
 
-        <!-- some things here -->
+        <h3>Reading Value of Potentiometer</h3>
+        <p>We connected the potentiometer to our Arduino as shown in the diagram below.</p>
+        <img src="lab01/images/pot_serialOut_diag.PNG" style="height:300px; width:400px;">
+        <p>Using the AnalogReadSerial example, available in File > Examples > 01. Basics > AnalogReadSerial, we initialized a serial connection in setup() and designated A0 to be an input pin.</p>
+        <p>Afterwards, using the analongRead call, we read the sensor value and printed it to the screen.</p>
+        <pre>
+          void setup(){
+              Serial.begin(9600);
+	            pinMode(A0, INPUT);
+          }
+          void loop(){
+	           Int analogIn = analogRead(A0);
+	           Serial.println(analogIn);
+          }</pre>
+        <p>Once we compiled and uploaded the code, the output was what we expected.</p>
+        <!-- read values from potentiometer -->
 
+        <h3>Mapping Potentiometer Value to LED</h3>
+        <img src="lab01/images/pot_ledOut_diag.PNG" style="height:300px; width:400px;">
+        <p>Once the potentiometer, LED, and Arduino were connected, our next goal was to control the LED brightness with the potentiometer readings.</p>
+        <p>Using the AnalogInOutSerial example, available in File > Examples > 03. Analog > AnalogInOutSerial, we read in the potentiometer value, a number in the range from 0-1023. We then scaled the reading down to the range 0-255 for the analogWrite function, which was used to control the LED brightness.</p>
+        <pre>
+          void setup() {
+              Serial.begin(9600);
+              pinMode(11, OUTPUT);
+              pinMode(A0, INPUT);
+          }
 
+          // the loop function runs over and over again forever
+          void loop() {
+              int analogIn = analogRead(A0);
+              int ledOutputValue = (analogIn/1023.0)*255;
+              analogWrite(11, ledOutputValue);
+              Serial.println(analogIn);
+          }</pre>
+        <p>Below is a GIF of the LED changing brightness in response to the potentiometer readings.</p>
+        <img src="lab01/images/Potentiometer_LED_Control.gif" style="height:300px; width:500px;">
 
+        <h3>Mapping Potentiometer Value to Servo</h3>
+        <img src="lab01/images/pot_servo_diag.PNG" style="height:300px; width:400px;">
+        <p>In this part of the lab, we connected the potentiometer to now control the servos on our robot. The Parallax Continuous Rotation Servos we used received values from a PWM signal in a range from 0 to 180. At 0, the servos would rotate at full speed in one direction. At 180, the servos would rotate at full speed in the opposite direction. And at 90, the servos would come to a full stop.</p>
+        <p>Similarly to the LED, we would read the value at the input pin, in this case A0, from the potentiometer, scale that value, and write it onto the servo. Our code is displayed below:</p>
+        <pre>
+          #include <Servo.h>
+          Servo aServo;
+          void setup() {
+            Serial.begin(9600);
+            aServo.attach(11);
+            pinMode(A0, INPUT);
+          }
+
+          // the loop function runs over and over again forever
+          void loop() {
+            int analogIn = analogRead(A0);
+            int servoOutputValue = (analogIn/1023.0)*180;
+            aServo.write(servoOutputValue);
+            Serial.println(analogIn);
+          }</pre>
+
+        <p>Once our code compiled, we captured a video of the servos’ response to the change in the potentiometer values:</p>
+        <img src="lab01/images/potentiometer_and _servo.gif" style="height:300px; width:500px;">
         <!-- End of Lab Body -->
       </div>
       <div class="modal-footer">
