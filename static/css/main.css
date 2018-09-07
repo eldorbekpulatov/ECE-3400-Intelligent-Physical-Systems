@@ -769,3 +769,10 @@ body{
 		padding-right: 15px;
 	}
 }
+
+/* =============================== */
+/* our custom style */
+#logo_resize{
+	height: 64px;
+	width: 174px;
+}
