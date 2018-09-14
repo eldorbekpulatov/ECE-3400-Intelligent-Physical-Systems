@@ -88,7 +88,7 @@
                     <!-- milestone 01 -->
                       <div class="col-sm-6">
                           <div class="shop-box">
-                            <img class="img-full img-responsive" src="static/images/lab-1.jpg" alt="shop">
+                            <img class="img-full img-responsive" src="static/images/milestone1.JPG" alt="shop">
                             <div class="shop-box-hover text-center">
                               <div class="c-table">
                                 <div class="c-cell">
@@ -203,70 +203,175 @@
                   <li>Make robot go in figure eights</li>
                 </ul>
 
-                <h3>Testing the line sensor</h3>
-                <p>First we hooked up the line sensor to the arduino and we used analogRead to see how the values on the arduino’s adc varies with line color.</p>
-                <p>At about ¼ inches off the ground we found that the line sensor is detecting white when its outputting greater than 850 and black when it is less.</p>
-                <p>After calibrating the sensors we wrote some code to make the robot go in a square based on sensor values.</p>
+                <h3>Line Sensor</h3>
+                <p>We began by connecting the line sensors as follows.</p>
+                <img src="milestone01/linesense_schem.PNG" alt="schematic" style="height:300px; width:500px;">
+                <img src="milestone01/assembled.JPG" alt="assembled" style="height:300px; width:500px;">
+                <p>
+                  We then proceeded to use analogRead to see how the values output by the sensor varied as the robot moved over different color segments of the grid. We chose thresholds for white and black based on the output we were reading in from the sensor, which depends on the grid, the sensor quality, and the distance between the sensor and the ground.
+                </p>
+                <img src="milestone01/line-sensor.gif" alt="sensor-data" style="height:300px; width:500px;">
+                <br>
+
+                <h3>Following A Line</h3>
+                <p>
+                  To follow a line, we have a simple control loop that uses feedback from the sensors to keep the robot on the correct path. If the left sensor detects white, the right wheel speeds up to correct path and vice versa as seen in the code and video below.
+                </p>
+                <pre>
+                  #include &ltServo.h&gt
+                  #define rightSense A0
+                  #define leftSense A1
+                  #define sensorThreshold 850
+                  Servo rightWheel;
+                  Servo leftWheel;
+
+                  void setup() {
+                    Serial.begin(9600);
+                    pinMode(rightSense, INPUT);
+                    pinMode(leftSense, INPUT);
+                    rightWheel.attach(11);
+                    leftWheel.attach(10);
+                    pinMode(11, OUTPUT);
+                    pinMode(10, OUTPUT);
+                  }
+
+                  void loop() {
+                    followLine();
+                  }
+
+                  void followLine(){
+                    int rightLine = analogRead(rightSense);
+                    int leftLine = analogRead(leftSense);
+                    if(rightLine < sensorThreshold && leftLine < sensorThreshold){
+                    Serial.println("both sensors white");
+                  }else if(leftLine < sensorThreshold){
+                    Serial.println("left sensor white");
+                    rightWheel.write(90); //nudge left
+                    leftWheel.write(130);
+                  }else if(rightLine < sensorThreshold){
+                    Serial.println("right sensor white");
+                    rightWheel.write(40); //nudge right
+                    leftWheel.write(90);
+                  }else{
+                    Serial.println("both sensor black");
+                    leftWheel.write(130);
+                    rightWheel.write(40);
+                  }
+                }
+                </pre>
+
+                <img src="milestone01/line-follow.gif" alt="line-follow" style="height:300px; width:500px;">
+                <br>
+
+                <h3>Traversing Grid in Figure Eight</h3>
+                <p>
+                  To traverse the grid in a figure eight, we developed the following finite state machine:
+                </p>
+                <img src="milestone01/fsm.png" alt="fsm" style="height:300px; width:500px;">
+                <p>
+                  Turns are achieved by slowing one wheel down and speeding the other up. Through simple trial and error, the appropriate speed and delays can be found to suit your needs. The code can be seen below.
+                </p>
 
                 <pre>
-                    #include Servo.h
-                    #define rightSense A0
-                    #define leftSense A1
-                    #define sensorThreshold 850
-                    Servo rightWheel;
-                    Servo leftWheel;
+                  #include &ltServo.h&gt
+                  #define rightSense A0
+                  #define leftSense A1
+                  #define sensorThreshold 850
+                  Servo rightWheel;
+                  Servo leftWheel;
 
-                    void setup() {
-                      Serial.begin(9600);
-                      pinMode(rightSense, INPUT);
-                      pinMode(leftSense, INPUT);
-                      rightWheel.attach(11);
-                      leftWheel.attach(10);
-                      pinMode(11, OUTPUT);
-                      pinMode(10, OUTPUT);
-                    }
+                  int topState = 0;
+                  int figure8State = 0;
 
-                    //loop the dance function
-                    void loop() {
-                     follow();
-                    }
+                  void setup() {
+                    Serial.begin(9600);
+                    pinMode(rightSense, INPUT);
+                    pinMode(leftSense, INPUT);
+                    rightWheel.attach(11);
+                    leftWheel.attach(10);
+                    pinMode(11, OUTPUT);
+                    pinMode(10, OUTPUT);
+                  }
 
-                    void turnRight(){
+                  //top level state machine
+                  void loop() {
+                   if(topState == 0){
+                    followLine();
+                   }
+                   else{
+                    figureEight();
+                   }
+                  }
+
+                  //Method to turn robot right until line is sensed
+                  void turnRight(){
+                    delay(100);
+                    leftWheel.write(130);
+                    rightWheel.write(90);
+                    delay(800);
+                    int rightLine = analogRead(rightSense);
+                    while(rightLine > sensorThreshold){
+                      rightLine = analogRead(rightSense);
                       leftWheel.write(130);
                       rightWheel.write(90);
-                      delay(1300);
                     }
+                  }
 
-                    void turnLeft(){
+                  //Method to turn robot left until line is sensed
+                  void turnLeft(){
+                    delay(100);
+                    leftWheel.write(90);
+                    rightWheel.write(40);
+                    delay(800);
+                    int leftLine = analogRead(leftSense);
+                    while(leftLine > sensorThreshold){
+                      leftLine = analogRead(leftSense);
                       leftWheel.write(90);
                       rightWheel.write(40);
-                      delay(1300);
                     }
+                  }
+                  //Figure eight state machine
+                  void figureEight(){
+                    if(figure8State < 4){
+                      turnLeft();
+                      figure8State++;
+                    }else{
+                      turnRight();
+                      figure8State++;
+                    }
+                    if(figure8State > 7){
+                      figure8State = 0;
+                    }
+                    topState = 0;
 
-                    void follow(){
-                      int rightLine = analogRead(rightSense);
-                      int leftLine = analogRead(leftSense);
-                      if(rightLine < sensorThreshold && leftLine < sensorThreshold){
-                        Serial.println("both white");
-                        //This if statement contains actions the robot should take if there is an intersection encountered
-                        turnLeft();
-                      }
-                      else if(leftLine < sensorThreshold){
-                          Serial.println("right black");
-                          rightWheel.write(90);
-                          leftWheel.write(130);
-                      }else if(rightLine < sensorThreshold){
-                          Serial.println("left black");
-                          rightWheel.write(40);
-                          leftWheel.write(90);
-                      }else{
-                        Serial.println("both black");
-                        leftWheel.write(130);
-                        rightWheel.write(40);
-                      }
+                  }
+
+                  void followLine(){
+                    int rightLine = analogRead(rightSense);
+                    int leftLine = analogRead(leftSense);
+                    if(rightLine < sensorThreshold && leftLine < sensorThreshold){
+                      Serial.println("both sensors white");
+                      //This if statement contains actions the robot should take if there is an intersection encountered
+                      topState = 1; //go to the next state in the top state machine
                     }
+                    else if(leftLine < sensorThreshold){
+                      Serial.println("left sensor white");
+                      rightWheel.write(90); //nudge left
+                      leftWheel.write(130);
+                    }else if(rightLine < sensorThreshold){
+                      Serial.println("right sensor white");
+                      rightWheel.write(40); //nudge right
+                      leftWheel.write(90);
+                    }else{
+                      Serial.println("both sensor black");
+                      leftWheel.write(130);
+                      rightWheel.write(40);
+                    }
+                  }
+
                 </pre>
-                <p>We then began brainstorming a finite state machine to make the robot go in a figure 8.</p>
+                <p>Here's our robot live.</p>
+                <img src="milestone01/figure8.gif" alt="figure8" style="height:300px; width:500px;">
               </div>
 
 
