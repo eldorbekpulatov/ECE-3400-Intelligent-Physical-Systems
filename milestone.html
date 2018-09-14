@@ -196,13 +196,78 @@
               <h2 class="modal-title" id="myModalLabel">Milestone 1</h2>
             </div>
             <div class="modal-body">
-              <!-- Lab Body -->
-              <h3>Objectives</h3>
-              <ul>
-                <li></li>
-                <li></li>
-              </ul>
+              <div style="width:80%; padding-left: 15%">
+                <h3>Objectives</h3>
+                <ul>
+                  <li>Testing the line sensor</li>
+                  <li>Make robot go in figure eights</li>
+                </ul>
 
+                <h3>Testing the line sensor</h3>
+                <p>First we hooked up the line sensor to the arduino and we used analogRead to see how the values on the arduino’s adc varies with line color.</p>
+                <p>At about ¼ inches off the ground we found that the line sensor is detecting white when its outputting greater than 850 and black when it is less.</p>
+                <p>After calibrating the sensors we wrote some code to make the robot go in a square based on sensor values.</p>
+
+                <pre>
+                    #include Servo.h
+                    #define rightSense A0
+                    #define leftSense A1
+                    #define sensorThreshold 850
+                    Servo rightWheel;
+                    Servo leftWheel;
+
+                    void setup() {
+                      Serial.begin(9600);
+                      pinMode(rightSense, INPUT);
+                      pinMode(leftSense, INPUT);
+                      rightWheel.attach(11);
+                      leftWheel.attach(10);
+                      pinMode(11, OUTPUT);
+                      pinMode(10, OUTPUT);
+                    }
+
+                    //loop the dance function
+                    void loop() {
+                     follow();
+                    }
+
+                    void turnRight(){
+                      leftWheel.write(130);
+                      rightWheel.write(90);
+                      delay(1300);
+                    }
+
+                    void turnLeft(){
+                      leftWheel.write(90);
+                      rightWheel.write(40);
+                      delay(1300);
+                    }
+
+                    void follow(){
+                      int rightLine = analogRead(rightSense);
+                      int leftLine = analogRead(leftSense);
+                      if(rightLine < sensorThreshold && leftLine < sensorThreshold){
+                        Serial.println("both white");
+                        //This if statement contains actions the robot should take if there is an intersection encountered
+                        turnLeft();
+                      }
+                      else if(leftLine < sensorThreshold){
+                          Serial.println("right black");
+                          rightWheel.write(90);
+                          leftWheel.write(130);
+                      }else if(rightLine < sensorThreshold){
+                          Serial.println("left black");
+                          rightWheel.write(40);
+                          leftWheel.write(90);
+                      }else{
+                        Serial.println("both black");
+                        leftWheel.write(130);
+                        rightWheel.write(40);
+                      }
+                    }
+                </pre>
+                <p>We then began brainstorming a finite state machine to make the robot go in a figure 8.</p>
+              </div>
 
 
             </div>
