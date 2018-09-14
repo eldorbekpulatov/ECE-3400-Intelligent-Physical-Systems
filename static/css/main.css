@@ -780,9 +780,9 @@ body{
 =======================================================================*/
 
 .center {
-	position: absolute;
-	margin-top: auto;
-	margin-left: 480px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	height: 42px;
 	width: 174px;
 }
