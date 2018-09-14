@@ -780,6 +780,10 @@ body{
 	width: 174px;
 }
 
+#homeimage {
+	padding-top: 100px;
+}
+
 @media (max-width: 767px) {
   .modal-fullscreen-xs-down {
     padding: 0 !important;
