@@ -1,6 +1,6 @@
 body{
 	background-color: #ededed;
-	font-family: 'Oswald';
+	font-family: 'Avenir';
 	position: relative;
 	margin-top: 0;
 }
@@ -77,7 +77,7 @@ body{
 =======================================================================*/
 .site-header-bg{
 	width: 100%;
-	background-color: #111;
+	background-color: #cfdce6;
 	z-index: 1;
 	padding: 30px 0;
 	color: #fff;
@@ -111,7 +111,7 @@ body{
 	text-align: center;
 	color: #fff;
 	letter-spacing: 3px;
-	background: #111;
+	background: #cfdce6;
 	position: relative;
 }
 .header-quote{
@@ -132,7 +132,7 @@ body{
 }
 .intro{
 	padding: 200px 0;
-    background-image: url(../images/header.jpg);
+    background-image: url(../images/header2.JPG);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -152,11 +152,11 @@ body{
     border-bottom-right-radius: 0;
 }
 .navbar-default{
-	border-color: #262626;
-    background-color: #111;
+	border-color: #cfdce6;
+    background-color: #cfdce6;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
-	color: #fabe12;
+	color: #092940;
 	background-color: transparent;
 }
 .navbar .navbar-nav {
@@ -230,9 +230,15 @@ body{
 }
 
 
+/*======================================================================
+##		Center Site Logo
+=======================================================================*/
 
-
-
+.center {
+	position: absolute;
+	margin-top: auto;
+	margin-left: 480px;
+}
 
 
 /*======================================================================
@@ -254,7 +260,7 @@ body{
     left: 25px;
     right: 25px;
     padding: 15px;
-    background-color: #fabe12;
+    background-color: #cfdce6;
     text-transform: uppercase;
     color: #fff;
     text-align: center;
@@ -272,7 +278,7 @@ body{
 	position: absolute;
 	top: 3px;
 	left: 0;
-	border-top: 60px solid #fabe12;
+	border-top: 60px solid #092940;
 	border-right: 60px solid transparent;
 	margin-left: -15px;
 	width: 250px;
