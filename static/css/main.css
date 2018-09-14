@@ -835,7 +835,7 @@ body{
   padding: 0 !important;
 }
 .modal-fullscreen .modal-dialog {
-  width: 100%;
+  width: 90%;
   height: 100%;
   margin: 0;
   padding: 0;
