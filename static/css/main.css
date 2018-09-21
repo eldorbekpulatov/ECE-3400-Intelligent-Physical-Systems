@@ -513,7 +513,7 @@ body{
 	left: 0;
 }
 .shop-box-hover .c-cell a{
-	font-size: 25px;
+	font-size: 55px;
 	color: #111;
 	transition: all 0.4s ease-in-out;
 	padding: 8px;
@@ -789,6 +789,10 @@ body{
 
 #homeimage {
 	padding-top: 100px;
+}
+
+.ion-ios-search-strong{
+	size: 200%;
 }
 
 @media (max-width: 767px) {
