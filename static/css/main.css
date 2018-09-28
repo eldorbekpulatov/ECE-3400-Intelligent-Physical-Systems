@@ -53,7 +53,7 @@ body{
 }
 .btn-robot{
 	border-radius: 0;
-	background-color: #fabe12;
+	background-color: #cfdce6;
 	color: #fff;
 	text-transform: uppercase;
 	border-color: transparent;
@@ -65,8 +65,8 @@ body{
 }
 .btn-robot:hover{
 	background-color: transparent;
-	color: #fabe12;
-	border-color: #fabe12;
+	color: #cfdce6;
+	border-color: #cfdce6;
 }
 
 
@@ -115,7 +115,7 @@ body{
 	position: relative;
 }
 .header-quote{
-	color: #fabe12;
+	color: #cfdce6;
 	font-weight: 700;
 	margin-bottom: 0;
 }
@@ -322,7 +322,7 @@ body{
 	color: #fff;
 }
 .history .title{
-	color: #fabe12;
+	color: #cfdce6;
 }
 .history img{
 	padding: 60px 0 0;
@@ -401,7 +401,7 @@ body{
 	background-image: url(../images/contact-header.jpg);
 }
 .about-header .intro{
-	background-image: url(../images/about-header.jpg);
+	background-image: url(../images/header2.JPGs);
 }
 .milestone-header .intro{
 	background-image: url(../images/milestones.jpg);
@@ -471,7 +471,7 @@ body{
   transition: all 0.4s ease-in-out;
 }
 .panel-default>.panel-heading:hover{
-	background-color: #fabe12;
+	background-color: #cfdce6;
 }
 .panel-default>.panel-heading+.panel-collapse>.panel-body {
   border-top: 2px solid rgba(0,0,0,.1);
@@ -503,7 +503,7 @@ body{
 	position: absolute;
 	left: -90%;
 	top: -90%;
-	background-color: #fabe12;
+	background-color: #cfdce6;
 	width: 100%;
 	height: 100%;
 	transition: all 0.4s ease-in-out;
@@ -539,7 +539,7 @@ body{
 }
 .star{
 	margin: 0;
-	color: #fabe12;
+	color: #cfdce6;
 }
 @media (min-width: 768px){
 	.shop-price, .star{
@@ -552,8 +552,8 @@ body{
 }
 .pager li>a:focus, .pager li>a:hover{
 	color: #fff;
-	border-color: #fabe12;
-	background-color: #fabe12;
+	border-color: #cfdce6;
+	background-color: #cfdce6;
 }
 
 
@@ -595,7 +595,7 @@ body{
 	padding-left: 0;
 }
 .contact-form .form-control:active, .contact-form .form-control:focus{
-	border-bottom: 1px solid #fabe12;
+	border-bottom: 1px solid #cfdce6;
 	box-shadow: none;
 }
 
@@ -653,7 +653,7 @@ body{
 }
 .service-title .icon span{
 	font-size: 40px;
-	color: #fabe12;
+	color: #cfdce6;
 	margin-right: 15px;
 }
 .service-title div{
@@ -674,7 +674,7 @@ body{
 	letter-spacing: 2px;
 }
 .m-s-title{
-	color: #fabe12;
+	color: #cfdce6;
 	margin: 0;
 	padding-top: 100px;
 }
@@ -734,7 +734,7 @@ body{
 .social {
  	font-size: 24px;
 	float: right;
-	background-color: #fabe12;
+	background-color: #cfdce6;
 	padding: 5px;
 }
 .social a {
@@ -762,7 +762,7 @@ body{
 	margin-top: 10px;
 }
 .cta .btn-robot:hover{
-	color: #fabe12;
+	color: #cfdce6;
 }
 @media (max-width: 677px){
 	.cta{
