@@ -243,17 +243,13 @@
                     int rightLine = analogRead(rightSense);
                     int leftLine = analogRead(leftSense);
                     if(rightLine < sensorThreshold && leftLine < sensorThreshold){
-                    Serial.println("both sensors white");
                   }else if(leftLine < sensorThreshold){
-                    Serial.println("left sensor white");
                     rightWheel.write(90); //nudge left
                     leftWheel.write(130);
                   }else if(rightLine < sensorThreshold){
-                    Serial.println("right sensor white");
                     rightWheel.write(40); //nudge right
                     leftWheel.write(90);
                   }else{
-                    Serial.println("both sensor black");
                     leftWheel.write(130);
                     rightWheel.write(40);
                   }
@@ -350,20 +346,16 @@
                     int rightLine = analogRead(rightSense);
                     int leftLine = analogRead(leftSense);
                     if(rightLine < sensorThreshold && leftLine < sensorThreshold){
-                      Serial.println("both sensors white");
                       //This if statement contains actions the robot should take if there is an intersection encountered
                       topState = 1; //go to the next state in the top state machine
                     }
                     else if(leftLine < sensorThreshold){
-                      Serial.println("left sensor white");
                       rightWheel.write(90); //nudge left
                       leftWheel.write(130);
                     }else if(rightLine < sensorThreshold){
-                      Serial.println("right sensor white");
                       rightWheel.write(40); //nudge right
                       leftWheel.write(90);
                     }else{
-                      Serial.println("both sensor black");
                       leftWheel.write(130);
                       rightWheel.write(40);
                     }
