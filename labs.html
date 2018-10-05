@@ -116,7 +116,7 @@
                               <div class="shop-box-hover text-center">
                                   <div class="c-table">
                                       <div class="c-cell">
-                                          <a href="#">
+                                          <a data-toggle="modal" data-target="#lab2modal">
                                             <span class="ion-ios-search-strong"></span>
                                           </a>
                                       </div>
@@ -186,7 +186,7 @@
         </div>
       </section>
 
-<!-- Modal Fullscreen -->
+<!-- Modal fpr lab01 -->
 <div class="modal fade modal-fullscreen" id="lab1modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -356,9 +356,66 @@
               </ul>
               <br/>
 
-
             </div>
           </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for lab02 -->
+<div class="modal fade modal-fullscreen" id="lab2modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <!-- Lab Title -->
+        <h2 class="modal-title" id="myModalLabel">Lab 2: Analog Circuitry and FFTs</h2>
+      </div>
+      <div class="modal-body">
+        <!-- Lab Body -->
+        <div style="width:80%; padding-left: 15%">
+          <h3>Objectives:</h3>
+          <ul>
+            <li>Add additional sensors to our robot. </li>
+            <li>Learn about Open Music Labs FFT.</li>
+            <li>Make a microphone analog circuit that will detect a 660Hz whistle blow signifying the beginning of our maze mapping.</li>
+            <li>Make an analog circuit to capture inputs from an IR sensor to detect nearby robots emitting IR at 6.08kHz, and distinguish them from decoys emitting at 18kHz.</li>
+          </ul>
+          <br>
+
+          <h3>Teams</h3>
+          <p>Traditionally there are two teams working in parallel, an acoustic team working on the microphone and an optical team working on the IR sensor. Instead, we had one team (Eldor Bekpulatov, Joseph Primmer, and Vicente Caycedo) working on both acoustics and optics. </p>
+          <br>
+
+          <h3>Open Music Labs FFT library</h3>
+          <p>First we hooked up the function generator to the arduino, then we used the example serial fft program from the library to figure out what frequencies correspond to what bins.</p>
+
+          <h4>Whistle Detection</h4>
+          <p>In order to detect the 660Hz signal we used an online <a href="http://sim.okawa-denshi.jp/en/OPtazyuBakeisan.htm">tool</a> to help us calculate the values for a multiple feedback Hi-Q bandpass filter.</p>
+          <p>We used the following circuit with calculated component values as part of our microphone circuit.</p>
+          <img src="lab02/images/op_amp_circ.png" alt="op_amp" style="height:300px; width:500px;">
+
+          <p>On top of multiple feedback bandpass filter, we also added an envelope detector, which uses a diode to half-wave rectify the output from the filter. Then, we used a passive low pass filter to smooth-out the waveform into a DC value. This way, we were able to get a DC output proportional to the amplitude of the output signal of the filter circuit. We read our output signal on the arduino with an analogRead(). We know the 660Hz is playing once the DC value that is read crosses a certain threshold. Note: We will determine this threshold once we learn the specifics of what speakers we will be using at competition and how far we will hold these from the robot.</p>
+          <br>
+
+          <h4>Circuit Schematic:</h4>
+          <img src="lab02/images/mic_circuit.png" alt="mic_circuit" style="height:300px; width:500px;">
+          <br><br>
+          <p>After designing the circuit we then breadboarded the circuit to make sure everything worked:</p>
+          <img src="lab02/images/mic_breadboard.png" alt="mic_breadboard" style="height:300px; width:500px;">
+          <br><br>
+          <p>We then transferred everything over to a protoboard:</p>
+          <img src="lab02/images/mic_protoboard.png" alt="mic_protoboard" style="height:300px; width:500px;">
+          <p>Here are some videos showing the circuit in action:</p>
+          <iframe src="https://drive.google.com/file/d/1ZR3ECvjgEv6aohfUy_1KQwy_kLW4glpc/preview" width="640" height="480"></iframe>
+          <!-- more stuff here -->
+
+        </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
