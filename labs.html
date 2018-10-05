@@ -282,7 +282,7 @@
             <p>In this part of the lab, we connected the potentiometer to now control the servos on our robot. The Parallax Continuous Rotation Servos we used received values from a PWM signal in a range from 0 to 180. At 0, the servos would rotate at full speed in one direction. At 180, the servos would rotate at full speed in the opposite direction. And at 90, the servos would come to a full stop.</p>
             <p>Similarly to the LED, we would read the value at the input pin, in this case A0, from the potentiometer, scale that value, and write it onto the servo. Our code is displayed below:</p>
             <pre>
-              #include <Servo.h>
+              #include &ltServo.h&gt
               Servo aServo;
               void setup() {
                 Serial.begin(9600);
@@ -418,6 +418,84 @@
           <br><br>
           <p>From the frequency sweep one can see that the filter isn’t absolutely perfect (the frequency band with the max gain is 520-620Hz), but from the two videos before we can see that this filter should definitely be good enough and will filter out the majority of other noises.</p>
           <iframe src="https://drive.google.com/file/d/11_MW1ChI9G-P-6uyT8mhj4lugYfw-tJY/preview" width="640" height="480"></iframe>
+          <br>
+
+          <h3>Robot Detection</h3>
+          <p>Once we assembled our IR circuit, we uploaded a modified version of the example fft serial example sketch. We added these lines of code to figure out which buckets have the largest values when the IR hat is close to the robot:</p>
+          <pre>
+            if(fft_log_out[i] > 60){
+                Serial.print("bucket ");
+                Serial.print(i);
+                Serial.print(" ");
+                Serial.println(fft_log_out[i]);
+            }
+          </pre>
+          <p>This code will only serial print the buckets with values greater than 60.</p>
+          <br>
+
+          <p>From the video below we can see that the main culprit is bucket 42:</p>
+          <iframe src="https://drive.google.com/file/d/1vyNJhmGwefYcyAyTC4f1Vl37ZXSriykG/preview" width="640" height="480"></iframe>
+          <br>
+          <p>Using this same method we found that the 18kHz decoy did not fall in this bucket and instead fell in the 81 bucket. This means our circuit will not pick up decoys if we are just looking in the 42 bucket.</p>
+          <p>We then removed the for loop from the example and added these lines of code to indicate when a robot has been detected:</p>
+          <pre>
+            if(fft_log_out[42] > 50){
+              Serial.println("ROBOT");
+            }else{
+              Serial.println("NO ROBOT");
+            }
+          </pre>
+          <br>
+          <p>Here's the code in use:</p>
+          <iframe src="https://drive.google.com/file/d/1DEeR7DQwYWacjtv5NscRGUv9_L21b7i5/preview" width="640" height="480"></iframe>
+          <br>
+          <p>Here is the final code from our integrated system with that can detect both the 660Hz start signal and 6.08kHz IR signals from other robots:</p>
+          <pre>
+            #define LOG_OUT 1 // use the log output function
+            #define FFT_N 256 // set to 256 point fft
+            #include &ltFFT.h&gt // include the library
+            const int micInputPin = A1;
+            int micValue = 0;
+            void setup() {
+              Serial.begin(115200); // use the serial port
+              TIMSK0 = 0; // turn off timer0 for lower jitter
+              ADCSRA = 0xe5; // set the adc to free running mode
+              ADMUX = 0x40; // use adc0
+              DIDR0 = 0x01; // turn off the digital input for adc0
+            }
+            void loop() {
+              while(1) { // reduces jitter
+                cli();  // UDRE interrupt slows this way down on arduino1.0
+                for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+                  while(!(ADCSRA & 0x10)); // wait for adc to be ready
+                  ADCSRA = 0xf5; // restart adc
+                  byte m = ADCL; // fetch adc data
+                  byte j = ADCH;
+                  int k = (j << 8) | m; // form into an int
+                  k -= 0x0200; // form into a signed int
+                  k <<= 6; // form into a 16b signed int
+                  fft_input[i] = k; // put real data into even bins
+                  fft_input[i+1] = 0; // set odd bins to 0
+                }
+                fft_window(); // window the data for better frequency response
+                fft_reorder(); // reorder the data before doing the fft
+                fft_run(); // process the data in the fft
+                fft_mag_log(); // take the output of the fft
+                sei();
+                //Serial.println("start");
+                  if(fft_log_out[42] > 50){
+                    Serial.println("ROBOT");
+                  }else{
+                    Serial.println("NO ROBOT");
+                  }
+                  micValue = analogRead(micInputPin);
+                  if(micValue > 550){
+                    Serial.println("START");
+                  }
+              }
+            }
+
+          </pre>
 
         </div>
       </div>
