@@ -4,18 +4,19 @@
  * Eldor Bekpulatov | Francis Rayos del Sol
  */
 
-#include <Servo.h>
-#include <FFT.h>
+
 
 #define LOG_OUT 1 // use the log output function
 #define FFT_N 256 // set to 256 point fft
+#include <Servo.h>
+#include <FFT.h>
 #define rightSensorPin A0
 #define leftSensorPin A1
 #define micInputPin A3
-#define leftWall 2
+#define leftWall 4
 #define frontWall 3
-#define rightWall 4
-#define lineSensorThreshold 850
+#define rightWall 2
+#define lineSensorThreshold 900
 
 Servo rightWheel;
 Servo leftWheel;
@@ -27,7 +28,8 @@ void setup() {
 }
 
 void loop() {
-  //rightHandFollow()
+  rightHandFollow();
+  /*
   stopMoving();
   if (digitalRead(leftWall)) {
     Serial.println("Left wall detected");
@@ -40,6 +42,7 @@ void loop() {
   }
   Serial.println("     ");
   delay(1000);
+  */
 }
 
 /**** SET UP ****/
@@ -63,7 +66,6 @@ void setupWallSensors() {
 /**** MAZE TRAVERSAL ****/
 
 /* Circles maze by keeping right hand on wall */
-/*
 void rightHandFollow(){
   while(!followLine()){} // Keep moving straight until intersection is reached
   if(canTurnRight()){
@@ -78,7 +80,6 @@ void rightHandFollow(){
     stopMoving(); // FIXME: do 180 deg turn
   }
 }
-*/
 
 /**** GENERAL ****/
 
@@ -150,8 +151,20 @@ boolean followLine(){
 
 // TODO: canMoveRight, canMoveLeft, canMoveStraight
 
+boolean canTurnRight() {
+  return !digitalRead(rightWall);
+}
+
+boolean canMoveStraight() {
+  return !digitalRead(frontWall);
+}
+
+boolean canTurnLeft() {
+  return !digitalRead(leftWall);
+}
+
 /* Returns true if robot detected */
-boolean robotDetected(){
+boolean robotDetect(){
    ADMUX = 0x42;
     int init_adcsra = ADCSRA;
     ADCSRA = 0xe5;
@@ -174,9 +187,10 @@ boolean robotDetected(){
     ADCSRA = init_adcsra;
     sei();
     if(fft_log_out[42] > 50){
-       return true;
-    } else {
-       return false;
-    }
+        return true;
+      }else{
+        return false;
+      }
 }
+
 
