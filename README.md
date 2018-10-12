@@ -1,2 +1,3 @@
-# ece3400
-# ONLY ARDUINO SRC CODE
+# ECE 3400 SOURCE CODE
+
+  Source code for Team CAPTCHA.
