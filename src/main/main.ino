@@ -12,20 +12,34 @@
 #define rightSensorPin A0
 #define leftSensorPin A1
 #define micInputPin A3
+#define leftWall 2
+#define frontWall 3
+#define rightWall 4
 #define lineSensorThreshold 850
 
 Servo rightWheel;
 Servo leftWheel;
 
-int state = 0; 
-
 void setup() {
   Serial.begin(115200);
   setupMotors();
+  setupWallSensors();
 }
 
 void loop() {
-
+  //rightHandFollow()
+  stopMoving();
+  if (digitalRead(leftWall)) {
+    Serial.println("Left wall detected");
+  } 
+  if (digitalRead(frontWall)) {
+    Serial.println("Front wall detected");
+  } 
+  if (digitalRead(rightWall)) {
+    Serial.println("Right wall detected");
+  }
+  Serial.println("     ");
+  delay(1000);
 }
 
 /**** SET UP ****/
@@ -40,13 +54,33 @@ void setupMotors() {
   pinMode(11, OUTPUT);
 }
 
-/**** GENERAL ****/
-
-/* Stops servo motors */
-void stopMoving(){
-  rightWheel.write(90);
-  leftWheel.write(90);
+void setupWallSensors() {
+  pinMode(leftWall, INPUT);
+  pinMode(frontWall, INPUT);
+  pinMode(rightWall, INPUT);
 }
+
+/**** MAZE TRAVERSAL ****/
+
+/* Circles maze by keeping right hand on wall */
+/*
+void rightHandFollow(){
+  while(!followLine()){} // Keep moving straight until intersection is reached
+  if(canTurnRight()){
+    turnRight();
+    followLine();
+  } else if(canMoveStraight()){
+    followLine();
+  } else if(canTurnLeft()){
+    turnLeft();
+    followLine();
+  } else {
+    stopMoving(); // FIXME: do 180 deg turn
+  }
+}
+*/
+
+/**** GENERAL ****/
 
 /* Returns true if start whistle detected */
 boolean startSignalDetected(){
@@ -56,6 +90,14 @@ boolean startSignalDetected(){
   } else {
     return false;
   }
+}
+
+/**** MOVEMEMENT ****/
+
+/* Stops servo motors */
+void stopMoving(){
+  rightWheel.write(90);
+  leftWheel.write(90);
 }
 
 /* Turns right */
@@ -82,13 +124,12 @@ void turnLeft(){
   }
 }
 
-/* Follows the line */
-void followLine(){
+/* Follows the line and returns true when intersection found */
+boolean followLine(){
   int rightLine = analogRead(rightSensorPin);
   int leftLine = analogRead(leftSensorPin);
   if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
-    // Intersection encountered
-    // TODO: encountered intersection
+    return true; // Intersection encountered
   } else if(leftLine < lineSensorThreshold) {
     // Left sensor white
     rightWheel.write(90); //nudge left
@@ -102,7 +143,12 @@ void followLine(){
     leftWheel.write(130);
     rightWheel.write(40);
   }
+  return false;
 }
+
+/**** SENSORS ****/
+
+// TODO: canMoveRight, canMoveLeft, canMoveStraight
 
 /* Returns true if robot detected */
 boolean robotDetected(){
