@@ -4,8 +4,6 @@
  * Eldor Bekpulatov | Francis Rayos del Sol
  */
 
-
-
 #define LOG_OUT 1 // use the log output function
 #define FFT_N 256 // set to 256 point fft
 #include <Servo.h>
@@ -16,7 +14,10 @@
 #define leftWall 4
 #define frontWall 3
 #define rightWall 2
-#define lineSensorThreshold 900
+#define lineSensorThreshold 930
+#define FIRsampRate 20
+#define FIRwindowSize 60
+#define DetectionRate 100
 
 Servo rightWheel;
 Servo leftWheel;
@@ -28,21 +29,11 @@ void setup() {
 }
 
 void loop() {
-  rightHandFollow();
-  /*
   stopMoving();
-  if (digitalRead(leftWall)) {
-    Serial.println("Left wall detected");
-  } 
-  if (digitalRead(frontWall)) {
-    Serial.println("Front wall detected");
-  } 
-  if (digitalRead(rightWall)) {
-    Serial.println("Right wall detected");
+  while(!startSignalDetected()){}
+  while(true) { 
+    rightHandFollow();
   }
-  Serial.println("     ");
-  delay(1000);
-  */
 }
 
 /**** SET UP ****/
@@ -66,8 +57,9 @@ void setupWallSensors() {
 /**** MAZE TRAVERSAL ****/
 
 /* Circles maze by keeping right hand on wall */
+
 void rightHandFollow(){
-  while(!followLine()){} // Keep moving straight until intersection is reached
+  if(followLine()){ // Keep moving straight until intersection is reached
   if(canTurnRight()){
     turnRight();
     followLine();
@@ -79,18 +71,34 @@ void rightHandFollow(){
   } else {
     stopMoving(); // FIXME: do 180 deg turn
   }
+  }
 }
 
 /**** GENERAL ****/
 
 /* Returns true if start whistle detected */
+int samples[FIRwindowSize];
+int sIndex = 0;
+int sRateCount = 0;
 boolean startSignalDetected(){
-  int micValue = analogRead(micInputPin);
-  if( micValue > 580 ){
-    return true;
-  } else {
-    return false;
+  if(sRateCount >= FIRsampRate){
+    samples[sIndex] = analogRead(micInputPin);
+    sRateCount = 0;
+    sIndex++;
+  }else{
+    delay(1);
+    sRateCount++;
   }
+  if(sIndex > FIRwindowSize){
+    sIndex = 0;
+  }long sum = 0;
+  for(int i = 0; i < FIRwindowSize; i++){
+    sum += samples[i];
+  }
+  int output = sum/FIRwindowSize;
+  Serial.println(output);
+  if(output > 589)return true;
+  else return false;
 }
 
 /**** MOVEMEMENT ****/
@@ -125,13 +133,17 @@ void turnLeft(){
   }
 }
 
-/* Follows the line and returns true when intersection found */
+/* Follows the line and returns true when intersection found and false otherwise*/
 boolean followLine(){
   int rightLine = analogRead(rightSensorPin);
   int leftLine = analogRead(leftSensorPin);
-  if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
+    if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
     return true; // Intersection encountered
-  } else if(leftLine < lineSensorThreshold) {
+  } else if(sampleRobotDetect()){
+    rightWheel.write(90); //Stand still if a robot is seen
+    leftWheel.write(90);
+  }
+  else if(leftLine < lineSensorThreshold) {
     // Left sensor white
     rightWheel.write(90); //nudge left
     leftWheel.write(130);
@@ -144,7 +156,7 @@ boolean followLine(){
     leftWheel.write(130);
     rightWheel.write(40);
   }
-  return false;
+    return false;
 }
 
 /**** SENSORS ****/
@@ -161,6 +173,23 @@ boolean canMoveStraight() {
 
 boolean canTurnLeft() {
   return !digitalRead(leftWall);
+}
+
+
+/*Samples the robot detect method and stores in detectState every (detection rate) calls, returns detectionState*/
+/*need this workaround because otherwise constantly doing fft makes robot react too slo*/
+int detectCount = 0;
+boolean detectState = false;
+boolean sampleRobotDetect(){
+    if(detectCount > DetectionRate){
+    if(robotDetect()){
+      detectState = true;
+    }else{
+      detectState = false;
+    }
+    detectCount = 0;
+  }detectCount++;
+  return detectState;
 }
 
 /* Returns true if robot detected */
