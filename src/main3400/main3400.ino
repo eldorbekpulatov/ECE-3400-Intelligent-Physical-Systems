@@ -42,8 +42,8 @@ void loop() {
 void setupMotors() {
   pinMode(leftSensorPin, INPUT);
   pinMode(rightSensorPin, INPUT);
-  leftWheel.attach(10);
-  rightWheel.attach(11);
+  leftWheel.attach(5);
+  rightWheel.attach(6);
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
 }
