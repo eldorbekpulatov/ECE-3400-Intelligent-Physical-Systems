@@ -96,7 +96,6 @@ boolean startSignalDetected(){
     sum += samples[i];
   }
   int output = sum/FIRwindowSize;
-  Serial.println(output);
   if(output > 589)return true;
   else return false;
 }
