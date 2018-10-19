@@ -115,19 +115,23 @@ void resetMaze() {
 
 /* Circles maze by keeping right hand on wall */
 void rightHandFollow(){
-  if(followLine()){ // Keep moving straight until intersection is reached
+  while(!followLine()){} // Keep moving straight until intersection is reached
     if(canTurnRight()){
+      Serial.println("turn right");
       turnRight();
       followLine();
     } else if(canMoveStraight()){
-      followLine();
+      Serial.println("straight");
     } else if(canTurnLeft()){
+      Serial.println("turn left");
       turnLeft();
       followLine();
     } else {
+      Serial.println("stop");
       stopMoving(); // FIXME: do 180 deg turn
     }
-  }
+    //updatePos();
+  //}
 }
 
 /* Updates robot's position in maze */
@@ -166,53 +170,53 @@ void updateOrientation(int turn){
 
 /* Creates mapping of current square and sends info to base */
 void mapMaze(){
-  byte info;
+  byte squareInfo;
   //Setting explored
-  info |= 0b00001000; 
+  squareInfo |= 0b00001000; 
   //Setting walls (depends on orientation)
   switch (orientation) {
         case 0:
             if(!canTurnRight()){
-              info |= 0b01000000;
+              squareInfo |= 0b01000000;
             }
             if(!canMoveStraight()){
-              info |= 0b10000000;  
+              squareInfo |= 0b10000000;  
             }
             if(!canTurnLeft()){
-              info |= 0b00010000;
+              squareInfo |= 0b00010000;
             }
             break;
         case 1:
             if(!canTurnRight()){
-              info |= 0b00100000;
+              squareInfo |= 0b00100000;
             }
             if(!canMoveStraight()){
-              info |= 0b01000000;  
+              squareInfo |= 0b01000000;  
             }
             if(!canTurnLeft()){
-              info |= 0b10000000;
+              squareInfo |= 0b10000000;
             }
             break;
         case 2:
             if(!canTurnRight()){
-              info |= 0b00010000;
+              squareInfo |= 0b00010000;
             }
             if(!canMoveStraight()){
-              info |= 0b00100000;  
+              squareInfo |= 0b00100000;  
             }
             if(!canTurnLeft()){
-              info |= 0b01000000;
+              squareInfo |= 0b01000000;
             }
             break;
         case 3:
             if(!canTurnRight()){
-              info |= 0b10000000;
+              squareInfo |= 0b10000000;
             }
             if(!canMoveStraight()){
-              info |= 0b00010000;  
+              squareInfo |= 0b00010000;  
             }
             if(!canTurnLeft()){
-              info |= 0b00100000;
+              squareInfo |= 0b00100000;
             }
             break;
         default:
@@ -223,10 +227,10 @@ void mapMaze(){
   // TODO:
 
   // TODO: Fix treasure
-  info = info & 0b11111000; //Resets last three bits
-  info = info | 0b1; //Sets last bit to temporarily indicate red square.
+  squareInfo = squareInfo & 0b11111000; //Resets last three bits
+  squareInfo = squareInfo | 0b1; //Sets last bit to temporarily indicate red square.
 
-  maze[posX][posY] = info;
+  maze[posX][posY] = squareInfo;
   transmitMsg();
 }
 
@@ -275,7 +279,7 @@ void stopMoving(){
 
 /* Turns right */
 void turnRight(){
-  updateOrientation(1);
+  //updateOrientation(1);
   delay(100);
   leftWheel.write(130);
   rightWheel.write(90);
@@ -288,7 +292,7 @@ void turnRight(){
 
 /* Turns left */
 void turnLeft(){
-  updateOrientation(0);
+  //updateOrientation(0);
   delay(100);
   leftWheel.write(90);
   rightWheel.write(40);
@@ -305,8 +309,7 @@ boolean followLine(){
   int leftLine = analogRead(leftSensorPin);
   if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
     // TODO: possibly stop moving to give time to make decisions
-    updatePos();
-    mapMaze();
+    // mapMaze();
     return true; // Intersection encountered
   } else if(sampleRobotDetect()){
     stopMoving(); //Stand still if a robot is seen
