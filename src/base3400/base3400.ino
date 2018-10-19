@@ -1,57 +1,65 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
+
 RF24 radio(9, 10); // CE, CSN
 long long address = 0x0000000068LL;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    ; // Wait for serial port to connect. Needed for native USB port only
   }
+  setupRadio();
+}
+
+void loop() {
+  if (radio.available()) {
+    char text[32] = "";
+    radio.read(&text, sizeof(text));
+    String guiMsg = "";
+    guiMsg += String(int(text[0]));
+    guiMsg += ","+String(int(text[1]));
+    byte mazeInfo = text[2];
+    if(wallNorth(mazeInfo)){
+      guiMsg+=",north=true";
+    } else {
+      guiMsg+=",north=false";
+    }
+    if(wallEast(mazeInfo)){
+      guiMsg+=",east=true";
+    } else {
+      guiMsg+=",east=false";
+    }
+    if(wallWest(mazeInfo)){
+      guiMsg+=",west=true";
+    } else {
+      guiMsg+=",west=false";
+    }
+    if(wallSouth(mazeInfo)){
+      guiMsg+=",south=true";
+    } else {
+      guiMsg+=",south=false";
+    }
+
+    if(tShape(mazeInfo)!="none"){
+      guiMsg+=",tshape=" +(tShape(mazeInfo));
+      guiMsg+=",tcolor=" +(tColor(mazeInfo));
+      Serial.println(guiMsg);
+    }
+  }
+}
+
+/**** SET UP ****/
+
+void setupRadio(){
   radio.begin();
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MIN);
   radio.startListening();
 }
 
-void loop() {
-   if (radio.available()) {
-    char text[32] = "";
-    radio.read(&text, sizeof(text));
-    String stuff = "";
-    stuff += String(int(text[0]));
-    stuff += ","+String(int(text[1]));
-    byte hellaStuff = text[2];
-  if(wallNorth(hellaStuff)){
-    stuff+=",north=true";
-  }else{
-    stuff+=",north=false";
-  }
-  if(wallEast(hellaStuff)){
-    stuff+=",east=true";
-  }else{
-    stuff+=",east=false";
-  }
-  if(wallWest(hellaStuff)){
-    stuff+=",west=true";
-  }else{
-    stuff+=",west=false";
-  }
-  if(wallSouth(hellaStuff)){
-    stuff+=",south=true";
-  }else{
-    stuff+=",south=false";
-  }
-
-  if(tShape(hellaStuff)!="none"){
-    stuff+=",tshape=" +(tShape(hellaStuff));
-    stuff+=",tcolor=" +(tColor(hellaStuff));
-  Serial.println(stuff);
-  }
-}
-}
+/**** GENERAL ****/
 
 boolean wallNorth(byte data){
   return((data >> 7) & 1 == 0b1);
