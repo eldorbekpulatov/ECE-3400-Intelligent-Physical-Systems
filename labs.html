@@ -941,7 +941,6 @@
                    }
               }
             </pre>
-            <br>
 
             <h6>Base</h6>
             <p>We created a loop where we would receive 3 bytes from the radio that contain the row and column the robot is in as well as the byte containing information about the robots curent square. From there, we had the base decode the data. When reading the byte, we detected which direction wall existed and continuously added that information onto a string which we would have the base print. At the same time, we used bit storage and manipulation to determine if there was a treasure detected as well as the shape and color of each treasure. Our base station code is as follows:</p>
@@ -1062,7 +1061,7 @@
             <iframe src="https://drive.google.com/file/d/1uCuKo-n-m_5ucmaIHq12umWYRT5J8SDI/preview" width="640" height="480"></iframe>
             <br>
 
-            <p>We previously achieved acknowledgement of sound detection, IR sensors, and avoiding decoys in our previous milestone. Therefore, we only had to implement our partially developed codes to work concurrently with our main robot code. Our general code is provided above. We mostly had to debug and develop our own GUI using Python library called PyGame for this part of the lab. Our GUI listened to values directly printed on serial output of Arduino. Our output on Arduino follows the format that the GUI provided in class uses. But rather than visualizing our incoming data using provided GUI, we chose to unit test it with our own GUI, though it can be tested on both.</p>
+            <p>We previously achieved acknowledgement of sound detection, IR sensors, and avoiding decoys in Milestone 2. Therefore, we only had to implement our partially developed codes to work concurrently with our main robot code. Our general code is provided above. We mostly had to debug and develop our own GUI using Python library called PyGame for this part of the lab. Our GUI listened to values directly printed on serial output of Arduino. Our output on Arduino follows the format that the GUI provided in class uses. But rather than visualizing our incoming data using provided GUI, we chose to unit test it with our own GUI, though it can be tested on both.</p>
 
             <p>Heres our robot solving the Maze using everything we have developed thus far. </p>
             <iframe src="https://drive.google.com/file/d/1bL1xvW6WJWDgn73Q53_Q3TufN43wbb_q/preview" width="640" height="480"></iframe>
