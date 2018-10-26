@@ -15,6 +15,7 @@ module DE0_NANO(
 localparam RED = 8'b111_000_00;
 localparam GREEN = 8'b000_111_00;
 localparam BLUE = 8'b000_000_11;
+localparam WHITE = 8'b111_111_11;
 
 //=======================================================
 //  PORT declarations
@@ -30,11 +31,11 @@ input 		    [33:20]		GPIO_1_D;
 input 		     [1:0]		KEY;
 
 ///// PIXEL DATA /////
-reg [7:0]	pixel_data_RGB332 = 8'd0;
+reg [7:0]	pixel_data_RGB332 = 8'b0;
 
 ///// READ/WRITE ADDRESS /////
-reg [14:0] X_ADDR;
-reg [14:0] Y_ADDR;
+reg [14:0] X_ADDR = 15'b1000;
+reg [14:0] Y_ADDR = 15'b1000;
 wire [14:0] WRITE_ADDRESS;
 reg [14:0] READ_ADDRESS; 
 
@@ -59,12 +60,14 @@ wire [8:0] RESULT;
 /* WRITE ENABLE */
 reg W_EN;
 
-///////* CREATE ANY LOCAL WIRES YOU NEED FOR YOUR PLL *///////
-wire clk50MHz
-wire clk25MHz
-wire clk24MHz
+////* LOCAL WIRES FOR PLL *////
+wire clk50MHz;
+wire clk25MHz;
+wire clk24MHz;
 
-///////* INSTANTIATE YOUR PLL HERE *///////
+assign GPIO_0_D[33] = clk24MHz; // Use something other than 33?
+
+///////* INSTANTIATE PLL HERE *///////
 PLLClks pll(
 	.inclk0(CLOCK_50),
 	.c0(clk24MHz),
@@ -107,18 +110,36 @@ IMAGE_PROCESSOR proc(
 
 ///////* Downsampler *///////////
 
-
 //instantiate downsampler here 
-
 
 ///////* Update Read Address *///////
 always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
 		READ_ADDRESS = (VGA_PIXEL_X + VGA_PIXEL_Y*`SCREEN_WIDTH);
+		X_ADDR = VGA_PIXEL_X;
+		Y_ADDR = VGA_PIXEL_Y;
 		if(VGA_PIXEL_X>(`SCREEN_WIDTH-1) || VGA_PIXEL_Y>(`SCREEN_HEIGHT-1))begin
 				VGA_READ_MEM_EN = 1'b0;
 		end
 		else begin
 				VGA_READ_MEM_EN = 1'b1;
+		end
+end
+
+///////* WRITE FLAG TO MEM *///////
+always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
+		X_ADDR = VGA_PIXEL_X;
+		Y_ADDR = VGA_PIXEL_Y;
+		
+		if ((VGA_PIXEL_X >= 80 && VGA_PIXEL_X <= 96) || (VGA_PIXEL_Y >= 64 && VGA_PIXEL_Y <= 80)) begin
+			pixel_data_RGB332 = RED;
+		end else  
+			pixel_data_RGB332 = WHITE;
+		
+		if(VGA_PIXEL_X>(`SCREEN_WIDTH-1) || VGA_PIXEL_Y>(`SCREEN_HEIGHT-1))begin
+				W_EN = 1'b0;
+		end
+		else begin
+				W_EN = 1'b1;
 		end
 end
 
