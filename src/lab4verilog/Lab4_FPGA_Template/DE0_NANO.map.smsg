@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at DOWNSAMPLER.v(18): object "X_ADDR" differs only in case from object "x_addr" in the same scope File: C:/Users/labuser/Desktop/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 18
+Info (10281): Verilog HDL Declaration information at DOWNSAMPLER.v(19): object "Y_ADDR" differs only in case from object "y_addr" in the same scope File: C:/Users/labuser/Desktop/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 19
