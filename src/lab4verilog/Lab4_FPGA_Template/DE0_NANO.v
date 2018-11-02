@@ -1,4 +1,4 @@
-`define SCREEN_WIDTH 176
+ `define SCREEN_WIDTH 176
 `define SCREEN_HEIGHT 144
 
 ///////* DON'T CHANGE THIS PART *///////
@@ -31,7 +31,7 @@ input 		    [33:20]		GPIO_1_D;
 input 		     [1:0]		KEY;
 
 ///// PIXEL DATA /////
-reg [7:0]	pixel_data_RGB332 = 8'b0;
+wire [7:0]	pixel_data_RGB332;
 
 //DATA FROM CAMERA
 wire [7:0] camera_data;
@@ -70,7 +70,7 @@ assign VGA_RESET = ~KEY[0];
 wire [8:0] RESULT;
 
 /* WRITE ENABLE */
-reg W_EN;
+wire W_EN;
 
 ////* LOCAL WIRES FOR PLL *////
 wire clk50MHz;
@@ -125,15 +125,11 @@ IMAGE_PROCESSOR proc(
 //assume data coming in as RGB565 (one pixel = 2 bytes)
 DOWNSAMPLER dsample(
 	.PCLK(pclk),  //new byte from camera on each posedge
-	.VSYNC(vsync), //new frame from camera on each negedge
 	.HREF(href), //new row from camera on each posedge
 	.CAMERA_IN(camera_data), //[7:0] from camera
-	.READY(), //write to RAM on this posedge 
-	.RAM_ADDR(), //which RAM address to write data to [14:0]
-	.DAT_2_RAM() //what data to write to ram [7:0]
+	.READY(W_EN), //write to RAM 
+	.DATA_2_RAM(pixel_data_RGB332) //what data to write to ram [7:0]
 );
-
-//instantiate downsampler here 
 
 ///////* Update Read Address *///////
 always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
@@ -151,22 +147,22 @@ end
 
 
 ///////* WRITE FLAG TO MEM *///////
-always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
-		X_ADDR = VGA_PIXEL_X;
-		Y_ADDR = VGA_PIXEL_Y;
-		
-		if ((VGA_PIXEL_X >= 80 && VGA_PIXEL_X <= 96) || (VGA_PIXEL_Y >= 64 && VGA_PIXEL_Y <= 80)) begin
-			pixel_data_RGB332 = RED;
-		end else  
-			pixel_data_RGB332 = WHITE;
-		
-		if(VGA_PIXEL_X>(`SCREEN_WIDTH-1) || VGA_PIXEL_Y>(`SCREEN_HEIGHT-1))begin
-				W_EN = 1'b0;
-		end
-		else begin
-				W_EN = 1'b1;
-		end
-end
+//always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
+//		X_ADDR = VGA_PIXEL_X;
+//		Y_ADDR = VGA_PIXEL_Y;
+//		
+//		if ((VGA_PIXEL_X >= 80 && VGA_PIXEL_X <= 96) || (VGA_PIXEL_Y >= 64 && VGA_PIXEL_Y <= 80)) begin
+//			pixel_data_RGB332 = RED;
+//		end else  
+//			pixel_data_RGB332 = WHITE;
+//		
+//		if(VGA_PIXEL_X>(`SCREEN_WIDTH-1) || VGA_PIXEL_Y>(`SCREEN_HEIGHT-1))begin
+//				W_EN = 1'b0;
+//		end
+//		else begin
+//				W_EN = 1'b1;
+//		end
+//end
 
 	
 endmodule 
