@@ -33,6 +33,18 @@ input 		     [1:0]		KEY;
 ///// PIXEL DATA /////
 reg [7:0]	pixel_data_RGB332 = 8'b0;
 
+//DATA FROM CAMERA
+wire [7:0] camera_data;
+wire pclk;
+wire href;
+wire vsync;
+
+assign camera_data = GPIO_1_D[27:20];
+assign pclk = GPIO_1_D[33];
+assign href = GPIO_1_D[31];
+assign vsync = GPIO_1_D[30];
+
+
 ///// READ/WRITE ADDRESS /////
 reg [14:0] X_ADDR = 15'b1000;
 reg [14:0] Y_ADDR = 15'b1000;
@@ -110,6 +122,17 @@ IMAGE_PROCESSOR proc(
 
 ///////* Downsampler *///////////
 
+//assume data coming in as RGB565 (one pixel = 2 bytes)
+DOWNSAMPLER dsample(
+	.PCLK(pclk),  //new byte from camera on each posedge
+	.VSYNC(vsync), //new frame from camera on each negedge
+	.HREF(href), //new row from camera on each posedge
+	.CAMERA_IN(camera_data), //[7:0] from camera
+	.READY(), //write to RAM on this posedge 
+	.RAM_ADDR(), //which RAM address to write data to [14:0]
+	.DAT_2_RAM() //what data to write to ram [7:0]
+);
+
 //instantiate downsampler here 
 
 ///////* Update Read Address *///////
@@ -124,6 +147,8 @@ always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
 				VGA_READ_MEM_EN = 1'b1;
 		end
 end
+
+
 
 ///////* WRITE FLAG TO MEM *///////
 always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin
