@@ -172,7 +172,7 @@
                             <div class="shop-box-hover text-center">
                                 <div class="c-table">
                                     <div class="c-cell">
-                                        <a href="#">
+                                        <a data-toggle="modal" data-target="#lab4modal">
                                             <span class="ion-ios-search-strong"></span>
                                         </a>
                                     </div>
@@ -1087,21 +1087,37 @@
   </div>
 </div>
 
-<!-- Modal for lab03 -->
-<div class="modal fade modal-fullscreen" id="lab3modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Modal for lab04 -->
+<div class="modal fade modal-fullscreen" id="lab4modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <!-- Lab Title -->
-        <h2 class="modal-title" id="myModalLabel">Lab 3: System Integration and Radio Communication</h2>
+        <h2 class="modal-title" id="myModalLabel">Lab 4 - FPGA and Shape Detection</h2>
       </div>
 
       <div class="modal-body">
         <!-- Lab Body -->
         <div style="width:80%; padding-left: 15%">
+        <h3>Objective:</h3>
+        <p>
+          Develop an FPGA module capable of detecting basic shapes from a camera input, and pass this information on to the Arduino. This device will be mounted on the robot to identify these shapes on the walls of the maze.
+        </p>
 
+        <h3>Teams:</h3>
+        <ul>
+          <li>Team Arduino: Joseph Primmer (jp2228), Eldor Bekplatov (eb654)</li>
+          <li>Team FPGA: Vicente Caycedo (vac55), Francis Rayos del Sol (fmr32)</li>
+        </ul>
+
+        <h3>Setting-up Arduino</h3>
+        <p>We were responsible for wiring the camera, setting up its registers with the Arduino, and reading treasure data from the FPGA.</p>
+        <p>Before deploying any code to Arduino, we disabled the internal pull-up resistors that are a part of the Arduino’s I2C interface. This is because they pull the signals that set up our camera to 5V, while our camera requires 3.3V. </p>
+        <br>
+        <p>Then, we started wiring the Arduino as specified in the diagram below.</p>
+        <img src="lab04/Lab3CameraWiringDiagram.png" style="height:300px; width:400px;">
         </div>
       </div>
 
