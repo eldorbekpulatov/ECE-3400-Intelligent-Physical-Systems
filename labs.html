@@ -16,6 +16,14 @@
     <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
     <link href='static/css/ionicons.css' rel="stylesheet">
     <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
 
   </head>
   <body>
@@ -221,7 +229,7 @@
               <p>We connected the external LED to the Arduino by wiring it in series with a 1k ohm resistor, as seen in the image below.</p>
               <img src="lab01/images/externalLED_diagram.PNG" style="height:300px; width:400px;">
               <p>Afterwards, we adjusted the Blink template to make the external LED blink instead of the internal LED. See the code snippet below for more details.</p>
-              <pre>
+              <pre class="brush: cpp">
                 void setup(){
                     pinMode(13, OUTPUT);
                 }
@@ -240,7 +248,7 @@
             <img src="lab01/images/pot_serialOut_diag.PNG" style="height:300px; width:400px;">
             <p>Using the AnalogReadSerial example, available in File > Examples > 01. Basics > AnalogReadSerial, we initialized a serial connection in setup() and designated A0 to be an input pin.</p>
             <p>Afterwards, using the analongRead call, we read the sensor value and printed it to the screen.</p>
-            <pre>
+            <pre class="brush: cpp">
               void setup(){
                   Serial.begin(9600);
     	            pinMode(A0, INPUT);
@@ -258,7 +266,7 @@
             <img src="lab01/images/pot_ledOut_diag.PNG" style="height:300px; width:400px;">
             <p>Once the potentiometer, LED, and Arduino were connected, our next goal was to control the LED brightness with the potentiometer readings.</p>
             <p>Using the AnalogInOutSerial example, available in File > Examples > 03. Analog > AnalogInOutSerial, we read in the potentiometer value, a number in the range from 0-1023. We then scaled the reading down to the range 0-255 for the analogWrite function, which was used to control the LED brightness.</p>
-            <pre>
+            <pre class="brush: cpp">
               void setup() {
                   Serial.begin(9600);
                   pinMode(11, OUTPUT);
@@ -281,7 +289,7 @@
             <img src="lab01/images/pot_servo_diag.PNG" style="height:300px; width:400px;">
             <p>In this part of the lab, we connected the potentiometer to now control the servos on our robot. The Parallax Continuous Rotation Servos we used received values from a PWM signal in a range from 0 to 180. At 0, the servos would rotate at full speed in one direction. At 180, the servos would rotate at full speed in the opposite direction. And at 90, the servos would come to a full stop.</p>
             <p>Similarly to the LED, we would read the value at the input pin, in this case A0, from the potentiometer, scale that value, and write it onto the servo. Our code is displayed below:</p>
-            <pre>
+            <pre class="brush: cpp">
               #include &ltServo.h&gt
               Servo aServo;
               void setup() {
@@ -311,7 +319,7 @@
 
             <h3>Driving Robot Autonomously</h3>
             <p>After assembly was complete, we made the robot dance autonomously in order to learn how the servos could be used to make the robot turn in different directions.</p>
-            <pre>
+            <pre class="brush: cpp">
               Servo rightWheel;
               Servo leftWheel;
               int input = A0;
@@ -422,7 +430,7 @@
 
           <h3>Robot Detection</h3>
           <p>Once we assembled our IR circuit, we uploaded a modified version of the example fft serial example sketch. We added these lines of code to figure out which buckets have the largest values when the IR hat is close to the robot:</p>
-          <pre>
+          <pre class="brush: cpp">
             if(fft_log_out[i] > 60){
                 Serial.print("bucket ");
                 Serial.print(i);
@@ -450,7 +458,7 @@
           <iframe src="https://drive.google.com/file/d/1DEeR7DQwYWacjtv5NscRGUv9_L21b7i5/preview" width="640" height="480"></iframe>
           <br>
           <p>Here is the final code from our integrated system with that can detect both the 660Hz start signal and 6.08kHz IR signals from other robots:</p>
-          <pre>
+          <pre class="brush: cpp">
             #define LOG_OUT 1 // use the log output function
             #define FFT_N 256 // set to 256 point fft
             #include &ltFFT.h&gt // include the library
@@ -507,7 +515,7 @@
 </div>
 
 
-<!-- Modal for lab02 -->
+<!-- Modal for lab03 -->
 <div class="modal fade modal-fullscreen" id="lab3modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -549,7 +557,7 @@
             <p>To finish up the Radio Connectivity we used sample codes provided to develop two versions of code to be deployed on each Arduino.</p>
             <h6>Robot</h6>
             <p>Our robot code would allocate three bytes to communicate to the base station. These three bytes then would be passed as reference to our funtions to be modified at each intersection/cell based on our data scheme. Then the radio module would transmit these values over to our base station. To identify the coordinates of our robot, we implemented a counter for orientation, which is responsible for keeping count of turns and identifying orientation relative to the maze. The following is our robot code:</p>
-            <pre style="overflow: scroll; max-height: 600px">
+            <pre style="overflow: scroll; max-height: 600px" class="brush: cpp">
               /**
               * TEAM CAPTCHA FALL 2018
               * Joseph Primmer   | Vicente Caycedo
@@ -947,7 +955,7 @@
 
             <h6>Base</h6>
             <p>We created a loop where we would receive 3 bytes from the radio that contain the row and column the robot is in as well as the byte containing information about the robots curent square. From there, we had the base decode the data. When reading the byte, we detected which direction wall existed and continuously added that information onto a string which we would have the base print. At the same time, we used bit storage and manipulation to determine if there was a treasure detected as well as the shape and color of each treasure. Our base station code is as follows:</p>
-            <pre style="overflow: scroll; max-height: 600px">
+            <pre style="overflow: scroll; max-height: 600px" class="brush: cpp">
               #include &ltSPI.h&gt
               #include &ltnRF24L01.h&gt
               #include &ltRF24.h&gt
@@ -1079,8 +1087,30 @@
   </div>
 </div>
 
+<!-- Modal for lab03 -->
+<div class="modal fade modal-fullscreen" id="lab3modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <!-- Lab Title -->
+        <h2 class="modal-title" id="myModalLabel">Lab 3: System Integration and Radio Communication</h2>
+      </div>
 
+      <div class="modal-body">
+        <!-- Lab Body -->
+        <div style="width:80%; padding-left: 15%">
+
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Footer -->
       <section id="footer-widget" class="footer-widget">
           <div class="container header-bg">
@@ -1102,5 +1132,6 @@
     <script src='static/js/jquery.magnific-popup.min.js'></script>
     <script src='static/js/owl.carousel.min.js'></script>
     <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
   </body>
 </html>
