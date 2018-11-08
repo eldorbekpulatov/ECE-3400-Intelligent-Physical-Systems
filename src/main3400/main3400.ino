@@ -119,16 +119,14 @@ void rightHandFollow(){
     if(canTurnRight()){
       Serial.println("turn right");
       turnRight();
-      followLine();
     } else if(canMoveStraight()){
       Serial.println("straight");
     } else if(canTurnLeft()){
       Serial.println("turn left");
       turnLeft();
-      followLine();
     } else {
-      Serial.println("stop");
-      stopMoving(); // FIXME: do 180 deg turn
+      Serial.println("turn aroud");
+      turnAround();
     }
     //updatePos();
   //}
@@ -277,6 +275,18 @@ void stopMoving(){
   leftWheel.write(90);
 }
 
+/* Turns 180 degrees */
+void turnAround(){
+  //updateOrientation(1);
+  leftWheel.write(135);
+  rightWheel.write(135);
+  delay(800);
+  int rightLine = analogRead(rightSensorPin);
+  while(rightLine > lineSensorThreshold){
+    rightLine = analogRead(rightSensorPin);
+  }
+}
+
 /* Turns right */
 void turnRight(){
   //updateOrientation(1);
@@ -310,6 +320,8 @@ boolean followLine(){
   if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
     // TODO: possibly stop moving to give time to make decisions
     // mapMaze();
+//    delay(180);
+//    stopMoving();
     return true; // Intersection encountered
   } else if(sampleRobotDetect()){
     stopMoving(); //Stand still if a robot is seen
@@ -320,7 +332,7 @@ boolean followLine(){
     leftWheel.write(130);
   } else if(rightLine < lineSensorThreshold) {
     // Right sensor white
-    rightWheel.write(40); //nudge right
+    rightWheel.write(50); //nudge right
     leftWheel.write(90);
   } else {
     // Both sensors black
@@ -391,5 +403,3 @@ boolean robotDetect(){
         return false;
      }
 }
-
-
