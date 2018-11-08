@@ -16,6 +16,7 @@ localparam RED = 8'b111_000_00;
 localparam GREEN = 8'b000_111_00;
 localparam BLUE = 8'b000_000_11;
 localparam WHITE = 8'b111_111_11;
+localparam BLACK = 8'b000_000_00;
 
 //=======================================================
 //  PORT declarations
@@ -79,6 +80,8 @@ wire clk24MHz;
 
 assign GPIO_0_D[33] = clk24MHz; // Use something other than 33?
 
+assign GPIO_0_D[0] = RESULT[0];
+assign GPIO_0_D[1] = RESULT[1];
 ///////* INSTANTIATE PLL HERE *///////
 PLLClks pll(
 	.inclk0(CLOCK_50),
@@ -102,7 +105,7 @@ Dual_Port_RAM_M9K mem(
 VGA_DRIVER driver (
 	.RESET(VGA_RESET),
 	.CLOCK(clk25MHz),
-	.PIXEL_COLOR_IN(VGA_READ_MEM_EN ? MEM_OUTPUT : BLUE),
+	.PIXEL_COLOR_IN(VGA_READ_MEM_EN ? MEM_OUTPUT : BLACK),
 	.PIXEL_X(VGA_PIXEL_X),
 	.PIXEL_Y(VGA_PIXEL_Y),
 	.PIXEL_COLOR_OUT({GPIO_0_D[9],GPIO_0_D[11],GPIO_0_D[13],GPIO_0_D[15],GPIO_0_D[17],GPIO_0_D[19],GPIO_0_D[21],GPIO_0_D[23]}),
@@ -121,15 +124,6 @@ IMAGE_PROCESSOR proc(
 );
 
 ///////* Downsampler *///////////
-
-//assume data coming in as RGB565 (one pixel = 2 bytes)
-//DOWNSAMPLER dsample(
-//	.PCLK(pclk),  //new byte from camera on each posedge
-//	.HREF(href), //new row from camera on each posedge
-//	.CAMERA_IN(camera_data), //[7:0] from camera
-//	.READY(W_EN), //write to RAM 
-//	.DATA_2_RAM(pixel_data_RGB332) //what data to write to ram [7:0]
-//);
 
 DOWNSAMPLER dsample(
 	.PCLK(pclk),  //new byte from camera on each posedge

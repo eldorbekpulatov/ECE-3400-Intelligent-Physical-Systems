@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DE0_NANO
-Wed Nov 07 20:11:48 2018
+Wed Nov 07 21:06:10 2018
 Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
 
 
@@ -15,22 +15,23 @@ Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis RAM Summary
   9. Analysis & Synthesis IP Cores Summary
- 10. General Register Statistics
- 11. Registers Packed Into Inferred Megafunctions
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Source assignments for Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated
- 14. Parameter Settings for User Entity Instance: PLLClks:pll|altpll:altpll_component
- 15. Parameter Settings for Inferred Entity Instance: Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0
- 16. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_mult:Mult0
- 17. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
- 18. altpll Parameter Settings by Entity Instance
- 19. altsyncram Parameter Settings by Entity Instance
- 20. lpm_mult Parameter Settings by Entity Instance
- 21. Port Connectivity Checks: "IMAGE_PROCESSOR:proc"
- 22. Port Connectivity Checks: "PLLClks:pll"
- 23. Post-Synthesis Netlist Statistics for Top Partition
- 24. Elapsed Time Per Partition
- 25. Analysis & Synthesis Messages
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Registers Packed Into Inferred Megafunctions
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Source assignments for Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated
+ 15. Parameter Settings for User Entity Instance: PLLClks:pll|altpll:altpll_component
+ 16. Parameter Settings for Inferred Entity Instance: Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0
+ 17. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_mult:Mult0
+ 18. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
+ 19. altpll Parameter Settings by Entity Instance
+ 20. altsyncram Parameter Settings by Entity Instance
+ 21. lpm_mult Parameter Settings by Entity Instance
+ 22. Port Connectivity Checks: "IMAGE_PROCESSOR:proc"
+ 23. Port Connectivity Checks: "PLLClks:pll"
+ 24. Post-Synthesis Netlist Statistics for Top Partition
+ 25. Elapsed Time Per Partition
+ 26. Analysis & Synthesis Messages
 
 
 
@@ -56,15 +57,15 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Nov 07 20:11:48 2018       ;
+; Analysis & Synthesis Status        ; Successful - Wed Nov 07 21:06:10 2018       ;
 ; Quartus Prime Version              ; 18.0.0 Build 614 04/24/2018 SJ Lite Edition ;
 ; Revision Name                      ; DE0_NANO                                    ;
 ; Top-level Entity Name              ; DE0_NANO                                    ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 179                                         ;
-;     Total combinational functions  ; 169                                         ;
-;     Dedicated logic registers      ; 54                                          ;
-; Total registers                    ; 54                                          ;
+; Total logic elements               ; 218                                         ;
+;     Total combinational functions  ; 208                                         ;
+;     Dedicated logic registers      ; 85                                          ;
+; Total registers                    ; 85                                          ;
 ; Total pins                         ; 51                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 202,752                                     ;
@@ -235,20 +236,20 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+------------------------------------------------------------------------------------+
 ; Resource                                    ; Usage                                                                              ;
 +---------------------------------------------+------------------------------------------------------------------------------------+
-; Estimated Total logic elements              ; 179                                                                                ;
+; Estimated Total logic elements              ; 218                                                                                ;
 ;                                             ;                                                                                    ;
-; Total combinational functions               ; 169                                                                                ;
+; Total combinational functions               ; 208                                                                                ;
 ; Logic element usage by number of LUT inputs ;                                                                                    ;
-;     -- 4 input functions                    ; 53                                                                                 ;
-;     -- 3 input functions                    ; 41                                                                                 ;
-;     -- <=2 input functions                  ; 75                                                                                 ;
+;     -- 4 input functions                    ; 52                                                                                 ;
+;     -- 3 input functions                    ; 50                                                                                 ;
+;     -- <=2 input functions                  ; 106                                                                                ;
 ;                                             ;                                                                                    ;
 ; Logic elements by mode                      ;                                                                                    ;
-;     -- normal mode                          ; 97                                                                                 ;
-;     -- arithmetic mode                      ; 72                                                                                 ;
+;     -- normal mode                          ; 107                                                                                ;
+;     -- arithmetic mode                      ; 101                                                                                ;
 ;                                             ;                                                                                    ;
-; Total registers                             ; 54                                                                                 ;
-;     -- Dedicated logic registers            ; 54                                                                                 ;
+; Total registers                             ; 85                                                                                 ;
+;     -- Dedicated logic registers            ; 85                                                                                 ;
 ;     -- I/O registers                        ; 0                                                                                  ;
 ;                                             ;                                                                                    ;
 ; I/O pins                                    ; 51                                                                                 ;
@@ -260,9 +261,9 @@ refer to the applicable agreement for further details.
 ;     -- PLLs                                 ; 1                                                                                  ;
 ;                                             ;                                                                                    ;
 ; Maximum fan-out node                        ; PLLClks:pll|altpll:altpll_component|PLLClks_altpll:auto_generated|wire_pll1_clk[0] ;
-; Maximum fan-out                             ; 56                                                                                 ;
-; Total fan-out                               ; 1679                                                                               ;
-; Average fan-out                             ; 4.69                                                                               ;
+; Maximum fan-out                             ; 87                                                                                 ;
+; Total fan-out                               ; 1857                                                                               ;
+; Average fan-out                             ; 4.34                                                                               ;
 +---------------------------------------------+------------------------------------------------------------------------------------+
 
 
@@ -271,7 +272,7 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
 ; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                  ; Entity Name       ; Library Name ;
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+
-; |DE0_NANO                                         ; 169 (13)            ; 54 (0)                    ; 202752      ; 0            ; 0       ; 0         ; 51   ; 0            ; |DE0_NANO                                                                                                                                            ; DE0_NANO          ; work         ;
+; |DE0_NANO                                         ; 208 (12)            ; 85 (0)                    ; 202752      ; 0            ; 0       ; 0         ; 51   ; 0            ; |DE0_NANO                                                                                                                                            ; DE0_NANO          ; work         ;
 ;    |DOWNSAMPLER:dsample|                          ; 62 (37)             ; 32 (32)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample                                                                                                                        ; DOWNSAMPLER       ; work         ;
 ;       |lpm_mult:Mult0|                            ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0                                                                                                         ; lpm_mult          ; work         ;
 ;          |multcore:mult_core|                     ; 25 (15)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core                                                                                      ; multcore          ; work         ;
@@ -281,15 +282,17 @@ refer to the applicable agreement for further details.
 ;                |mpar_add:sub_par_add|             ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add                                                 ; mpar_add          ; work         ;
 ;                   |lpm_add_sub:adder[0]|          ; 3 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]                            ; lpm_add_sub       ; work         ;
 ;                      |add_sub_pgh:auto_generated| ; 3 (3)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder|mpar_add:sub_par_add|lpm_add_sub:adder[0]|add_sub_pgh:auto_generated ; add_sub_pgh       ; work         ;
-;    |Dual_Port_RAM_M9K:mem|                        ; 8 (0)               ; 2 (0)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem                                                                                                                      ; Dual_Port_RAM_M9K ; work         ;
-;       |altsyncram:mem_rtl_0|                      ; 8 (0)               ; 2 (0)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0                                                                                                 ; altsyncram        ; work         ;
-;          |altsyncram_j5f1:auto_generated|         ; 8 (0)               ; 2 (2)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated                                                                  ; altsyncram_j5f1   ; work         ;
+;    |Dual_Port_RAM_M9K:mem|                        ; 18 (0)              ; 2 (0)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem                                                                                                                      ; Dual_Port_RAM_M9K ; work         ;
+;       |altsyncram:mem_rtl_0|                      ; 18 (0)              ; 2 (0)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0                                                                                                 ; altsyncram        ; work         ;
+;          |altsyncram_j5f1:auto_generated|         ; 18 (0)              ; 2 (2)                     ; 202752      ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated                                                                  ; altsyncram_j5f1   ; work         ;
 ;             |decode_f8a:rden_decode_b|            ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated|decode_f8a:rden_decode_b                                         ; decode_f8a        ; work         ;
 ;             |decode_msa:decode2|                  ; 4 (4)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated|decode_msa:decode2                                               ; decode_msa        ; work         ;
+;             |mux_6nb:mux3|                        ; 10 (10)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated|mux_6nb:mux3                                                     ; mux_6nb           ; work         ;
+;    |IMAGE_PROCESSOR:proc|                         ; 41 (41)             ; 31 (31)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|IMAGE_PROCESSOR:proc                                                                                                                       ; IMAGE_PROCESSOR   ; work         ;
 ;    |PLLClks:pll|                                  ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|PLLClks:pll                                                                                                                                ; PLLClks           ; work         ;
 ;       |altpll:altpll_component|                   ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|PLLClks:pll|altpll:altpll_component                                                                                                        ; altpll            ; work         ;
 ;          |PLLClks_altpll:auto_generated|          ; 0 (0)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|PLLClks:pll|altpll:altpll_component|PLLClks_altpll:auto_generated                                                                          ; PLLClks_altpll    ; work         ;
-;    |VGA_DRIVER:driver|                            ; 60 (60)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|VGA_DRIVER:driver                                                                                                                          ; VGA_DRIVER        ; work         ;
+;    |VGA_DRIVER:driver|                            ; 49 (49)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|VGA_DRIVER:driver                                                                                                                          ; VGA_DRIVER        ; work         ;
 ;    |lpm_mult:Mult0|                               ; 26 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_mult:Mult0                                                                                                                             ; lpm_mult          ; work         ;
 ;       |multcore:mult_core|                        ; 26 (16)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_mult:Mult0|multcore:mult_core                                                                                                          ; multcore          ; work         ;
 ;          |mpar_add:padder|                        ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder                                                                                          ; mpar_add          ; work         ;
@@ -320,13 +323,23 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------+--------------+---------+--------------+--------------+-----------------------+-----------------+
 
 
++------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                 ;
++-------------------------------------------+----------------------------------------+
+; Register name                             ; Reason for Removal                     ;
++-------------------------------------------+----------------------------------------+
+; IMAGE_PROCESSOR:proc|redAccumulator[0..4] ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 5     ;                                        ;
++-------------------------------------------+----------------------------------------+
+
+
 +------------------------------------------------------+
 ; General Register Statistics                          ;
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 54    ;
-; Number of registers using Synchronous Clear  ; 40    ;
+; Total registers                              ; 85    ;
+; Number of registers using Synchronous Clear  ; 71    ;
 ; Number of registers using Synchronous Load   ; 10    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
@@ -349,10 +362,10 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|pixel_count[6]     ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|Y[3]             ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[5]      ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |DE0_NANO|VGA_DRIVER:driver|PIXEL_COLOR_OUT[6] ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|pixel_count[9]     ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|Y[0]             ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[6]      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |DE0_NANO|VGA_DRIVER:driver|PIXEL_COLOR_OUT[7] ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
 
 
@@ -938,13 +951,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 +---------------------------------------+------------------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "IMAGE_PROCESSOR:proc"                                                                 ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
-; Port   ; Type   ; Severity ; Details                                                                             ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
-; RESULT ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+--------+--------+----------+-------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "IMAGE_PROCESSOR:proc"                                                                       ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port         ; Type   ; Severity ; Details                                                                             ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
+; RESULT[8..2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------+
@@ -962,27 +975,27 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 51                          ;
-; cycloneiii_ff         ; 54                          ;
+; cycloneiii_ff         ; 85                          ;
 ;     ENA               ; 8                           ;
 ;     ENA SCLR          ; 20                          ;
-;     SCLR              ; 10                          ;
+;     SCLR              ; 41                          ;
 ;     SCLR SLD          ; 10                          ;
 ;     plain             ; 6                           ;
-; cycloneiii_lcell_comb ; 169                         ;
-;     arith             ; 72                          ;
-;         2 data inputs ; 47                          ;
-;         3 data inputs ; 25                          ;
-;     normal            ; 97                          ;
+; cycloneiii_lcell_comb ; 208                         ;
+;     arith             ; 101                         ;
+;         2 data inputs ; 71                          ;
+;         3 data inputs ; 30                          ;
+;     normal            ; 107                         ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 8                           ;
-;         2 data inputs ; 19                          ;
-;         3 data inputs ; 16                          ;
-;         4 data inputs ; 53                          ;
+;         1 data inputs ; 10                          ;
+;         2 data inputs ; 24                          ;
+;         3 data inputs ; 20                          ;
+;         4 data inputs ; 52                          ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 32                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 5.60                        ;
-; Average LUT depth     ; 3.04                        ;
+; Average LUT depth     ; 3.22                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1001,7 +1014,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
-    Info: Processing started: Wed Nov 07 20:11:28 2018
+    Info: Processing started: Wed Nov 07 21:05:51 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE0_NANO -c DE0_NANO
 Warning (125092): Tcl Script File DE_NANO_SOPC.qip not found
     Info (125063): set_global_assignment -name QIP_FILE DE_NANO_SOPC.qip
@@ -1022,21 +1035,21 @@ Info (12021): Found 1 design units, including 1 entities, in source file pllclks
 Info (12021): Found 1 design units, including 1 entities, in source file downsampler.v
     Info (12023): Found entity 1: DOWNSAMPLER File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 6
 Info (12127): Elaborating entity "DE0_NANO" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(49): object "X_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 49
-Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(50): object "Y_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 50
-Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(147): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 147
-Warning (10034): Output port "GPIO_0_D[32..24]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[22]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[20]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[18]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[16]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[14]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[12]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[10]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[8]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[6]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Warning (10034): Output port "GPIO_0_D[4..0]" at DE0_NANO.v(28) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-Info (12128): Elaborating entity "PLLClks" for hierarchy "PLLClks:pll" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 88
+Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(50): object "X_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 50
+Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(51): object "Y_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 51
+Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(141): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 141
+Warning (10034): Output port "GPIO_0_D[32..24]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[22]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[20]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[18]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[16]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[14]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[12]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[10]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[8]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[6]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Warning (10034): Output port "GPIO_0_D[4..2]" at DE0_NANO.v(29) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+Info (12128): Elaborating entity "PLLClks" for hierarchy "PLLClks:pll" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 91
 Info (12128): Elaborating entity "altpll" for hierarchy "PLLClks:pll|altpll:altpll_component" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/PLLClks.v Line: 98
 Info (12130): Elaborated megafunction instantiation "PLLClks:pll|altpll:altpll_component" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/PLLClks.v Line: 98
 Info (12133): Instantiated megafunction "PLLClks:pll|altpll:altpll_component" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/PLLClks.v Line: 98
@@ -1105,16 +1118,16 @@ Info (12133): Instantiated megafunction "PLLClks:pll|altpll:altpll_component" wi
 Info (12021): Found 1 design units, including 1 entities, in source file db/pllclks_altpll.v
     Info (12023): Found entity 1: PLLClks_altpll File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/pllclks_altpll.v Line: 29
 Info (12128): Elaborating entity "PLLClks_altpll" for hierarchy "PLLClks:pll|altpll:altpll_component|PLLClks_altpll:auto_generated" File: c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/altpll.tdf Line: 897
-Info (12128): Elaborating entity "Dual_Port_RAM_M9K" for hierarchy "Dual_Port_RAM_M9K:mem" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 99
+Info (12128): Elaborating entity "Dual_Port_RAM_M9K" for hierarchy "Dual_Port_RAM_M9K:mem" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 102
 Warning (10036): Verilog HDL or VHDL warning at Dual_Port_RAM_M9K.v(34): object "r_addr_reg" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/Dual_Port_RAM_M9K.v Line: 34
-Info (12128): Elaborating entity "VGA_DRIVER" for hierarchy "VGA_DRIVER:driver" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 111
+Info (12128): Elaborating entity "VGA_DRIVER" for hierarchy "VGA_DRIVER:driver" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 114
 Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(71): truncated value with size 32 to match size of target (10) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/VGA_DRIVER.v Line: 71
 Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(75): truncated value with size 32 to match size of target (10) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/VGA_DRIVER.v Line: 75
-Info (12128): Elaborating entity "IMAGE_PROCESSOR" for hierarchy "IMAGE_PROCESSOR:proc" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 121
-Warning (10034): Output port "RESULT" at IMAGE_PROCESSOR.v(26) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/IMAGE_PROCESSOR.v Line: 26
-Info (12128): Elaborating entity "DOWNSAMPLER" for hierarchy "DOWNSAMPLER:dsample" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 142
-Warning (10230): Verilog HDL assignment warning at DOWNSAMPLER.v(35): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 35
-Warning (10230): Verilog HDL assignment warning at DOWNSAMPLER.v(53): truncated value with size 3 to match size of target (2) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 53
+Info (12128): Elaborating entity "IMAGE_PROCESSOR" for hierarchy "IMAGE_PROCESSOR:proc" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 124
+Warning (10034): Output port "RESULT[8..2]" at IMAGE_PROCESSOR.v(26) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/IMAGE_PROCESSOR.v Line: 26
+Info (12128): Elaborating entity "DOWNSAMPLER" for hierarchy "DOWNSAMPLER:dsample" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 136
+Warning (10230): Verilog HDL assignment warning at DOWNSAMPLER.v(34): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 34
+Warning (10230): Verilog HDL assignment warning at DOWNSAMPLER.v(52): truncated value with size 3 to match size of target (2) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 52
 Warning (276027): Inferred dual-clock RAM node "Dual_Port_RAM_M9K:mem|mem_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Info (19000): Inferred 1 megafunctions from design logic
     Info (276029): Inferred altsyncram megafunction from the following design logic: "Dual_Port_RAM_M9K:mem|mem_rtl_0" 
@@ -1134,8 +1147,8 @@ Info (19000): Inferred 1 megafunctions from design logic
         Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
         Info (286033): Parameter RAM_BLOCK_TYPE set to M9K
 Info (278001): Inferred 2 megafunctions from design logic
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "DOWNSAMPLER:dsample|Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 35
-    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 147
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "DOWNSAMPLER:dsample|Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 34
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 141
 Info (12130): Elaborated megafunction instantiation "Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0"
 Info (12133): Instantiated megafunction "Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
@@ -1161,8 +1174,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/deco
     Info (12023): Found entity 1: decode_f8a File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/decode_f8a.tdf Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_6nb.tdf
     Info (12023): Found entity 1: mux_6nb File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/mux_6nb.tdf Line: 22
-Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 35
-Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_mult:Mult0" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 35
+Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 34
+Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_mult:Mult0" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 34
     Info (12134): Parameter "LPM_WIDTHA" = "10"
     Info (12134): Parameter "LPM_WIDTHB" = "8"
     Info (12134): Parameter "LPM_WIDTHP" = "18"
@@ -1183,50 +1196,48 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/add_
     Info (12023): Found entity 1: add_sub_pgh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_pgh.tdf Line: 22
 Info (12131): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0|altshift:external_latency_ffs", which is child of megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0" File: c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_mult.tdf Line: 351
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "GPIO_0_D[0]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[1]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[2]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[3]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[4]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[6]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[8]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[10]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[12]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[14]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[16]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[18]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[20]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[22]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[24]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[25]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[26]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[27]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[28]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[29]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[30]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[31]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
-    Warning (13410): Pin "GPIO_0_D[32]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 28
+    Warning (13410): Pin "GPIO_0_D[2]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[3]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[4]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[6]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[8]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[10]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[12]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[14]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[16]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[18]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[20]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[22]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[24]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[25]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[26]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[27]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[28]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[29]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[30]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[31]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
+    Warning (13410): Pin "GPIO_0_D[32]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 29
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
 Warning (15899): PLL "PLLClks:pll|altpll:altpll_component|PLLClks_altpll:auto_generated|pll1" has parameters clk2_multiply_by and clk2_divide_by specified but port CLK[2] is not connected File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/pllclks_altpll.v Line: 43
 Warning (21074): Design contains 6 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "GPIO_1_D[23]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (15610): No output dependent on input pin "GPIO_1_D[24]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (15610): No output dependent on input pin "GPIO_1_D[28]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (15610): No output dependent on input pin "GPIO_1_D[29]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (15610): No output dependent on input pin "GPIO_1_D[32]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
-Info (21057): Implemented 265 device resources after synthesis - the final resource count might be different
+    Warning (15610): No output dependent on input pin "GPIO_1_D[23]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
+    Warning (15610): No output dependent on input pin "GPIO_1_D[24]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
+    Warning (15610): No output dependent on input pin "GPIO_1_D[28]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
+    Warning (15610): No output dependent on input pin "GPIO_1_D[29]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
+    Warning (15610): No output dependent on input pin "GPIO_1_D[32]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 31
+    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 32
+Info (21057): Implemented 304 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 17 input pins
     Info (21059): Implemented 34 output pins
-    Info (21061): Implemented 181 logic cells
+    Info (21061): Implemented 220 logic cells
     Info (21064): Implemented 32 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 56 warnings
-    Info: Peak virtual memory: 682 megabytes
-    Info: Processing ended: Wed Nov 07 20:11:48 2018
-    Info: Elapsed time: 00:00:20
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 54 warnings
+    Info: Peak virtual memory: 684 megabytes
+    Info: Processing ended: Wed Nov 07 21:06:10 2018
+    Info: Elapsed time: 00:00:19
     Info: Total CPU time (on all processors): 00:00:40
 
 

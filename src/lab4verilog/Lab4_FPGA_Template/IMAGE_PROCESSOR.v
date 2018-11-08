@@ -25,6 +25,22 @@ input			VGA_VSYNC_NEG;
 
 output [8:0] RESULT;
 
+reg [17:0] redAccumulator; //25,344 * 7 = 177,408
 
+reg [17:0] blueAccumulator;  //25,344 * 3 = 76,032
+
+always @(posedge CLK) begin
+	if(VGA_VSYNC_NEG) begin
+		redAccumulator <= 18'b0;
+		blueAccumulator <= 18'b0;
+	end
+	else begin
+		redAccumulator <= redAccumulator + (18'b0 | (PIXEL_IN & 8'b11100000));
+		blueAccumulator <= blueAccumulator + (18'b0 | (PIXEL_IN & 8'b00000011));
+	end
+end
+
+assign RESULT[0] = (redAccumulator > 18'd25000);
+assign RESULT[1] = (blueAccumulator > 18'd1000);
 
 endmodule
