@@ -1,6 +1,6 @@
 Assembler report for DE0_NANO
-Fri Oct 26 15:41:37 2018
-Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
+Wed Nov 07 20:12:00 2018
+Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
 
 
 ---------------------
@@ -10,7 +10,7 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
   2. Assembler Summary
   3. Assembler Settings
   4. Assembler Generated Files
-  5. Assembler Device Options: C:/Users/labuser/Desktop/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof
+  5. Assembler Device Options: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof
   6. Assembler Messages
 
 
@@ -18,7 +18,7 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2017  Intel Corporation. All rights reserved.
+Copyright (C) 2018  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -26,19 +26,18 @@ functions, and any output files from any of the foregoing
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
 
 
 
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Fri Oct 26 15:41:37 2018 ;
+; Assembler Status      ; Successful - Wed Nov 07 20:12:00 2018 ;
 ; Revision Name         ; DE0_NANO                              ;
 ; Top-level Entity Name ; DE0_NANO                              ;
 ; Family                ; Cyclone IV E                          ;
@@ -53,23 +52,23 @@ agreement for further details.
 +--------+---------+---------------+
 
 
-+----------------------------------------------------------------------------------+
-; Assembler Generated Files                                                        ;
-+----------------------------------------------------------------------------------+
-; File Name                                                                        ;
-+----------------------------------------------------------------------------------+
-; C:/Users/labuser/Desktop/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof ;
-+----------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------+
+; Assembler Generated Files                                                                                 ;
++-----------------------------------------------------------------------------------------------------------+
+; File Name                                                                                                 ;
++-----------------------------------------------------------------------------------------------------------+
+; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof ;
++-----------------------------------------------------------------------------------------------------------+
 
 
-+------------------------------------------------------------------------------------------------------------+
-; Assembler Device Options: C:/Users/labuser/Desktop/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof ;
-+----------------+-------------------------------------------------------------------------------------------+
-; Option         ; Setting                                                                                   ;
-+----------------+-------------------------------------------------------------------------------------------+
-; JTAG usercode  ; 0x0015E86E                                                                                ;
-; Checksum       ; 0x0015E86E                                                                                ;
-+----------------+-------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.sof ;
++----------------+--------------------------------------------------------------------------------------------------------------------+
+; Option         ; Setting                                                                                                            ;
++----------------+--------------------------------------------------------------------------------------------------------------------+
+; JTAG usercode  ; 0x0016C3D3                                                                                                         ;
+; Checksum       ; 0x0016C3D3                                                                                                         ;
++----------------+--------------------------------------------------------------------------------------------------------------------+
 
 
 +--------------------+
@@ -77,8 +76,8 @@ agreement for further details.
 +--------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Assembler
-    Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Fri Oct 26 15:41:36 2018
+    Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+    Info: Processing started: Wed Nov 07 20:11:58 2018
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off DE0_NANO -c DE0_NANO
 Warning (125092): Tcl Script File DE_NANO_SOPC.qip not found
     Info (125063): set_global_assignment -name QIP_FILE DE_NANO_SOPC.qip
@@ -88,9 +87,9 @@ Warning (18236): Number of processors has not been specified which may cause ove
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus Prime Assembler was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 566 megabytes
-    Info: Processing ended: Fri Oct 26 15:41:37 2018
-    Info: Elapsed time: 00:00:01
-    Info: Total CPU time (on all processors): 00:00:01
+    Info: Peak virtual memory: 596 megabytes
+    Info: Processing ended: Wed Nov 07 20:12:00 2018
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:02
 
 

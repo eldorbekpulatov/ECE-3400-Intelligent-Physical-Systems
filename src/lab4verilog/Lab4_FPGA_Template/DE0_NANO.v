@@ -51,7 +51,7 @@ reg [14:0] Y_ADDR = 15'b1000;
 wire [14:0] WRITE_ADDRESS;
 reg [14:0] READ_ADDRESS; 
 
-assign WRITE_ADDRESS = X_ADDR + Y_ADDR*(`SCREEN_WIDTH);
+//assign WRITE_ADDRESS = X_ADDR + Y_ADDR*(`SCREEN_WIDTH);
 
 ///// VGA INPUTS/OUTPUTS /////
 wire 			VGA_RESET;
@@ -123,13 +123,24 @@ IMAGE_PROCESSOR proc(
 ///////* Downsampler *///////////
 
 //assume data coming in as RGB565 (one pixel = 2 bytes)
+//DOWNSAMPLER dsample(
+//	.PCLK(pclk),  //new byte from camera on each posedge
+//	.HREF(href), //new row from camera on each posedge
+//	.CAMERA_IN(camera_data), //[7:0] from camera
+//	.READY(W_EN), //write to RAM 
+//	.DATA_2_RAM(pixel_data_RGB332) //what data to write to ram [7:0]
+//);
+
 DOWNSAMPLER dsample(
 	.PCLK(pclk),  //new byte from camera on each posedge
+	.VSYNC(vsync), //new frame from camera on each negedge
 	.HREF(href), //new row from camera on each posedge
 	.CAMERA_IN(camera_data), //[7:0] from camera
-	.READY(W_EN), //write to RAM 
+	.READY(W_EN), //write to RAM on this posedge 
+	.RAM_ADDR(WRITE_ADDRESS), //which RAM address to write data to [14:0]
 	.DATA_2_RAM(pixel_data_RGB332) //what data to write to ram [7:0]
 );
+
 
 ///////* Update Read Address *///////
 always @ (VGA_PIXEL_X, VGA_PIXEL_Y) begin

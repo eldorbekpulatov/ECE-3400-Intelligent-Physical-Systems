@@ -50,6 +50,42 @@
 				{
 					"name" : "CLOCK_50",
 					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[33]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[30]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[31]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[22]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[21]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[20]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[27]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[26]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[25]",
+					"strict" : false
 				}
 			]
 		}
