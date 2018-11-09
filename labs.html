@@ -1139,7 +1139,7 @@
                 <img src="lab04/red.gif" alt="red_gif" style="width:100%">
                 <div class="caption">
                   <p>Unit testing our camera to detect the color red from weel.</p>
-                </div>  
+                </div>
             </div>
           </div>
           <div class="col-md-4">
@@ -1161,8 +1161,8 @@
         </div>
 
         <p>Once we had this information we combined the correct bit ranges into the rgb332 to get out a proper color image. </p>
-        <img src="lab04/colorTest.jpeg" alt="colorTest" style="height:300px; width:400px;">
-
+        <img src="lab04/colorTest.jpeg" alt="colorTest" style="height:400px; width:500px;">
+        <br>
         <p>After we implemented all of this correctly we created accumulators in our image processor for the amounts of blue and red color in each incoming image. If the accumulator values reached above a certain threshold we know a treasure is detected, and based on the value in each red/blue accumulator we know which color is being detected.</p>
         <pre>
           always @(posedge CLK) begin
@@ -1181,7 +1181,7 @@
 
         <p>Below you can see that the LED on the right corresponds with a blue treasure detected and the LED on the left corresponds with a red treasure being detected. When the camera is pointed at black, no treasure is detected.</p>
         <iframe src="https://drive.google.com/file/d/1I7HK-jRMZWsnaPjBjR5aiSlQGEo9gTl0/preview" width="640" height="480"></iframe>
-        
+
         </div>
       </div>
 
