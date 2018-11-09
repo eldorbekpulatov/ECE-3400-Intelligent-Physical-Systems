@@ -1,4 +1,4 @@
-/** 
+/**
  * TEAM CAPTCHA FALL 2018
  * Joseph Primmer   | Vicente Caycedo
  * Eldor Bekpulatov | Francis Rayos del Sol
@@ -31,7 +31,7 @@ void setup() {
 void loop() {
   stopMoving();
   while(!startSignalDetected()){}
-  while(true) { 
+  while(true) {
     rightHandFollow();
   }
 }
@@ -136,7 +136,7 @@ void turnLeft(){
 boolean followLine(){
   int rightLine = analogRead(rightSensorPin);
   int leftLine = analogRead(leftSensorPin);
-    if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
+  if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
     return true; // Intersection encountered
   } else if(sampleRobotDetect()){
     rightWheel.write(90); //Stand still if a robot is seen
@@ -211,7 +211,7 @@ boolean robotDetect(){
     fft_window(); // window the data for better frequency response
     fft_reorder(); // reorder the data before doing the fft
     fft_run(); // process the data in the fft
-    fft_mag_log(); // take the output of the 
+    fft_mag_log(); // take the output of the
     ADCSRA = init_adcsra;
     sei();
     if(fft_log_out[42] > 50){
@@ -220,5 +220,3 @@ boolean robotDetect(){
         return false;
       }
 }
-
-
