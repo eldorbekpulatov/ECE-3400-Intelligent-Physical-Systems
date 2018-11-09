@@ -1126,15 +1126,13 @@
         <br>
         <br>
         <p>After Wiring everything up, we modified the arduino template code to configure the cameras i2c registers to the proper values. The registers we wrote to were COM3 for scaling, COM7 for register reset and enabling the color bar test, COM9 for the auto gain control, CLKRC to enable the external clock, COM15 for data format, and COM17 to turn on the color bar.</p>
-        <p>At first we had some trouble with configuring our registers to correctly interact with our verilog code and we were only getting static on the screen. However after seeking help from the team [robots n roses (link to website)] we were able to find some register values that we didn’t set. We also used their suggestion of switching to the RGB 444 resolution. </p>
+        <p>At first we had some trouble with configuring our registers to correctly interact with our verilog code and we were only getting static on the screen. However after seeking help from the team <a href="https://samuel-feibel.github.io/RobotsNRoses/index.html">Robots n Roses</a> we were able to find some register values that we didn’t set. We also used their suggestion of switching to the RGB 444 resolution. </p>
         <pre>
           OV7670_write_register(COM15_ADDR, 0xD0); //RGB 444
           OV7670_write_register(0x8C, 0x02); // RGB 444</pre>
 
-
         <p>After implementing the those schages we were able to get out a clear image, however when downsampling we were placing our color bits in the wrong places, so our color was a bit off. To remedy this, by trial and error we assigned different sections of the 2 data bytes coming from our camera to the first three bits of the rgb332. Then we held these up to a color wheel image. </p>
         <img src="lab04/colorWheel.PNG" alt="colorWheel" style="height:500px; width:600px; padding-bottom:10px;">
-        <br>
         <br>
         <p>We were able to tell which colors each bit range mapped to by seeing which portion of the color wheel was brightest. </p>
         <div class="row">
@@ -1164,7 +1162,6 @@
           </div>
         </div>
         <p>Once we had this information we combined the correct bit ranges into the rgb332 to get out a proper color image. </p>
-        <br>
         <img src="lab04/colorTest.jpeg" alt="colorTest" style="height:600px; width:500px;">
         <br>
         <br>
