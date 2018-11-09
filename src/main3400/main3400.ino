@@ -120,6 +120,9 @@ void rightHandFollow(){
       Serial.println("turn right");
       turnRight();
     } else if(canMoveStraight()){
+      leftWheel.write(130);
+      rightWheel.write(40);
+      delay(200);
       Serial.println("straight");
     } else if(canTurnLeft()){
       Serial.println("turn left");
