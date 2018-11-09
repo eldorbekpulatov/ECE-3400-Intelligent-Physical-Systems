@@ -10,7 +10,8 @@ module DOWNSAMPLER (
 	CAMERA_IN, //[7:0] from camera
 	READY, //write to RAM on this posedge 
 	RAM_ADDR, //which RAM address to write data to [14:0]
-	DATA_2_RAM //what data to write to ram [7:0]
+	DATA_2_RAM, //what data to write to ram [7:0]
+	CV_2_RAM
 );
 input [7:0] CAMERA_IN;
 input PCLK;
@@ -18,6 +19,7 @@ input VSYNC;
 input HREF;
 
 output [7:0] DATA_2_RAM;
+output [7:0] CV_2_RAM;
 output READY;
 output [14:0] RAM_ADDR;
 
@@ -31,7 +33,14 @@ reg [9:0] Y = 10'b0;
 reg last_sync = 0;
 reg last_href = 0;
 
+reg [7:0] sum;
+reg [7:0] temp;
+reg [7:0] redStuff;
+reg [7:0] blueStuff;
+
+
 assign RAM_ADDR = X + Y*(`SCREEN_WIDTH);
+assign CV_2_RAM = redStuff | blueStuff;
 
 always @(posedge PCLK) begin
 	if(VSYNC & ~last_sync) begin // posedge vsync
@@ -48,14 +57,39 @@ always @(posedge PCLK) begin
 		Y = Y; 
 		if (HREF) begin			
 			if (CYCLE == 1'b0) begin
+				temp = CAMERA_IN;
 				DATA_2_RAM[4:2] = CAMERA_IN[7:5]; //GREEN
-				DATA_2_RAM[1:0] = CAMERA_IN[2:0]; //BLUE
+				DATA_2_RAM[1:0] = CAMERA_IN[1:0]; //BLUE
 				CYCLE = 1'b1;
 				READY = 1'b0;
 				X = X;
 			end 
 			else begin				
 				DATA_2_RAM[7:5] = CAMERA_IN[2:0]; //RED
+				
+				
+				//BLUE THRESH DETECT 
+				if(temp[2:0] > 3'b10 & DATA_2_RAM[4:2] < 3'b11 & DATA_2_RAM[7:5] < 3'b11) begin
+					blueStuff[1:0] = temp[1:0];
+					blueStuff[7:2] = 6'b0;
+				end
+				else begin
+					blueStuff[7:0] = 8'b0;
+				end	
+				
+				//RED THRESH DETECT
+				if(DATA_2_RAM[7:5] > 3'b100 & DATA_2_RAM[4:2] < 3'b100 & temp[2:0] < 3'b100) begin
+					redStuff[7:5] = DATA_2_RAM[7:5];
+					redStuff[4:0] = 5'b0;
+				end
+				else begin
+					redStuff[7:0] = 8'b0;
+				end
+				
+				
+				
+				//sum = {5'b0, DATA_2_RAM[4:2]}  + {6'b0, DATA_2_RAM[1:0]} + {5'b0, DATA_2_RAM[7:5]};
+				//grayscale = sum / 3;
 				READY = 1'b1;
 				CYCLE = 1'b0;
 				X = X + 1'b1;			

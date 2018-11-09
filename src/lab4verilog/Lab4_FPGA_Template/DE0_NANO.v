@@ -132,7 +132,8 @@ DOWNSAMPLER dsample(
 	.CAMERA_IN(camera_data), //[7:0] from camera
 	.READY(W_EN), //write to RAM on this posedge 
 	.RAM_ADDR(WRITE_ADDRESS), //which RAM address to write data to [14:0]
-	.DATA_2_RAM(pixel_data_RGB332) //what data to write to ram [7:0]
+	.DATA_2_RAM(), //what data to write to ram [7:0]
+	.CV_2_RAM(pixel_data_RGB332)
 );
 
 

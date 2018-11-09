@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at DOWNSAMPLER.v(38): always construct contains both blocking and non-blocking assignments File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 38
+Info (10281): Verilog HDL Declaration information at DOWNSAMPLER.v(28): object "TEMP" differs only in case from object "temp" in the same scope File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 28
