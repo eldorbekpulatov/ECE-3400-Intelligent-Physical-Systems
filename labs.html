@@ -1118,6 +1118,73 @@
         <br>
         <p>Then, we started wiring the Arduino as specified in the diagram below.</p>
         <img src="lab04/Lab3CameraWiringDiagram.png" style="height:300px; width:400px;">
+<<<<<<< HEAD
+=======
+        <br>
+        <p>Originally we tried to communicate with the camera over i2c without the FPGA 24MHz attached, however we realized the camera wouldn’t function without this signal. After connecting the signal we were able to communicate with the camera over i2c. </p>
+        <iframe src="https://drive.google.com/file/d/1m_ml0awF1m-Gz8xvOmy1i3MjrHF73nKQ/preview" width="640" height="480"></iframe>
+        <p>Then, we wired the camera to the correct pins on the FPGA according to the pin mappings in our verilog code. </p>
+        <img src="lab04/wiredup.png" alt="wired-up" style="height:300px; width:400px;">
+        <p>After Wiring everything up, we modified the arduino template code to configure the cameras i2c registers to the proper values. The registers we wrote to were COM3 for scaling, COM7 for register reset and enabling the color bar test, COM9 for the auto gain control, CLKRC to enable the external clock, COM15 for data format, and COM17 to turn on the color bar.</p>
+        <p>At first we had some trouble with configuring our registers to correctly interact with our verilog code and we were only getting static on the screen. However after seeking help from the team [robots n roses (link to website)] we were able to find some register values that we didn’t set. We also used their suggestion of switching to the RGB 444 resolution. </p>
+        <pre>
+          OV7670_write_register(COM15_ADDR, 0xD0); //RGB 444
+          OV7670_write_register(0x8C, 0x02); // RGB 444
+        </pre>
+
+        <p>After implementing the those schages we were able to get out a clear image, however when downsampling we were placing our color bits in the wrong places, so our color was a bit off. To remedy this, by trial and error we assigned different sections of the 2 data bytes coming from our camera to the first three bits of the rgb332. Then we held these up to a color wheel image. </p>
+        <img src="lab04/colorWheel.PNG" alt="colorWheel" style="height:300px; width:400px;">
+        <p>We were able to tell which colors each bit range mapped to by seeing which portion of the color wheel was brightest. </p>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="lab04/red.gif" alt="red_gif" style="width:100%">
+                <div class="caption">
+                  <p>Unit testing our camera to detect the color red from weel.</p>
+                </div>  
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="lab04/green.gif" alt="green_gif" style="width:100%">
+                <div class="caption">
+                  <p>Unit testing our camera to detect the color green from weel.</p>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="lab04/blue.gif" alt="blue_gif" style="width:100%">
+                <div class="caption">
+                  <p>Unit testing our camera to detect the color blue from weel.</p>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <p>Once we had this information we combined the correct bit ranges into the rgb332 to get out a proper color image. </p>
+        <img src="lab04/colorTest.jpeg" alt="colorTest" style="height:300px; width:400px;">
+
+        <p>After we implemented all of this correctly we created accumulators in our image processor for the amounts of blue and red color in each incoming image. If the accumulator values reached above a certain threshold we know a treasure is detected, and based on the value in each red/blue accumulator we know which color is being detected.</p>
+        <pre>
+          always @(posedge CLK) begin
+            if(VGA_VSYNC_NEG) begin
+              redAccumulator <= 18'b0;
+              blueAccumulator <= 18'b0;
+            end
+            else begin
+              redAccumulator <= redAccumulator + (18'b0 | (PIXEL_IN & 8'b11100000));
+              blueAccumulator <= blueAccumulator + (18'b0 | (PIXEL_IN & 8'b00000011));
+            end
+          end
+          assign RESULT[0] = (redAccumulator > 18'd25000);
+          assign RESULT[1] = (blueAccumulator > 18'd1000);
+        </pre>
+
+        <p>Below you can see that the LED on the right corresponds with a blue treasure detected and the LED on the left corresponds with a red treasure being detected. When the camera is pointed at black, no treasure is detected.</p>
+        <iframe src="https://drive.google.com/file/d/1I7HK-jRMZWsnaPjBjR5aiSlQGEo9gTl0/preview" width="640" height="480"></iframe>
+        
+>>>>>>> 3627a8285a322b8cfd253b4dcc23884ae8996b50
         </div>
       </div>
 
