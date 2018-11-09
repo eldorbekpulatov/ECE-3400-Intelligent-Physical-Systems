@@ -1112,23 +1112,33 @@
           <li>Team FPGA: Vicente Caycedo (vac55), Francis Rayos del Sol (fmr32)</li>
         </ul>
 
-        <h3>Setting-up Arduino</h3>
-        <p>We were responsible for wiring the camera, setting up its registers with the Arduino, and reading treasure data from the FPGA.</p>
-        <p>Before deploying any code to Arduino, we disabled the internal pull-up resistors that are a part of the Arduino’s I2C interface. This is because they pull the signals that set up our camera to 5V, while our camera requires 3.3V. </p>
-        <br>
+        <h3>Team Arduino</h3>
+        <h4>Setting-up Arduino</h4>
+          <p>We were responsible for wiring the camera, setting up its registers with the Arduino, and reading treasure data from the FPGA.</p>
+          <p>Before deploying any code to Arduino, we disabled the internal pull-up resistors that are a part of the Arduino’s I2C interface. This is because they pull the signals that set up our camera to 5V, while our camera requires 3.3V. </p>
+          <!-- add some snippet -->
+
+        <h4>Wiring of System</h4>
         <p>Then, we started wiring the Arduino as specified in the diagram below.</p>
         <img src="lab04/Lab3CameraWiringDiagram.png" style="height:300px; width:400px;">
         <br>
         <p>Originally we tried to communicate with the camera over i2c without the FPGA 24MHz attached, however we realized the camera wouldn’t function without this signal. After connecting the signal we were able to communicate with the camera over i2c. </p>
         <iframe src="https://drive.google.com/file/d/1m_ml0awF1m-Gz8xvOmy1i3MjrHF73nKQ/preview" width="640" height="480"></iframe>
+        <h4>Communicating with the FPGA</h4>
         <p>Then, we wired the camera to the correct pins on the FPGA according to the pin mappings in our verilog code. </p>
 
+        <h3>Team FPGA</h3>
+        <h4>Setup</h4>
+          <!-- Some stuff about Setting up FPGA -->
         <p>After Wiring everything up, we modified the arduino template code to configure the cameras i2c registers to the proper values. The registers we wrote to were COM3 for scaling, COM7 for register reset and enabling the color bar test, COM9 for the auto gain control, CLKRC to enable the external clock, COM15 for data format, and COM17 to turn on the color bar.</p>
+        
+        <h4>Buffer</h4>
         <p>At first we had some trouble with configuring our registers to correctly interact with our verilog code and we were only getting static on the screen. However after seeking help from the team <a href="https://samuel-feibel.github.io/RobotsNRoses/index.html">Robots n Roses</a> we were able to find some register values that we didn’t set. We also used their suggestion of switching to the RGB 444 resolution. </p>
         <pre>
           OV7670_write_register(COM15_ADDR, 0xD0); //RGB 444
           OV7670_write_register(0x8C, 0x02); // RGB 444</pre>
-
+        
+        <h4>Downsampler</h4>
         <p>After implementing the those schages we were able to get out a clear image, however when downsampling we were placing our color bits in the wrong places, so our color was a bit off. To remedy this, by trial and error we assigned different sections of the 2 data bytes coming from our camera to the first three bits of the rgb332. Then we held these up to a color wheel image. </p>
         <img src="lab04/colorWheel.PNG" alt="colorWheel" style="height:500px; width:600px; padding-bottom:10px;">
         <br>
@@ -1159,6 +1169,8 @@
             </div>
           </div>
         </div>
+
+        <h4>Color Detection</h4>
         <p>Once we had this information we combined the correct bit ranges into the rgb332 to get out a proper color image. </p>
         <img src="lab04/colorTest.jpeg" alt="colorTest" style="height:600px; width:500px;">
         <br>
@@ -1179,6 +1191,7 @@
           assign RESULT[1] = (blueAccumulator > 18'd1000);
         </pre>
 
+        <h3>Integrating</h3>
         <p>Below you can see that the LED on the right corresponds with a blue treasure detected and the LED on the left corresponds with a red treasure being detected. When the camera is pointed at black, no treasure is detected.</p>
         <iframe src="https://drive.google.com/file/d/1I7HK-jRMZWsnaPjBjR5aiSlQGEo9gTl0/preview" width="640" height="480"></iframe>
 
