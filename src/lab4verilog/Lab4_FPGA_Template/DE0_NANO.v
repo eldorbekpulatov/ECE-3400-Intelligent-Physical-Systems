@@ -6,6 +6,7 @@ module DE0_NANO(
 	CLOCK_50,
 	GPIO_0_D,
 	GPIO_1_D,
+	LED,
 	KEY
 );
 
@@ -31,6 +32,9 @@ output 		    [33:0]		GPIO_0_D;
 input 		    [33:20]		GPIO_1_D;
 input 		     [1:0]		KEY;
 
+//////////////////LEDS ON BOARD/////////////////////
+output [7:0] LED;
+
 ///// PIXEL DATA /////
 wire [7:0]	pixel_data_RGB332;
 
@@ -44,6 +48,13 @@ assign camera_data = GPIO_1_D[27:20];
 assign pclk = GPIO_1_D[33];
 assign href = GPIO_1_D[31];
 assign vsync = GPIO_1_D[30];
+
+
+//assign camera_data = GPIO_1_D[27:20];
+//assign pclk = GPIO_1_D[28];
+//assign href = GPIO_1_D[29];
+//assign vsync = GPIO_1_D[30];
+
 
 
 ///// READ/WRITE ADDRESS /////
@@ -79,6 +90,8 @@ wire clk25MHz;
 wire clk24MHz;
 
 assign GPIO_0_D[33] = clk24MHz; // Use something other than 33?
+
+//assign GPIO_0_D[26] = clk24MHz; // Use something other than 33?
 
 assign GPIO_0_D[0] = RESULT[0];
 assign GPIO_0_D[1] = RESULT[1];
@@ -122,9 +135,11 @@ IMAGE_PROCESSOR proc(
 	.VGA_VSYNC_NEG(VGA_VSYNC_NEG),
 	.RESULT(RESULT)
 );
+assign LED = RESULT;
 
 ///////* Downsampler *///////////
-
+wire [7:0] ledavg;
+wire [7:0] pic;
 DOWNSAMPLER dsample(
 	.PCLK(pclk),  //new byte from camera on each posedge
 	.VSYNC(vsync), //new frame from camera on each negedge
@@ -133,8 +148,13 @@ DOWNSAMPLER dsample(
 	.READY(W_EN), //write to RAM on this posedge 
 	.RAM_ADDR(WRITE_ADDRESS), //which RAM address to write data to [14:0]
 	.DATA_2_RAM(), //what data to write to ram [7:0]
-	.CV_2_RAM(pixel_data_RGB332)
+	.CV_2_RAM(),
+	.CV_3_RAM(pixel_data_RGB332),
+	.CV_4_RAM(),
+	.LEDAVG(ledavg)
 );
+
+//assign pixel_data_RGB332 = (edges === 8'b0) ? pic : edges;
 
 
 ///////* Update Read Address *///////

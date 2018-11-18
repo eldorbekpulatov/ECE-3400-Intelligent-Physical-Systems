@@ -1,0 +1,6 @@
+
+State Machine - |DE0_NANO|DOWNSAMPLER:dsample|redOrBlueOrNaught
+Name redOrBlueOrNaught.00 redOrBlueOrNaught.10 redOrBlueOrNaught.01 
+redOrBlueOrNaught.00 0 0 0 
+redOrBlueOrNaught.01 1 0 1 
+redOrBlueOrNaught.10 1 1 0 

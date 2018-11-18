@@ -4,14 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "GPIO_0_D[0]",
-					"strict" : false
-				},
-				{
-					"name" : "GPIO_0_D[1]",
-					"strict" : false
-				},
-				{
 					"name" : "GPIO_0_D[5]",
 					"strict" : false
 				},
@@ -29,6 +21,18 @@
 				},
 				{
 					"name" : "GPIO_0_D[13]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_0_D[15]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_0_D[17]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_0_D[19]",
 					"strict" : false
 				},
 				{
@@ -60,10 +64,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "GPIO_1_D[22]",
-					"strict" : false
-				},
-				{
 					"name" : "GPIO_1_D[20]",
 					"strict" : false
 				},
@@ -72,7 +72,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "GPIO_1_D[27]",
+					"name" : "GPIO_1_D[22]",
 					"strict" : false
 				},
 				{
@@ -81,6 +81,10 @@
 				},
 				{
 					"name" : "GPIO_1_D[26]",
+					"strict" : false
+				},
+				{
+					"name" : "GPIO_1_D[27]",
 					"strict" : false
 				}
 			]
