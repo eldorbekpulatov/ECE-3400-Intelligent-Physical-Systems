@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DE0_NANO
-Sun Nov 18 08:47:03 2018
+Sun Nov 18 15:36:04 2018
 Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
 
 
@@ -23,19 +23,23 @@ Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
  15. Source assignments for Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0|altsyncram_j5f1:auto_generated
  16. Parameter Settings for User Entity Instance: PLLClks:pll|altpll:altpll_component
  17. Parameter Settings for Inferred Entity Instance: Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0
- 18. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_mult:Mult0
- 19. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
- 20. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div0
- 21. altpll Parameter Settings by Entity Instance
- 22. altsyncram Parameter Settings by Entity Instance
- 23. lpm_mult Parameter Settings by Entity Instance
- 24. Port Connectivity Checks: "DOWNSAMPLER:dsample"
- 25. Port Connectivity Checks: "IMAGE_PROCESSOR:proc"
- 26. Port Connectivity Checks: "PLLClks:pll"
- 27. Post-Synthesis Netlist Statistics for Top Partition
- 28. Elapsed Time Per Partition
- 29. Analysis & Synthesis Messages
- 30. Analysis & Synthesis Suppressed Messages
+ 18. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div1
+ 19. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div0
+ 20. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_mult:Mult0
+ 21. Parameter Settings for Inferred Entity Instance: lpm_mult:Mult0
+ 22. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div2
+ 23. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div4
+ 24. Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div3
+ 25. altpll Parameter Settings by Entity Instance
+ 26. altsyncram Parameter Settings by Entity Instance
+ 27. lpm_mult Parameter Settings by Entity Instance
+ 28. Port Connectivity Checks: "DOWNSAMPLER:dsample"
+ 29. Port Connectivity Checks: "IMAGE_PROCESSOR:proc"
+ 30. Port Connectivity Checks: "PLLClks:pll"
+ 31. Post-Synthesis Netlist Statistics for Top Partition
+ 32. Elapsed Time Per Partition
+ 33. Analysis & Synthesis Messages
+ 34. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -61,15 +65,15 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun Nov 18 08:47:02 2018       ;
+; Analysis & Synthesis Status        ; Successful - Sun Nov 18 15:36:04 2018       ;
 ; Quartus Prime Version              ; 18.0.0 Build 614 04/24/2018 SJ Lite Edition ;
 ; Revision Name                      ; DE0_NANO                                    ;
 ; Top-level Entity Name              ; DE0_NANO                                    ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 472                                         ;
-;     Total combinational functions  ; 434                                         ;
-;     Dedicated logic registers      ; 149                                         ;
-; Total registers                    ; 149                                         ;
+; Total logic elements               ; 1,600                                       ;
+;     Total combinational functions  ; 1,535                                       ;
+;     Dedicated logic registers      ; 306                                         ;
+; Total registers                    ; 306                                         ;
 ; Total pins                         ; 59                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 202,752                                     ;
@@ -210,6 +214,17 @@ refer to the applicable agreement for further details.
 ; db/decode_msa.tdf                ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/decode_msa.tdf          ;         ;
 ; db/decode_f8a.tdf                ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/decode_f8a.tdf          ;         ;
 ; db/mux_6nb.tdf                   ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/mux_6nb.tdf             ;         ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_divide.tdf                                                   ;         ;
+; abs_divider.inc                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/abs_divider.inc                                                  ;         ;
+; sign_div_unsign.inc              ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/sign_div_unsign.inc                                              ;         ;
+; db/lpm_divide_2jm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_2jm.tdf      ;         ;
+; db/sign_div_unsign_qlh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_qlh.tdf ;         ;
+; db/alt_u_div_87f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_87f.tdf       ;         ;
+; db/add_sub_7pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_7pc.tdf         ;         ;
+; db/add_sub_8pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_8pc.tdf         ;         ;
+; db/lpm_divide_hkm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_hkm.tdf      ;         ;
+; db/sign_div_unsign_9nh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_9nh.tdf ;         ;
+; db/alt_u_div_6af.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_6af.tdf       ;         ;
 ; lpm_mult.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_mult.tdf                                                     ;         ;
 ; lpm_add_sub.inc                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_add_sub.inc                                                  ;         ;
 ; multcore.inc                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/multcore.inc                                                     ;         ;
@@ -232,14 +247,9 @@ refer to the applicable agreement for further details.
 ; db/add_sub_lgh.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_lgh.tdf         ;         ;
 ; db/add_sub_pgh.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_pgh.tdf         ;         ;
 ; altshift.tdf                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/altshift.tdf                                                     ;         ;
-; lpm_divide.tdf                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_divide.tdf                                                   ;         ;
-; abs_divider.inc                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/abs_divider.inc                                                  ;         ;
-; sign_div_unsign.inc              ; yes             ; Megafunction                 ; c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/sign_div_unsign.inc                                              ;         ;
-; db/lpm_divide_hkm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_hkm.tdf      ;         ;
-; db/sign_div_unsign_9nh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_9nh.tdf ;         ;
-; db/alt_u_div_6af.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_6af.tdf       ;         ;
-; db/add_sub_7pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_7pc.tdf         ;         ;
-; db/add_sub_8pc.tdf               ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_8pc.tdf         ;         ;
+; db/lpm_divide_6jm.tdf            ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_6jm.tdf      ;         ;
+; db/sign_div_unsign_ulh.tdf       ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_ulh.tdf ;         ;
+; db/alt_u_div_g7f.tdf             ; yes             ; Auto-Generated Megafunction  ; C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_g7f.tdf       ;         ;
 +----------------------------------+-----------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------+---------+
 
 
@@ -248,20 +258,20 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+--------------------+
 ; Resource                                    ; Usage              ;
 +---------------------------------------------+--------------------+
-; Estimated Total logic elements              ; 472                ;
+; Estimated Total logic elements              ; 1,600              ;
 ;                                             ;                    ;
-; Total combinational functions               ; 434                ;
+; Total combinational functions               ; 1535               ;
 ; Logic element usage by number of LUT inputs ;                    ;
-;     -- 4 input functions                    ; 82                 ;
-;     -- 3 input functions                    ; 140                ;
-;     -- <=2 input functions                  ; 212                ;
+;     -- 4 input functions                    ; 245                ;
+;     -- 3 input functions                    ; 839                ;
+;     -- <=2 input functions                  ; 451                ;
 ;                                             ;                    ;
 ; Logic elements by mode                      ;                    ;
-;     -- normal mode                          ; 226                ;
-;     -- arithmetic mode                      ; 208                ;
+;     -- normal mode                          ; 790                ;
+;     -- arithmetic mode                      ; 745                ;
 ;                                             ;                    ;
-; Total registers                             ; 149                ;
-;     -- Dedicated logic registers            ; 149                ;
+; Total registers                             ; 306                ;
+;     -- Dedicated logic registers            ; 306                ;
 ;     -- I/O registers                        ; 0                  ;
 ;                                             ;                    ;
 ; I/O pins                                    ; 59                 ;
@@ -273,9 +283,9 @@ refer to the applicable agreement for further details.
 ;     -- PLLs                                 ; 1                  ;
 ;                                             ;                    ;
 ; Maximum fan-out node                        ; GPIO_1_D[33]~input ;
-; Maximum fan-out                             ; 127                ;
-; Total fan-out                               ; 2671               ;
-; Average fan-out                             ; 3.64               ;
+; Maximum fan-out                             ; 284                ;
+; Total fan-out                               ; 6308               ;
+; Average fan-out                             ; 3.17               ;
 +---------------------------------------------+--------------------+
 
 
@@ -284,12 +294,29 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+--------------+
 ; Compilation Hierarchy Node                        ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                  ; Entity Name         ; Library Name ;
 +---------------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+--------------+
-; |DE0_NANO                                         ; 434 (11)            ; 149 (0)                   ; 202752      ; 0            ; 0       ; 0         ; 59   ; 0            ; |DE0_NANO                                                                                                                                            ; DE0_NANO            ; work         ;
-;    |DOWNSAMPLER:dsample|                          ; 330 (193)           ; 127 (127)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample                                                                                                                        ; DOWNSAMPLER         ; work         ;
+; |DE0_NANO                                         ; 1535 (12)           ; 306 (0)                   ; 202752      ; 0            ; 0       ; 0         ; 59   ; 0            ; |DE0_NANO                                                                                                                                            ; DE0_NANO            ; work         ;
+;    |DOWNSAMPLER:dsample|                          ; 1430 (502)          ; 284 (284)                 ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample                                                                                                                        ; DOWNSAMPLER         ; work         ;
 ;       |lpm_divide:Div0|                           ; 112 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div0                                                                                                        ; lpm_divide          ; work         ;
 ;          |lpm_divide_hkm:auto_generated|          ; 112 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div0|lpm_divide_hkm:auto_generated                                                                          ; lpm_divide_hkm      ; work         ;
 ;             |sign_div_unsign_9nh:divider|         ; 112 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div0|lpm_divide_hkm:auto_generated|sign_div_unsign_9nh:divider                                              ; sign_div_unsign_9nh ; work         ;
 ;                |alt_u_div_6af:divider|            ; 112 (112)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div0|lpm_divide_hkm:auto_generated|sign_div_unsign_9nh:divider|alt_u_div_6af:divider                        ; alt_u_div_6af       ; work         ;
+;       |lpm_divide:Div1|                           ; 125 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div1                                                                                                        ; lpm_divide          ; work         ;
+;          |lpm_divide_2jm:auto_generated|          ; 125 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div1|lpm_divide_2jm:auto_generated                                                                          ; lpm_divide_2jm      ; work         ;
+;             |sign_div_unsign_qlh:divider|         ; 125 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div1|lpm_divide_2jm:auto_generated|sign_div_unsign_qlh:divider                                              ; sign_div_unsign_qlh ; work         ;
+;                |alt_u_div_87f:divider|            ; 125 (124)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div1|lpm_divide_2jm:auto_generated|sign_div_unsign_qlh:divider|alt_u_div_87f:divider                        ; alt_u_div_87f       ; work         ;
+;                   |add_sub_8pc:add_sub_1|         ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div1|lpm_divide_2jm:auto_generated|sign_div_unsign_qlh:divider|alt_u_div_87f:divider|add_sub_8pc:add_sub_1  ; add_sub_8pc         ; work         ;
+;       |lpm_divide:Div2|                           ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div2                                                                                                        ; lpm_divide          ; work         ;
+;          |lpm_divide_6jm:auto_generated|          ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div2|lpm_divide_6jm:auto_generated                                                                          ; lpm_divide_6jm      ; work         ;
+;             |sign_div_unsign_ulh:divider|         ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div2|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider                                              ; sign_div_unsign_ulh ; work         ;
+;                |alt_u_div_g7f:divider|            ; 222 (222)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div2|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider|alt_u_div_g7f:divider                        ; alt_u_div_g7f       ; work         ;
+;       |lpm_divide:Div3|                           ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div3                                                                                                        ; lpm_divide          ; work         ;
+;          |lpm_divide_6jm:auto_generated|          ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div3|lpm_divide_6jm:auto_generated                                                                          ; lpm_divide_6jm      ; work         ;
+;             |sign_div_unsign_ulh:divider|         ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div3|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider                                              ; sign_div_unsign_ulh ; work         ;
+;                |alt_u_div_g7f:divider|            ; 222 (222)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div3|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider|alt_u_div_g7f:divider                        ; alt_u_div_g7f       ; work         ;
+;       |lpm_divide:Div4|                           ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div4                                                                                                        ; lpm_divide          ; work         ;
+;          |lpm_divide_6jm:auto_generated|          ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div4|lpm_divide_6jm:auto_generated                                                                          ; lpm_divide_6jm      ; work         ;
+;             |sign_div_unsign_ulh:divider|         ; 222 (0)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div4|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider                                              ; sign_div_unsign_ulh ; work         ;
+;                |alt_u_div_g7f:divider|            ; 222 (222)           ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_divide:Div4|lpm_divide_6jm:auto_generated|sign_div_unsign_ulh:divider|alt_u_div_g7f:divider                        ; alt_u_div_g7f       ; work         ;
 ;       |lpm_mult:Mult0|                            ; 25 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0                                                                                                         ; lpm_mult            ; work         ;
 ;          |multcore:mult_core|                     ; 25 (15)             ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core                                                                                      ; multcore            ; work         ;
 ;             |mpar_add:padder|                     ; 10 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |DE0_NANO|DOWNSAMPLER:dsample|lpm_mult:Mult0|multcore:mult_core|mpar_add:padder                                                                      ; mpar_add            ; work         ;
@@ -355,13 +382,20 @@ Encoding Type:  One-Hot
 ; Register name                              ; Reason for Removal                               ;
 +--------------------------------------------+--------------------------------------------------+
 ; DOWNSAMPLER:dsample|redEdgeStuff[0,1,5..7] ; Stuck at GND due to stuck port data_in           ;
+; DOWNSAMPLER:dsample|redStuff[0..4]         ; Stuck at GND due to stuck port data_in           ;
+; DOWNSAMPLER:dsample|blueStuff[2..7]        ; Stuck at GND due to stuck port data_in           ;
 ; DOWNSAMPLER:dsample|temp[7]                ; Merged with DOWNSAMPLER:dsample|DATA_2_RAM[4]    ;
 ; DOWNSAMPLER:dsample|temp[6]                ; Merged with DOWNSAMPLER:dsample|DATA_2_RAM[3]    ;
 ; DOWNSAMPLER:dsample|temp[5]                ; Merged with DOWNSAMPLER:dsample|DATA_2_RAM[2]    ;
 ; DOWNSAMPLER:dsample|blueEdgeStuff[1..7]    ; Merged with DOWNSAMPLER:dsample|blueEdgeStuff[0] ;
+; DOWNSAMPLER:dsample|blueStuff[0]           ; Merged with DOWNSAMPLER:dsample|blueShift[4][0]  ;
+; DOWNSAMPLER:dsample|blueStuff[1]           ; Merged with DOWNSAMPLER:dsample|blueShift[4][1]  ;
 ; DOWNSAMPLER:dsample|redEdgeStuff[3,4]      ; Merged with DOWNSAMPLER:dsample|redEdgeStuff[2]  ;
+; DOWNSAMPLER:dsample|redStuff[5]            ; Merged with DOWNSAMPLER:dsample|redShift[3][0]   ;
+; DOWNSAMPLER:dsample|redStuff[6]            ; Merged with DOWNSAMPLER:dsample|redShift[3][1]   ;
+; DOWNSAMPLER:dsample|redStuff[7]            ; Merged with DOWNSAMPLER:dsample|redShift[3][2]   ;
 ; DOWNSAMPLER:dsample|sum2bAvg[0..7]         ; Lost fanout                                      ;
-; Total Number of Removed Registers = 25     ;                                                  ;
+; Total Number of Removed Registers = 41     ;                                                  ;
 +--------------------------------------------+--------------------------------------------------+
 
 
@@ -370,12 +404,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 149   ;
-; Number of registers using Synchronous Clear  ; 97    ;
-; Number of registers using Synchronous Load   ; 0     ;
+; Total registers                              ; 306   ;
+; Number of registers using Synchronous Clear  ; 135   ;
+; Number of registers using Synchronous Load   ; 24    ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 123   ;
+; Number of registers using Clock Enable       ; 280   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -389,20 +423,24 @@ Encoding Type:  One-Hot
 +-----------------------------------------+---------------------------------+------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                 ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                       ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|pixel_count[2]       ;
-; 3:1                ; 18 bits   ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|redAccumulator[14] ;
-; 3:1                ; 18 bits   ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|blueAccumulator[4] ;
-; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|brightnessSum[18]  ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|Y[0]               ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[9]        ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |DE0_NANO|DOWNSAMPLER:dsample|redOrBlueOrNaught  ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |DE0_NANO|VGA_DRIVER:driver|PIXEL_COLOR_OUT[4]   ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|pixel_count[6]        ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|edgesYAccumTop[0]   ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|edgesYAccumMid[5]   ;
+; 3:1                ; 24 bits   ; 48 LEs        ; 24 LEs               ; 24 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|edgesYAccumBot[15]  ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|lastEdge[3]         ;
+; 3:1                ; 18 bits   ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|redAccumulator[15]  ;
+; 3:1                ; 18 bits   ; 36 LEs        ; 18 LEs               ; 18 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|blueAccumulator[11] ;
+; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|brightnessSum[17]   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|DOWNSAMPLER:dsample|Y[2]                ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |DE0_NANO|VGA_DRIVER:driver|line_count[6]         ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |DE0_NANO|DOWNSAMPLER:dsample|redOrBlueOrNaught   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; No         ; |DE0_NANO|VGA_DRIVER:driver|PIXEL_COLOR_OUT[6]    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
 
 
 +--------------------------------------------------------------------------------------------------+
@@ -849,6 +887,52 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++--------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div1 ;
++------------------------+----------------+--------------------------------------------+
+; Parameter Name         ; Value          ; Type                                       ;
++------------------------+----------------+--------------------------------------------+
+; LPM_WIDTHN             ; 18             ; Untyped                                    ;
+; LPM_WIDTHD             ; 2              ; Untyped                                    ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_PIPELINE           ; 0              ; Untyped                                    ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
+; CBXI_PARAMETER         ; lpm_divide_2jm ; Untyped                                    ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
++------------------------+----------------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div0 ;
++------------------------+----------------+--------------------------------------------+
+; Parameter Name         ; Value          ; Type                                       ;
++------------------------+----------------+--------------------------------------------+
+; LPM_WIDTHN             ; 20             ; Untyped                                    ;
+; LPM_WIDTHD             ; 17             ; Untyped                                    ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_PIPELINE           ; 0              ; Untyped                                    ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
+; CBXI_PARAMETER         ; lpm_divide_hkm ; Untyped                                    ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
++------------------------+----------------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +-------------------------------------------------------------------------------------+
 ; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_mult:Mult0 ;
 +------------------------------------------------+--------------+---------------------+
@@ -920,18 +1004,64 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 
 +--------------------------------------------------------------------------------------+
-; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div0 ;
+; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div2 ;
 +------------------------+----------------+--------------------------------------------+
 ; Parameter Name         ; Value          ; Type                                       ;
 +------------------------+----------------+--------------------------------------------+
-; LPM_WIDTHN             ; 20             ; Untyped                                    ;
-; LPM_WIDTHD             ; 17             ; Untyped                                    ;
+; LPM_WIDTHN             ; 16             ; Untyped                                    ;
+; LPM_WIDTHD             ; 8              ; Untyped                                    ;
 ; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
 ; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
 ; LPM_PIPELINE           ; 0              ; Untyped                                    ;
 ; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
 ; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
-; CBXI_PARAMETER         ; lpm_divide_hkm ; Untyped                                    ;
+; CBXI_PARAMETER         ; lpm_divide_6jm ; Untyped                                    ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
++------------------------+----------------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div4 ;
++------------------------+----------------+--------------------------------------------+
+; Parameter Name         ; Value          ; Type                                       ;
++------------------------+----------------+--------------------------------------------+
+; LPM_WIDTHN             ; 16             ; Untyped                                    ;
+; LPM_WIDTHD             ; 8              ; Untyped                                    ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_PIPELINE           ; 0              ; Untyped                                    ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
+; CBXI_PARAMETER         ; lpm_divide_6jm ; Untyped                                    ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                               ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                               ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                             ;
++------------------------+----------------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: DOWNSAMPLER:dsample|lpm_divide:Div3 ;
++------------------------+----------------+--------------------------------------------+
+; Parameter Name         ; Value          ; Type                                       ;
++------------------------+----------------+--------------------------------------------+
+; LPM_WIDTHN             ; 16             ; Untyped                                    ;
+; LPM_WIDTHD             ; 8              ; Untyped                                    ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                    ;
+; LPM_PIPELINE           ; 0              ; Untyped                                    ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                    ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                    ;
+; CBXI_PARAMETER         ; lpm_divide_6jm ; Untyped                                    ;
 ; CARRY_CHAIN            ; MANUAL         ; Untyped                                    ;
 ; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                    ;
 ; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                 ;
@@ -1010,25 +1140,24 @@ Note: In order to hide this table in the UI and the text report file, please set
 +---------------------------------------+------------------------------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "DOWNSAMPLER:dsample"                                                                      ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
-; Port       ; Type   ; Severity ; Details                                                                             ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
-; DATA_2_RAM ; Output ; Info     ; Explicitly unconnected                                                              ;
-; CV_2_RAM   ; Output ; Info     ; Explicitly unconnected                                                              ;
-; CV_4_RAM   ; Output ; Info     ; Explicitly unconnected                                                              ;
-; LEDAVG     ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+------------+--------+----------+-------------------------------------------------------------------------------------+
++---------------------------------------------------------+
+; Port Connectivity Checks: "DOWNSAMPLER:dsample"         ;
++------------+--------+----------+------------------------+
+; Port       ; Type   ; Severity ; Details                ;
++------------+--------+----------+------------------------+
+; DATA_2_RAM ; Output ; Info     ; Explicitly unconnected ;
+; CV_2_RAM   ; Output ; Info     ; Explicitly unconnected ;
+; CV_3_RAM   ; Output ; Info     ; Explicitly unconnected ;
++------------+--------+----------+------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "IMAGE_PROCESSOR:proc"                                                                    ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
-; Port      ; Type   ; Severity ; Details                                                                             ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
-; RESULT[8] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+-----------+--------+----------+-------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "IMAGE_PROCESSOR:proc"                                                                       ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port         ; Type   ; Severity ; Details                                                                             ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
+; RESULT[8..2] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++--------------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------+
@@ -1046,26 +1175,27 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
 ; boundary_port         ; 59                          ;
-; cycloneiii_ff         ; 149                         ;
-;     ENA               ; 47                          ;
-;     ENA SCLR          ; 76                          ;
+; cycloneiii_ff         ; 306                         ;
+;     ENA               ; 142                         ;
+;     ENA SCLR          ; 114                         ;
+;     ENA SLD           ; 24                          ;
 ;     SCLR              ; 21                          ;
 ;     plain             ; 5                           ;
-; cycloneiii_lcell_comb ; 435                         ;
-;     arith             ; 208                         ;
-;         2 data inputs ; 99                          ;
-;         3 data inputs ; 109                         ;
-;     normal            ; 227                         ;
-;         0 data inputs ; 13                          ;
-;         1 data inputs ; 11                          ;
-;         2 data inputs ; 90                          ;
-;         3 data inputs ; 31                          ;
-;         4 data inputs ; 82                          ;
+; cycloneiii_lcell_comb ; 1535                        ;
+;     arith             ; 745                         ;
+;         2 data inputs ; 154                         ;
+;         3 data inputs ; 591                         ;
+;     normal            ; 790                         ;
+;         0 data inputs ; 72                          ;
+;         1 data inputs ; 41                          ;
+;         2 data inputs ; 184                         ;
+;         3 data inputs ; 248                         ;
+;         4 data inputs ; 245                         ;
 ; cycloneiii_pll        ; 1                           ;
 ; cycloneiii_ram_block  ; 32                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 14.90                       ;
-; Average LUT depth     ; 5.56                        ;
+; Max LUT depth         ; 39.10                       ;
+; Average LUT depth     ; 20.56                       ;
 +-----------------------+-----------------------------+
 
 
@@ -1074,7 +1204,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:03     ;
+; Top            ; 00:00:05     ;
 +----------------+--------------+
 
 
@@ -1084,7 +1214,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
-    Info: Processing started: Sun Nov 18 08:46:43 2018
+    Info: Processing started: Sun Nov 18 15:35:41 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE0_NANO -c DE0_NANO
 Warning (125092): Tcl Script File DE_NANO_SOPC.qip not found
     Info (125063): set_global_assignment -name QIP_FILE DE_NANO_SOPC.qip
@@ -1110,7 +1240,6 @@ Warning (10236): Verilog HDL Implicit Net warning at edgeDetector.v(18): created
 Info (12127): Elaborating entity "DE0_NANO" for the top level hierarchy
 Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(61): object "X_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 61
 Warning (10036): Verilog HDL or VHDL warning at DE0_NANO.v(62): object "Y_ADDR" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 62
-Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(138): truncated value with size 9 to match size of target (8) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 138
 Warning (10230): Verilog HDL assignment warning at DE0_NANO.v(162): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 162
 Warning (10034): Output port "GPIO_0_D[32..24]" at DE0_NANO.v(30) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
 Warning (10034): Output port "GPIO_0_D[22]" at DE0_NANO.v(30) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
@@ -1199,9 +1328,11 @@ Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(71): truncated v
 Warning (10230): Verilog HDL assignment warning at VGA_DRIVER.v(75): truncated value with size 32 to match size of target (10) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/VGA_DRIVER.v Line: 75
 Info (12128): Elaborating entity "IMAGE_PROCESSOR" for hierarchy "IMAGE_PROCESSOR:proc" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 137
 Warning (10034): Output port "RESULT" at IMAGE_PROCESSOR.v(27) has no driver File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/IMAGE_PROCESSOR.v Line: 27
-Warning (12158): Entity "IMAGE_PROCESSOR" contains only dangling pins File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 137
 Info (12128): Elaborating entity "DOWNSAMPLER" for hierarchy "DOWNSAMPLER:dsample" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 155
+Warning (10036): Verilog HDL or VHDL warning at DOWNSAMPLER.v(101): object "noShapeCondition" assigned a value but never read File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 101
 Warning (10230): Verilog HDL assignment warning at DOWNSAMPLER.v(51): truncated value with size 32 to match size of target (15) File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 51
+Warning (10030): Net "shapeResult[4]" at DOWNSAMPLER.v(103) has no driver or initial value, using a default initial value '0' File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 103
+Warning (10030): Net "shapeResult[1]" at DOWNSAMPLER.v(103) has no driver or initial value, using a default initial value '0' File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 103
 Warning (276027): Inferred dual-clock RAM node "Dual_Port_RAM_M9K:mem|mem_rtl_0" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
 Info (19000): Inferred 1 megafunctions from design logic
     Info (276029): Inferred altsyncram megafunction from the following design logic: "Dual_Port_RAM_M9K:mem|mem_rtl_0" 
@@ -1220,10 +1351,14 @@ Info (19000): Inferred 1 megafunctions from design logic
         Info (286033): Parameter INDATA_ACLR_A set to NONE
         Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
         Info (286033): Parameter RAM_BLOCK_TYPE set to M9K
-Info (278001): Inferred 3 megafunctions from design logic
+Info (278001): Inferred 7 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div1" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 129
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "DOWNSAMPLER:dsample|Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 51
     Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 162
-    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div2" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 137
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div4" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 139
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "DOWNSAMPLER:dsample|Div3" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 138
 Info (12130): Elaborated megafunction instantiation "Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0"
 Info (12133): Instantiated megafunction "Dual_Port_RAM_M9K:mem|altsyncram:mem_rtl_0" with the following parameter:
     Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
@@ -1249,6 +1384,34 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/deco
     Info (12023): Found entity 1: decode_f8a File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/decode_f8a.tdf Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_6nb.tdf
     Info (12023): Found entity 1: mux_6nb File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/mux_6nb.tdf Line: 22
+Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_divide:Div1" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 129
+Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_divide:Div1" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 129
+    Info (12134): Parameter "LPM_WIDTHN" = "18"
+    Info (12134): Parameter "LPM_WIDTHD" = "2"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_2jm.tdf
+    Info (12023): Found entity 1: lpm_divide_2jm File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_2jm.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_qlh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_qlh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_qlh.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_87f.tdf
+    Info (12023): Found entity 1: alt_u_div_87f File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_87f.tdf Line: 26
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_7pc.tdf
+    Info (12023): Found entity 1: add_sub_7pc File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_7pc.tdf Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_8pc.tdf
+    Info (12023): Found entity 1: add_sub_8pc File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_8pc.tdf Line: 22
+Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_divide:Div0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
+Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_divide:Div0" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
+    Info (12134): Parameter "LPM_WIDTHN" = "20"
+    Info (12134): Parameter "LPM_WIDTHD" = "17"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_hkm.tdf
+    Info (12023): Found entity 1: lpm_divide_hkm File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_hkm.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_9nh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_9nh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_9nh.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_6af.tdf
+    Info (12023): Found entity 1: alt_u_div_6af File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_6af.tdf Line: 26
 Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 51
 Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_mult:Mult0" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 51
     Info (12134): Parameter "LPM_WIDTHA" = "10"
@@ -1270,22 +1433,18 @@ Info (12131): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mul
 Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_pgh.tdf
     Info (12023): Found entity 1: add_sub_pgh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_pgh.tdf Line: 22
 Info (12131): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0|altshift:external_latency_ffs", which is child of megafunction instantiation "DOWNSAMPLER:dsample|lpm_mult:Mult0" File: c:/intelfpga_lite/18.0/quartus/libraries/megafunctions/lpm_mult.tdf Line: 351
-Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_divide:Div0" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
-Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_divide:Div0" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 66
-    Info (12134): Parameter "LPM_WIDTHN" = "20"
-    Info (12134): Parameter "LPM_WIDTHD" = "17"
+Info (12130): Elaborated megafunction instantiation "DOWNSAMPLER:dsample|lpm_divide:Div2" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 137
+Info (12133): Instantiated megafunction "DOWNSAMPLER:dsample|lpm_divide:Div2" with the following parameter: File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DOWNSAMPLER.v Line: 137
+    Info (12134): Parameter "LPM_WIDTHN" = "16"
+    Info (12134): Parameter "LPM_WIDTHD" = "8"
     Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
     Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
-Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_hkm.tdf
-    Info (12023): Found entity 1: lpm_divide_hkm File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_hkm.tdf Line: 24
-Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_9nh.tdf
-    Info (12023): Found entity 1: sign_div_unsign_9nh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_9nh.tdf Line: 24
-Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_6af.tdf
-    Info (12023): Found entity 1: alt_u_div_6af File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_6af.tdf Line: 26
-Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_7pc.tdf
-    Info (12023): Found entity 1: add_sub_7pc File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_7pc.tdf Line: 22
-Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_8pc.tdf
-    Info (12023): Found entity 1: add_sub_8pc File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/add_sub_8pc.tdf Line: 22
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_6jm.tdf
+    Info (12023): Found entity 1: lpm_divide_6jm File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/lpm_divide_6jm.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_ulh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_ulh File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/sign_div_unsign_ulh.tdf Line: 24
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_g7f.tdf
+    Info (12023): Found entity 1: alt_u_div_g7f File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/db/alt_u_div_g7f.tdf Line: 26
 Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "GPIO_0_D[0]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
     Warning (13410): Pin "GPIO_0_D[1]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
@@ -1310,14 +1469,8 @@ Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "GPIO_0_D[30]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
     Warning (13410): Pin "GPIO_0_D[31]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
     Warning (13410): Pin "GPIO_0_D[32]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 30
-    Warning (13410): Pin "LED[0]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
     Warning (13410): Pin "LED[1]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
-    Warning (13410): Pin "LED[2]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
-    Warning (13410): Pin "LED[3]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
     Warning (13410): Pin "LED[4]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
-    Warning (13410): Pin "LED[5]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
-    Warning (13410): Pin "LED[6]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
-    Warning (13410): Pin "LED[7]" is stuck at GND File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 36
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 8 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.map.smsg
@@ -1331,17 +1484,17 @@ Warning (21074): Design contains 6 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "GPIO_1_D[29]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 32
     Warning (15610): No output dependent on input pin "GPIO_1_D[32]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 32
     Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/Joseph Primmer/Documents/Cornell/ECE3400/ece3400/src/lab4verilog/Lab4_FPGA_Template/DE0_NANO.v Line: 33
-Info (21057): Implemented 567 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1697 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 17 input pins
     Info (21059): Implemented 42 output pins
-    Info (21061): Implemented 475 logic cells
+    Info (21061): Implemented 1605 logic cells
     Info (21064): Implemented 32 RAM segments
     Info (21065): Implemented 1 PLLs
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 66 warnings
-    Info: Peak virtual memory: 694 megabytes
-    Info: Processing ended: Sun Nov 18 08:47:03 2018
-    Info: Elapsed time: 00:00:20
-    Info: Total CPU time (on all processors): 00:00:39
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 61 warnings
+    Info: Peak virtual memory: 704 megabytes
+    Info: Processing ended: Sun Nov 18 15:36:05 2018
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:45
 
 
 +------------------------------------------+

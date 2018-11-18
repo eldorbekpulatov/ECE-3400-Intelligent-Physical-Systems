@@ -135,7 +135,7 @@ IMAGE_PROCESSOR proc(
 	.VGA_VSYNC_NEG(VGA_VSYNC_NEG),
 	.RESULT(RESULT)
 );
-assign LED = RESULT;
+
 
 ///////* Downsampler *///////////
 wire [7:0] ledavg;
@@ -149,11 +149,11 @@ DOWNSAMPLER dsample(
 	.RAM_ADDR(WRITE_ADDRESS), //which RAM address to write data to [14:0]
 	.DATA_2_RAM(), //what data to write to ram [7:0]
 	.CV_2_RAM(),
-	.CV_3_RAM(pixel_data_RGB332),
-	.CV_4_RAM(),
+	.CV_3_RAM(),
+	.CV_4_RAM(pixel_data_RGB332),
 	.LEDAVG(ledavg)
 );
-
+assign LED = ledavg;
 //assign pixel_data_RGB332 = (edges === 8'b0) ? pic : edges;
 
 
