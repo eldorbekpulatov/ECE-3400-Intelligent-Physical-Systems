@@ -321,13 +321,6 @@ boolean followLine(){
   int rightLine = analogRead(rightSensorPin);
   int leftLine = analogRead(leftSensorPin);
   if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
-<<<<<<< HEAD
-=======
-    // TODO: possibly stop moving to give time to make decisions
-    // mapMaze();
-//    delay(180);
-//    stopMoving();
->>>>>>> 2e8b185689b2bbf8a32795a27e544e168720dbfe
     return true; // Intersection encountered
   } else if(sampleRobotDetect()){
     stopMoving(); //Stand still if a robot is seen
