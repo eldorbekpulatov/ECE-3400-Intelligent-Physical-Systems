@@ -46,12 +46,14 @@ int posY = 0; // col
  */
 int orientation = 2;
 
+
 void setup() {
   Serial.begin(115200);
   setupMotors();
   setupWallSensors();
   setupRadio();
   resetMaze();
+
 }
 
 void loop() {
@@ -112,6 +114,27 @@ void resetMaze() {
 }
 
 /**** MAZE TRAVERSAL ****/
+/*
+ * stack path = {};
+ * stack gen = {x};
+ * while gen !empty {
+ *    u = gen.pop();
+ *    if u !visited{
+ *      u.visit();
+ *      path.push(~dir);
+ *      
+ *      for each neightbor:
+ *        stack.push(each);
+ *    }
+ *    while u !directNeighbor (currentX,Y){
+ *      path.pop();
+ *      backprop();
+ *    }
+ * }
+ *  
+ * 
+ */
+
 
 /* Circles maze by keeping right hand on wall */
 void rightHandFollow(){
