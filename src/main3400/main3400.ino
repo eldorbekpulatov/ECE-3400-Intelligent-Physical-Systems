@@ -216,11 +216,11 @@ int getDirection(Coordinate c){
   return dir;
 }
 
-int negateDirection(byte d){
+int negateDirection(int d){
   return (d+2)%4;
 }
 
-Coordinate getNeighbor(byte select){
+Coordinate getNeighbor(int select){
   if (select == 0){
     return Coordinate(posX-1, posY);
   }else if(select == 1){
@@ -431,16 +431,17 @@ void dfs(){
     
     while(!isDirectNeighbor(u)){
       // pop the last ~move, and execute ~move
-      byte dir = path.pop();
+      int dir = path.pop();
       goToDir(dir);  
-      Serial.println(posX); //
     }
 
     if(!isVisited(u)){
       // get relative direction go there and update path
-      byte dir = getDirection(u);
+      int dir = getDirection(u);
       goToDir(dir);
+      // update the maze/set explored
       mapMaze();
+      // add ~dir to our path stack
       path.push(negateDirection(dir));
     }
 
