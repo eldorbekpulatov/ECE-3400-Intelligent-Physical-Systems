@@ -34,8 +34,9 @@ RF24 radio(9, 10); // CE, CSN
 long long address = 0x0000000068LL;
 
 byte maze[9][9];
+
 /* Robot starts in top left square of map, facing south */
-int posX = 0; // row
+int posX = -1; // row
 int posY = 0; // col
 
 /* Robot's orientation
@@ -46,25 +47,86 @@ int posY = 0; // col
  */
 int orientation = 2;
 
+/************* CLASSES ***************/
+struct Coordinate{
+    Coordinate(int x, int y){this->x = x; this->y = y;}
+    int x, y;
+};
 
+class Stack{
+  public:
+   void push(Coordinate c){
+    stack_x[i] = c.x;
+    stack_y[i] = c.y;
+    i = i+1;
+   }
+
+   Coordinate pop(){
+    i = i-1;
+    return Coordinate(stack_x[i], stack_y[i]);
+   }
+
+   Coordinate peep(){
+    return Coordinate(stack_x[i-1], stack_y[i-1]);
+   }
+   
+   bool isEmpty(){
+    return i==0;
+   }
+
+  private:
+    byte stack_x [50];
+    byte stack_y [50];
+    byte i = 0;
+};
+
+
+class StackPath{
+  public:
+   void push(byte x){
+    stack[i] = x;
+    i = i+1;
+   }
+
+   byte pop(){
+    i = i-1;
+    return stack[i];
+   }
+
+   byte peep(){ 
+    return stack[i-1];
+   }
+   
+   boolean isEmpty(){
+    return i==0;
+   }
+
+  private:
+    byte stack [81] = {};
+    byte i = 0;
+};
+
+/*********** MAIN ***************/
 void setup() {
   Serial.begin(115200);
   setupMotors();
   setupWallSensors();
   setupRadio();
   resetMaze();
-
+  
 }
 
 void loop() {
   stopMoving();
-  while(!startSignalDetected()){}
-  while(true) {
-    rightHandFollow();
-  }
+  while(!startSignalDetected()){} // Do not move untill signal detected
+  
+  //explicitly test unit steps
+  goToDir(2);
+
+//  dfs();
 }
 
-/**** SET UP ****/
+/*************** SET UP ****************/
 
 /* Sets up left and right motors for movement*/
 void setupMotors() {
@@ -94,7 +156,7 @@ void resetMaze() {
    * INFORMATION ENCODING FOR MAZE MAPPING
    * 1 Byte, x, is used to map information for each square
    * x[7:4] = North, East, South, West Wall detected
-   *  x[3]  = Explored
+   * x[3]   = Explored
    * x[2:0] = Treasure encoding
    *      000 - undefined
    *      001 - red square
@@ -113,50 +175,145 @@ void resetMaze() {
   }
 }
 
+
+
 /**** MAZE TRAVERSAL ****/
-/*
- * stack path = {};
- * stack gen = {x};
- * while gen !empty {
- *    u = gen.pop();
- *    if u !visited{
- *      u.visit();
- *      path.push(~dir);
- *      
- *      for each neightbor:
- *        stack.push(each);
- *    }
- *    while u !directNeighbor (currentX,Y){
- *      path.pop();
- *      backprop();
- *    }
- * }
- *  
- * 
- */
 
-
-/* Circles maze by keeping right hand on wall */
-void rightHandFollow(){
-  while(!followLine()){} // Keep moving straight until intersection is reached
-    if(canTurnRight()){
-      Serial.println("turn right");
-      turnRight();
-    } else if(canMoveStraight()){
-      leftWheel.write(130);
-      rightWheel.write(40);
-      delay(200);
-      Serial.println("straight");
-    } else if(canTurnLeft()){
-      Serial.println("turn left");
-      turnLeft();
-    } else {
-      Serial.println("turn aroud");
-      turnAround();
-    }
-    //updatePos();
-  //}
+bool isDirectNeighbor(Coordinate c){
+  if ((posX == c.x) && (abs(abs(c.y) - abs(posY)) == 1)){
+    return true;
+  }else if ((posY == c.y) && (abs(abs(c.x) - abs(posX)) == 1)){
+    return true;
+  }else{
+    return false;
+  }
 }
+
+bool isVisited(Coordinate c)
+{
+  if ((c.y < 9 && c.y > -1) && (c.x < 9 && c.x > -1)){
+    return !((maze[c.x][c.y] | 0b11110111) ^ 0b11111111);
+  }else{
+    return true;
+  }
+};
+
+int getDirection(Coordinate c){
+  int dir;
+  if (posX == c.x){
+    if (posY > c.y){
+      dir = 3;
+    }else{
+      dir = 1;
+    }
+  }else{
+    if (posX > c.x){
+      dir = 0;
+    }else{
+      dir = 2;
+    }
+  }
+  return dir;
+}
+
+int negateDirection(byte d){
+  return (d+2)%4;
+}
+
+Coordinate getNeighbor(byte select){
+  if (select == 0){
+    return Coordinate(posX-1, posY);
+  }else if(select == 1){
+    return Coordinate(posX, posY+1);
+  }else if(select == 2){
+    return Coordinate(posX+1, posY);
+  }else{
+    return Coordinate(posX, posY-1);
+  }
+}
+
+Coordinate getFrontNeighbor(){
+  return getNeighbor(orientation); 
+}
+Coordinate getRightNeighbor(){
+  return getNeighbor(orientation+1);
+}
+Coordinate getBackNeighbor(){
+  return getNeighbor(orientation-2); 
+}
+Coordinate getLeftNeighbor(){
+  return getNeighbor(orientation-1); 
+}
+
+
+/**** MOVEMEMENT ****/
+/* Follows the line and returns true when intersection found and false otherwise*/
+boolean followLine(){
+  int rightLine = analogRead(rightSensorPin);
+  int leftLine = analogRead(leftSensorPin);
+  if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
+    return true; // Intersection encountered
+  } else if(sampleRobotDetect()){
+    stopMoving(); //Stand still if a robot is seen
+  }
+  else if(leftLine < lineSensorThreshold) {
+    // Left sensor white
+    rightWheel.write(90); //nudge left
+    leftWheel.write(130);
+  } else if(rightLine < lineSensorThreshold) {
+    // Right sensor white
+    rightWheel.write(50); //nudge right
+    leftWheel.write(90);
+  } else {
+    // Both sensors black
+    leftWheel.write(130);
+    rightWheel.write(40);
+  }
+  return false;
+}
+
+/* Stops servo motors */
+void stopMoving(){
+  rightWheel.write(90);
+  leftWheel.write(90);
+}
+
+/* Turns 180 degrees */
+void turnAround(){
+  leftWheel.write(135);
+  rightWheel.write(135);
+  delay(800);
+  int rightLine = analogRead(rightSensorPin);
+  while(rightLine > lineSensorThreshold){
+    rightLine = analogRead(rightSensorPin);
+  }
+}
+
+/* Turns right */
+void turnRight(){
+  delay(100);
+  leftWheel.write(130);
+  rightWheel.write(90);
+  delay(800);
+  int rightLine = analogRead(rightSensorPin);
+  while(rightLine > lineSensorThreshold){
+    rightLine = analogRead(rightSensorPin);
+  }
+}
+
+/* Turns left */
+void turnLeft(){
+  delay(100);
+  leftWheel.write(90);
+  rightWheel.write(40);
+  delay(800);
+  int leftLine = analogRead(leftSensorPin);
+  while(leftLine > lineSensorThreshold){
+    leftLine = analogRead(leftSensorPin);
+  }
+}
+
+/************ STEP MOVEMENTS **************/
 
 /* Updates robot's position in maze */
 void updatePos(){
@@ -179,16 +336,141 @@ void updatePos(){
 }
 
 /* Updates robot's orientation in maze 
-   param turn: 0 if turned left, 1 if turned right.
+   param turn: 0 if straight, 1 if turned right, 2 if turned back, 3 if turned left
 */
 void updateOrientation(int turn){
-  if(turn){ //Turned right
+  if(turn == 1){ //Turned right
     orientation = (orientation + 1) % 4;
-  } else {
+  } else if(turn == 2){ //Turned back
+    orientation = (orientation+2)%4;
+  }else if (turn == 3){ //Turned left
     orientation--;
     if (orientation == -1){
       orientation = 3;
     }
+  } 
+  // Went straight
+}
+
+
+void goStraight(){
+  leftWheel.write(130);
+  rightWheel.write(40);
+  delay(400);
+  updateOrientation(0); //went straight
+  while(!followLine()){} // Keep moving straight until intersection is reached
+  stopMoving();
+}
+
+void goLeft(){
+  turnLeft();
+  updateOrientation(3); //turned left
+  while(!followLine()){}; // Keep moving straight until intersection is reached
+  stopMoving();
+}
+void goRight(){
+  turnRight();
+  updateOrientation(1); //turned right
+  while(!followLine()){}; // Keep moving straight until intersection is reached
+  stopMoving();
+}
+void goBack(){
+  turnAround();
+  updateOrientation(2); //turned back
+  while(!followLine()){}; // Keep moving straight until intersection is reached
+  stopMoving();
+}
+
+
+void goToDir(int dir){
+  int rem = dir - orientation;
+  switch(rem){
+    case -1: goLeft(); break;
+    case 0: goStraight(); break;
+    case 1: goRight(); break;
+    case 2: goBack(); break;
+    case 3: goLeft(); break; 
+  }
+  updatePos();
+}
+
+/********* DFS ************/
+/*
+ * stack path = {};
+ * stack gen = {x};
+ * while gen !empty {
+ *    u = gen.pop();
+ *    
+ *    while u !directNeighbor (currentX,Y){
+ *      path.pop();
+ *      backprop();
+ *    }
+ *    
+ *    if(!isVisited(u)){
+ *      u.visit();
+ *      path.push(~dir);
+ *      mapMaze();
+ *    }
+ *      
+ *    for each neightbor of u {
+ *      if each !visited{
+ *        gen.push(each);
+ *      }
+ *    }
+ * }
+ */
+
+void dfs(){
+  StackPath path;
+  
+  Stack s;
+  s.push(Coordinate(0,0));
+  
+  while(!s.isEmpty()){
+    Coordinate u = s.pop();
+    
+    while(!isDirectNeighbor(u)){
+      // pop the last ~move, and execute ~move
+      byte dir = path.pop();
+      goToDir(dir);  
+      Serial.println(posX); //
+    }
+
+    if(!isVisited(u)){
+      // get relative direction go there and update path
+      byte dir = getDirection(u);
+      goToDir(dir);
+      mapMaze();
+      path.push(negateDirection(dir));
+    }
+
+    // For all neighbors, if not visited push to stack
+    Coordinate neighbor = getBackNeighbor();
+    if(!isVisited(neighbor)){
+        s.push(neighbor);
+    }
+    
+    if (canTurnLeft()){
+      neighbor = getLeftNeighbor();
+      if(!isVisited(neighbor)){
+        s.push(neighbor);
+      }
+    }
+
+    if (canTurnRight()){
+      neighbor = getRightNeighbor();
+      if(!isVisited(neighbor)){
+        s.push(neighbor);
+      }
+    }
+    
+    if (canMoveStraight()){
+      neighbor = getFrontNeighbor();
+      if(!isVisited(neighbor)){
+        s.push(neighbor);
+      }
+    }
+    
   }
 }
 
@@ -248,7 +530,6 @@ void mapMaze(){
   }
   // Update neighbor squares if possible
   // TODO: Is it necessary?
-  // TODO:
 
   // TODO: Fix treasure
   squareInfo = squareInfo & 0b11111000; //Resets last three bits
@@ -258,8 +539,8 @@ void mapMaze(){
   transmitMsg();
 }
 
-/**** GENERAL ****/
 
+/**** GENERAL ****/
 /* Returns true if start whistle detected */
 int samples[FIRwindowSize];
 int sIndex = 0;
@@ -293,78 +574,7 @@ void transmitMsg(){
   radio.write(msg, 3);
 }
 
-/**** MOVEMEMENT ****/
-
-/* Stops servo motors */
-void stopMoving(){
-  rightWheel.write(90);
-  leftWheel.write(90);
-}
-
-/* Turns 180 degrees */
-void turnAround(){
-  //updateOrientation(1);
-  leftWheel.write(135);
-  rightWheel.write(135);
-  delay(800);
-  int rightLine = analogRead(rightSensorPin);
-  while(rightLine > lineSensorThreshold){
-    rightLine = analogRead(rightSensorPin);
-  }
-}
-
-/* Turns right */
-void turnRight(){
-  //updateOrientation(1);
-  delay(100);
-  leftWheel.write(130);
-  rightWheel.write(90);
-  delay(800);
-  int rightLine = analogRead(rightSensorPin);
-  while(rightLine > lineSensorThreshold){
-    rightLine = analogRead(rightSensorPin);
-  }
-}
-
-/* Turns left */
-void turnLeft(){
-  //updateOrientation(0);
-  delay(100);
-  leftWheel.write(90);
-  rightWheel.write(40);
-  delay(800);
-  int leftLine = analogRead(leftSensorPin);
-  while(leftLine > lineSensorThreshold){
-    leftLine = analogRead(leftSensorPin);
-  }
-}
-
-/* Follows the line and returns true when intersection found and false otherwise*/
-boolean followLine(){
-  int rightLine = analogRead(rightSensorPin);
-  int leftLine = analogRead(leftSensorPin);
-  if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
-    return true; // Intersection encountered
-  } else if(sampleRobotDetect()){
-    stopMoving(); //Stand still if a robot is seen
-  }
-  else if(leftLine < lineSensorThreshold) {
-    // Left sensor white
-    rightWheel.write(90); //nudge left
-    leftWheel.write(130);
-  } else if(rightLine < lineSensorThreshold) {
-    // Right sensor white
-    rightWheel.write(50); //nudge right
-    leftWheel.write(90);
-  } else {
-    // Both sensors black
-    leftWheel.write(130);
-    rightWheel.write(40);
-  }
-  return false;
-}
-
-/**** SENSORS ****/
+/*********** SENSORS **********/
 
 boolean canTurnRight() {
   return !digitalRead(rightWall);
