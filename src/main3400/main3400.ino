@@ -34,6 +34,7 @@ RF24 radio(9, 10); // CE, CSN
 long long address = 0x0000000068LL;
 
 byte maze[9][9];
+bool onStack [9][9];
 
 /* Robot starts in top left square of map, facing south */
 int posX = -1; // row
@@ -59,25 +60,36 @@ class Stack{
     stack_x[i] = c.x;
     stack_y[i] = c.y;
     i = i+1;
+    onStack[c.x][c.y] = 1;
    }
 
    Coordinate pop(){
-    i = i-1;
-    return Coordinate(stack_x[i], stack_y[i]);
+    if(i>0){
+      i = i-1;
+      onStack[stack_x[i]][stack_y[i]] = 0;
+      return Coordinate(stack_x[i], stack_y[i]);
+    }
    }
 
    Coordinate peep(){
-    return Coordinate(stack_x[i-1], stack_y[i-1]);
+    if (i>0){
+      return Coordinate(stack_x[i-1], stack_y[i-1]);
+    }
    }
    
    bool isEmpty(){
-    return i==0;
+    return i<1;
+   }
+
+   byte isOnStack(Coordinate c){
+    // -1 < c.x < 9 && -1 < c.y < 9
+    return onStack[c.x][c.y] == true;
    }
 
   private:
     byte stack_x [50];
     byte stack_y [50];
-    byte i = 0;
+    byte i = 0; 
 };
 
 
@@ -89,13 +101,15 @@ class StackPath{
    }
 
    byte pop(){
-    i = i-1;
-    return stack[i];
-   }
+    if (!this->isEmpty()){
+      i = i-1;
+      return stack[i];
+   }}
 
    byte peep(){ 
-    return stack[i-1];
-   }
+    if (!this->isEmpty()){
+      return stack[i-1];
+   }}
    
    boolean isEmpty(){
     return i==0;
@@ -114,16 +128,22 @@ void setup() {
   setupRadio();
   resetMaze();
   
+  stopMoving();
+  dfs();
+  stopMoving();
+//  Stack s;
+//  Serial.println(s.isOnStack(Coordinate(0,1)));
+//  s.push(Coordinate(0,1));
+//  Serial.println(s.isOnStack(Coordinate(0,1)));
+//  s.pop();
+//  Serial.println(s.isEmpty());
+//  Serial.println(s.isOnStack(Coordinate(0,1)));
 }
 
 void loop() {
-  stopMoving();
-  while(!startSignalDetected()){} // Do not move untill signal detected
-  
-  //explicitly test unit steps
-  goToDir(2);
+//  stopMoving();
+//  while(!startSignalDetected()){} // Do not move untill signal detected
 
-//  dfs();
 }
 
 /*************** SET UP ****************/
@@ -356,7 +376,7 @@ void updateOrientation(int turn){
 void goStraight(){
   leftWheel.write(130);
   rightWheel.write(40);
-  delay(400);
+  delay(200);
   updateOrientation(0); //went straight
   while(!followLine()){} // Keep moving straight until intersection is reached
   stopMoving();
@@ -385,6 +405,8 @@ void goBack(){
 void goToDir(int dir){
   int rem = dir - orientation;
   switch(rem){
+    case -3: goRight(); break;
+    case -2: goBack(); break;
     case -1: goLeft(); break;
     case 0: goStraight(); break;
     case 1: goRight(); break;
@@ -413,7 +435,7 @@ void goToDir(int dir){
  *    }
  *      
  *    for each neightbor of u {
- *      if each !visited{
+ *      if each !visited && !onStack{
  *        gen.push(each);
  *      }
  *    }
@@ -428,7 +450,10 @@ void dfs(){
   
   while(!s.isEmpty()){
     Coordinate u = s.pop();
-    
+    Serial.print(u.x);
+    Serial.print(",");
+    Serial.print(u.y);
+    Serial.println("");
     while(!isDirectNeighbor(u)){
       // pop the last ~move, and execute ~move
       int dir = path.pop();
@@ -445,30 +470,56 @@ void dfs(){
       path.push(negateDirection(dir));
     }
 
-    // For all neighbors, if not visited push to stack
+    // For all neighbors, if not visited && not on stack, push to stack
+    // back maybe shouldt be aded ??
     Coordinate neighbor = getBackNeighbor();
-    if(!isVisited(neighbor)){
+
+    if(!isVisited(neighbor) ){
+//      Serial.println("back !visited");
+//      Serial.println(s.isOnStack(neighbor));
+      if(!s.isOnStack(neighbor)){
+//        Serial.println("back !isONStack");
         s.push(neighbor);
+//        Serial.println("added Back");
+      } 
     }
     
     if (canTurnLeft()){
       neighbor = getLeftNeighbor();
-      if(!isVisited(neighbor)){
-        s.push(neighbor);
+      if(!isVisited(neighbor) ){
+//        Serial.println("left !visited");
+//        Serial.println(s.isOnStack(neighbor));
+        if(!s.isOnStack(neighbor)){
+//          Serial.println("left !isONStack");
+          s.push(neighbor);
+//          Serial.println("added left");
+        } 
       }
     }
 
     if (canTurnRight()){
       neighbor = getRightNeighbor();
-      if(!isVisited(neighbor)){
-        s.push(neighbor);
+      if(!isVisited(neighbor) ){
+//        Serial.println("right !visited");
+//        Serial.println(s.isOnStack(neighbor));
+        if(!s.isOnStack(neighbor)){
+//          Serial.println("right !isONStack");
+          s.push(neighbor);
+//          Serial.println("added right");
+        } 
       }
     }
     
     if (canMoveStraight()){
       neighbor = getFrontNeighbor();
-      if(!isVisited(neighbor)){
-        s.push(neighbor);
+      if(!isVisited(neighbor) ){
+//        Serial.println("straight !visited");
+//        Serial.println(s.isOnStack(neighbor));
+        if(!s.isOnStack(neighbor)){
+//          Serial.println("straight !isONStack");
+          s.push(neighbor);
+//          Serial.println("added straight");
+        } 
       }
     }
     
