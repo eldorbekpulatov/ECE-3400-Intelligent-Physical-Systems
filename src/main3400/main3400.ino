@@ -142,9 +142,8 @@ void setup() {
   resetMaze();
   
   stopMoving();
-  delay(1000);
+  delay(3000);
   dfs();
-
 }
 
 void loop() {
@@ -204,6 +203,17 @@ void resetMaze() {
 
 
 /**** MAZE TRAVERSAL ****/
+bool canGoDir(byte dir){
+  int rem = dir - orientation;
+  switch(rem){
+    case -3: canTurnRight(); break;
+    case -1: canTurnLeft(); break;
+    case 0: canMoveStraight; break;
+    case 1: canTurnRight(); break;
+    case 3: canTurnLeft(); break; 
+    default: break;
+  }
+}
 
 bool isDirectNeighbor(Coordinate c){
   if ((posX == c.x) && (abs(abs(c.y) - abs(posY)) == 1)){
@@ -405,13 +415,13 @@ void goToDir(int dir){
   updatePos();
 }
 
-void processNeighbor(Stack s, Coordinate neighbor){
+void processNeighbor(Stack* s, Coordinate neighbor){
   //if not visited: if not on stack: push to stack -> buubleUp 
   if(!isVisited(neighbor)){
-      if(!s.isOnStack(neighbor)){
-        s.push(neighbor);
+      if(!s->isOnStack(neighbor)){
+        s->push(neighbor);
       }else{
-        s.bubbleUp(neighbor); 
+        s->bubbleUp(neighbor); 
       } 
    }
 }
@@ -454,7 +464,7 @@ void dfs(){
   while(!s.isEmpty()){
     Coordinate u = s.pop();
     
-    while(!isDirectNeighbor(u)){
+    while(!isDirectNeighbor(u) && !canGoDir(getDirection(u))){
       int dir = path.pop();
       goToDir(dir);  
     }
@@ -465,20 +475,20 @@ void dfs(){
       path.push(negateDirection(dir));
       mapMaze();
     }
-
+    
     // For all neighbors, process them
-    processNeighbor(s, getBackNeighbor()); //maybe not needed
+    processNeighbor(&s, getBackNeighbor()); //maybe not needed
     
     if (canTurnLeft()){
-      processNeighbor(s, getLeftNeighbor());
+      processNeighbor(&s, getLeftNeighbor());
     }
 
     if (canTurnRight()){
-      processNeighbor(s, getRightNeighbor());
+      processNeighbor(&s, getRightNeighbor());
     }
     
     if (canMoveStraight()){
-      processNeighbor(s, getFrontNeighbor());
+      processNeighbor(&s, getFrontNeighbor());
     }
     
   }
