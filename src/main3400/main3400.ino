@@ -86,6 +86,21 @@ class Stack{
     return onStack[c.x][c.y] == true;
    }
 
+  void bubbleUp(Coordinate c){
+    for(int j=0; j<i-1; j++){
+      if((stack_x[j] == c.x) && (stack_y[j] == c.y)){
+        // swap
+        int tx, ty;
+        tx = stack_x[j];
+        ty = stack_y[j];
+        stack_x[j] = stack_x[j+1];
+        stack_y[j] = stack_y[j+1];
+        stack_x[j+1] = tx;
+        stack_y[j+1] = ty;
+      }
+    }
+  }
+  
   private:
     byte stack_x [50];
     byte stack_y [50];
@@ -131,13 +146,7 @@ void setup() {
   stopMoving();
   dfs();
   stopMoving();
-//  Stack s;
-//  Serial.println(s.isOnStack(Coordinate(0,1)));
-//  s.push(Coordinate(0,1));
-//  Serial.println(s.isOnStack(Coordinate(0,1)));
-//  s.pop();
-//  Serial.println(s.isEmpty());
-//  Serial.println(s.isOnStack(Coordinate(0,1)));
+
 }
 
 void loop() {
@@ -401,7 +410,6 @@ void goBack(){
   stopMoving();
 }
 
-
 void goToDir(int dir){
   int rem = dir - orientation;
   switch(rem){
@@ -414,6 +422,17 @@ void goToDir(int dir){
     case 3: goLeft(); break; 
   }
   updatePos();
+}
+
+void processNeighbor(Stack s, Coordinate neighbor){
+  //if not visited -> not on stack, push to stack, else buubleUp 
+  if(!isVisited(neighbor)){
+      if(!s.isOnStack(neighbor)){
+        s.push(neighbor);
+      }else{
+        s.bubbleUp(neighbor); 
+      } 
+   }
 }
 
 /********* DFS ************/
@@ -450,10 +469,7 @@ void dfs(){
   
   while(!s.isEmpty()){
     Coordinate u = s.pop();
-    Serial.print(u.x);
-    Serial.print(",");
-    Serial.print(u.y);
-    Serial.println("");
+    
     while(!isDirectNeighbor(u)){
       // pop the last ~move, and execute ~move
       int dir = path.pop();
@@ -470,57 +486,23 @@ void dfs(){
       path.push(negateDirection(dir));
     }
 
-    // For all neighbors, if not visited && not on stack, push to stack
-    // back maybe shouldt be aded ??
+    // For all neighbors, process them
     Coordinate neighbor = getBackNeighbor();
-
-    if(!isVisited(neighbor) ){
-//      Serial.println("back !visited");
-//      Serial.println(s.isOnStack(neighbor));
-      if(!s.isOnStack(neighbor)){
-//        Serial.println("back !isONStack");
-        s.push(neighbor);
-//        Serial.println("added Back");
-      } 
-    }
+    processNeighbor(s, neighbor);
     
     if (canTurnLeft()){
       neighbor = getLeftNeighbor();
-      if(!isVisited(neighbor) ){
-//        Serial.println("left !visited");
-//        Serial.println(s.isOnStack(neighbor));
-        if(!s.isOnStack(neighbor)){
-//          Serial.println("left !isONStack");
-          s.push(neighbor);
-//          Serial.println("added left");
-        } 
-      }
+      processNeighbor(s, neighbor);
     }
 
     if (canTurnRight()){
       neighbor = getRightNeighbor();
-      if(!isVisited(neighbor) ){
-//        Serial.println("right !visited");
-//        Serial.println(s.isOnStack(neighbor));
-        if(!s.isOnStack(neighbor)){
-//          Serial.println("right !isONStack");
-          s.push(neighbor);
-//          Serial.println("added right");
-        } 
-      }
+      processNeighbor(s, neighbor);
     }
     
     if (canMoveStraight()){
       neighbor = getFrontNeighbor();
-      if(!isVisited(neighbor) ){
-//        Serial.println("straight !visited");
-//        Serial.println(s.isOnStack(neighbor));
-        if(!s.isOnStack(neighbor)){
-//          Serial.println("straight !isONStack");
-          s.push(neighbor);
-//          Serial.println("added straight");
-        } 
-      }
+      processNeighbor(s, neighbor);
     }
     
   }
