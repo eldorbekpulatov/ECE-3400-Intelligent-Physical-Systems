@@ -59,23 +59,21 @@ class Stack{
    void push(Coordinate c){
     stack_x[i] = c.x;
     stack_y[i] = c.y;
+    onStack[c.x][c.y] = true;
     i = i+1;
-    onStack[c.x][c.y] = 1;
    }
 
    Coordinate pop(){
     if(i>0){
       i = i-1;
-      onStack[stack_x[i]][stack_y[i]] = 0;
+      onStack[stack_x[i]][stack_y[i]] = false;
       return Coordinate(stack_x[i], stack_y[i]);
-    }
-   }
+    }}
 
    Coordinate peep(){
     if (i>0){
       return Coordinate(stack_x[i-1], stack_y[i-1]);
-    }
-   }
+    }}
    
    bool isEmpty(){
     return i<1;
@@ -90,7 +88,7 @@ class Stack{
     for(int j=0; j<i-1; j++){
       if((stack_x[j] == c.x) && (stack_y[j] == c.y)){
         // swap
-        int tx, ty;
+        byte tx, ty;
         tx = stack_x[j];
         ty = stack_y[j];
         stack_x[j] = stack_x[j+1];
@@ -116,18 +114,18 @@ class StackPath{
    }
 
    byte pop(){
-    if (!this->isEmpty()){
+    if (i>0){
       i = i-1;
       return stack[i];
    }}
 
    byte peep(){ 
-    if (!this->isEmpty()){
+    if (i>0){
       return stack[i-1];
    }}
    
    boolean isEmpty(){
-    return i==0;
+    return i == 0;
    }
 
   private:
@@ -144,15 +142,14 @@ void setup() {
   resetMaze();
   
   stopMoving();
+  delay(1000);
   dfs();
-  stopMoving();
 
 }
 
 void loop() {
 //  stopMoving();
 //  while(!startSignalDetected()){} // Do not move untill signal detected
-
 }
 
 /*************** SET UP ****************/
@@ -218,29 +215,20 @@ bool isDirectNeighbor(Coordinate c){
   }
 }
 
-bool isVisited(Coordinate c)
-{
+bool isVisited(Coordinate c){
   if ((c.y < 9 && c.y > -1) && (c.x < 9 && c.x > -1)){
     return !((maze[c.x][c.y] | 0b11110111) ^ 0b11111111);
-  }else{
-    return true;
-  }
-};
+  }else{ return true; }
+}
 
 int getDirection(Coordinate c){
   int dir;
   if (posX == c.x){
-    if (posY > c.y){
-      dir = 3;
-    }else{
-      dir = 1;
-    }
+    if (posY > c.y){ dir = 3; }
+    else{ dir = 1; }
   }else{
-    if (posX > c.x){
-      dir = 0;
-    }else{
-      dir = 2;
-    }
+    if (posX > c.x){ dir = 0; }
+    else{ dir = 2;}
   }
   return dir;
 }
@@ -347,27 +335,20 @@ void turnLeft(){
 /* Updates robot's position in maze */
 void updatePos(){
   switch (orientation) {
-    case 0:
-      posX--;
-      break;
-    case 1:
-      posY++;
-      break;
-    case 2:
-      posX++;
-      break;
-    case 3:
-      posY--;
-      break;
-    default:
-      break;
+    case 0: posX--; break;
+    case 1: posY++; break;
+    case 2: posX++; break;
+    case 3: posY--; break;
+    default: break;
   }
 }
 
 /* Updates robot's orientation in maze 
-   param turn: 0 if straight, 1 if turned right, 2 if turned back, 3 if turned left
-*/
+ *  param turn: 0 if straight, 1 if turned right, 
+ *              2 if turned back, 3 if turned left
+ */
 void updateOrientation(int turn){
+  // dont update orientation if went straight
   if(turn == 1){ //Turned right
     orientation = (orientation + 1) % 4;
   } else if(turn == 2){ //Turned back
@@ -378,7 +359,6 @@ void updateOrientation(int turn){
       orientation = 3;
     }
   } 
-  // Went straight
 }
 
 
@@ -387,26 +367,26 @@ void goStraight(){
   rightWheel.write(40);
   delay(200);
   updateOrientation(0); //went straight
-  while(!followLine()){} // Keep moving straight until intersection is reached
+  while(!followLine()){} 
   stopMoving();
 }
 
 void goLeft(){
   turnLeft();
   updateOrientation(3); //turned left
-  while(!followLine()){}; // Keep moving straight until intersection is reached
+  while(!followLine()){}; 
   stopMoving();
 }
 void goRight(){
   turnRight();
   updateOrientation(1); //turned right
-  while(!followLine()){}; // Keep moving straight until intersection is reached
+  while(!followLine()){}; 
   stopMoving();
 }
 void goBack(){
   turnAround();
   updateOrientation(2); //turned back
-  while(!followLine()){}; // Keep moving straight until intersection is reached
+  while(!followLine()){}; 
   stopMoving();
 }
 
@@ -420,12 +400,13 @@ void goToDir(int dir){
     case 1: goRight(); break;
     case 2: goBack(); break;
     case 3: goLeft(); break; 
+    default: break;
   }
   updatePos();
 }
 
 void processNeighbor(Stack s, Coordinate neighbor){
-  //if not visited -> not on stack, push to stack, else buubleUp 
+  //if not visited: if not on stack: push to stack -> buubleUp 
   if(!isVisited(neighbor)){
       if(!s.isOnStack(neighbor)){
         s.push(neighbor);
@@ -454,59 +435,56 @@ void processNeighbor(Stack s, Coordinate neighbor){
  *    }
  *      
  *    for each neightbor of u {
- *      if each !visited && !onStack{
- *        gen.push(each);
+ *      if each !visited{ 
+ *        if !onStack{
+ *          gen.push(each);
+ *        }else{
+ *          s.bubbleUp(each)
+ *        }
  *      }
  *    }
  * }
  */
 
 void dfs(){
-  StackPath path;
-  
   Stack s;
   s.push(Coordinate(0,0));
+  StackPath path;
   
   while(!s.isEmpty()){
     Coordinate u = s.pop();
     
     while(!isDirectNeighbor(u)){
-      // pop the last ~move, and execute ~move
       int dir = path.pop();
       goToDir(dir);  
     }
 
     if(!isVisited(u)){
-      // get relative direction go there and update path
       int dir = getDirection(u);
       goToDir(dir);
-      // update the maze/set explored
-      mapMaze();
-      // add ~dir to our path stack
       path.push(negateDirection(dir));
+      mapMaze();
     }
 
     // For all neighbors, process them
-    Coordinate neighbor = getBackNeighbor();
-    processNeighbor(s, neighbor);
+    processNeighbor(s, getBackNeighbor()); //maybe not needed
     
     if (canTurnLeft()){
-      neighbor = getLeftNeighbor();
-      processNeighbor(s, neighbor);
+      processNeighbor(s, getLeftNeighbor());
     }
 
     if (canTurnRight()){
-      neighbor = getRightNeighbor();
-      processNeighbor(s, neighbor);
+      processNeighbor(s, getRightNeighbor());
     }
     
     if (canMoveStraight()){
-      neighbor = getFrontNeighbor();
-      processNeighbor(s, neighbor);
+      processNeighbor(s, getFrontNeighbor());
     }
     
   }
 }
+
+/**************** GENERAL *********************/
 
 /* Creates mapping of current square and sends info to base */
 void mapMaze(){
@@ -566,15 +544,13 @@ void mapMaze(){
   // TODO: Is it necessary?
 
   // TODO: Fix treasure
-  squareInfo = squareInfo & 0b11111000; //Resets last three bits
+  squareInfo = squareInfo & 0b11111000; // Resets last three bits
   squareInfo = squareInfo | 0b1; //Sets last bit to temporarily indicate red square.
 
   maze[posX][posY] = squareInfo;
   transmitMsg();
 }
 
-
-/**** GENERAL ****/
 /* Returns true if start whistle detected */
 int samples[FIRwindowSize];
 int sIndex = 0;
