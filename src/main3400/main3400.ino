@@ -13,8 +13,8 @@
 #include <FFT.h>
 // Radio Libraries
 #include <SPI.h>
-#include <nRF24L01.h>
-#include <RF24.h>
+#include "nRF24L01.h"
+#include "RF24.h"
 
 #define rightSensorPin A0
 #define leftSensorPin A1
@@ -31,7 +31,8 @@ Servo rightWheel;
 Servo leftWheel;
 
 RF24 radio(9, 10); // CE, CSN
-long long address = 0x0000000068LL;
+// Radio pipe addresses for the 2 nodes to communicate.
+const uint64_t pipes[2] = { 0x0000000044LL, 0x0000000045LL };
 
 byte maze[9][9];
 //bool onStack [9][9];
@@ -120,8 +121,21 @@ void setupWallSensors() {
 
 void setupRadio() {
   radio.begin();
-  radio.openWritingPipe(address);
+  // optionally, increase the delay between retries & # of retries
+  radio.setRetries(15,15);
+  radio.setAutoAck(true);
+  // set the channel
+  radio.setChannel(0x50);
+  // set the power
+  // RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MED=-6dBM, and RF24_PA_HIGH=0dBm.
   radio.setPALevel(RF24_PA_HIGH);
+  //RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
+  radio.setDataRate(RF24_250KBPS);
+
+  //SEND CODE (TRANSMIT)
+  radio.openWritingPipe(pipes[0]);
+  radio.openReadingPipe(1,pipes[1]);
+  radio.printDetails();
   radio.stopListening();
 }
 
@@ -478,11 +492,16 @@ boolean startSignalDetected(){
 
 /* Transmits info to base */
 void transmitMsg(){
-  char msg[3];
-  msg[0] = char(posX);
-  msg[1] = char(posY);
-  msg[2] = char(maze[posX][posY]);
-  radio.write(msg, 3);
+  int numTries = 0;
+  bool ok;
+      do{
+        char msg[3];
+        msg[0] = char(posX);
+        msg[1] = char(posY);
+        msg[2] = char(maze[posX][posY]);
+        ok = radio.write(msg, 3);
+        numTries++;
+      }while(!ok && numTries < 10);
 }
 
 /*********** SENSORS **********/
