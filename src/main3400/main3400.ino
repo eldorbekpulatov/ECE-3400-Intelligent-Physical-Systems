@@ -80,8 +80,8 @@ class Stack{
    }
 
   private:
-    byte stack_x [50];
-    byte stack_y [50];
+    byte stack_x [81];
+    byte stack_y [81];
     byte i = 0; 
 };
 
@@ -123,20 +123,20 @@ void setupRadio() {
   radio.begin();
   // optionally, increase the delay between retries & # of retries
   radio.setRetries(15,15);
-  radio.setAutoAck(true);
+  //radio.setAutoAck(true);
   // set the channel
-  radio.setChannel(0x50);
+  //radio.setChannel(0x50);
   // set the power
   // RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MED=-6dBM, and RF24_PA_HIGH=0dBm.
-  radio.setPALevel(RF24_PA_HIGH);
+  //radio.setPALevel(RF24_PA_HIGH);
   //RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
-  radio.setDataRate(RF24_250KBPS);
-
+  //radio.setDataRate(RF24_250KBPS);
+  radio.setPayloadSize(3);
   //SEND CODE (TRANSMIT)
   radio.openWritingPipe(pipes[0]);
   radio.openReadingPipe(1,pipes[1]);
-  radio.printDetails();
-  radio.stopListening();
+  //radio.printDetails();
+  
 }
 
 void resetMaze() {
@@ -460,7 +460,7 @@ void mapMaze(){
 
   // TODO: Fix treasure
   squareInfo = squareInfo & 0b11111000; // Resets last three bits
-  squareInfo = squareInfo | 0b1; //Sets last bit to temporarily indicate red square.
+ // squareInfo = squareInfo | 0b1; //Sets last bit to temporarily indicate red square.
 
   maze[posX][posY] = squareInfo;
   transmitMsg();
@@ -493,15 +493,23 @@ boolean startSignalDetected(){
 /* Transmits info to base */
 void transmitMsg(){
   int numTries = 0;
+  radio.stopListening();
   bool ok;
       do{
+        Serial.print("hey");
+        Serial.println(numTries);
         char msg[3];
         msg[0] = char(posX);
         msg[1] = char(posY);
         msg[2] = char(maze[posX][posY]);
         ok = radio.write(msg, 3);
+        //delay(20);
         numTries++;
-      }while(!ok && numTries < 10);
+      }while(!ok && numTries < 100);
+      if(numTries > 50){
+        delay(10);
+        setupRadio();
+      }
 }
 
 /*********** SENSORS **********/

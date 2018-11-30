@@ -17,13 +17,14 @@ void loop() {
     if ( radio.available() )
     {
       
-      bool done = false;
-      while (!done)
-      {
+//      bool done = false;
+//      while (!done)
+//      {
         // Fetch the payload, and see if this was the last one.
         //done = radio.read( &got_time, sizeof(unsigned long) );
         char text[32] = "";
-        done = radio.read(&text, sizeof(text));
+        radio.read(&text, sizeof(text)); // done = 
+       // Serial.println(text);
         String guiMsg = "";
         guiMsg += String(int(text[0]));
         guiMsg += ","+String(int(text[1]));
@@ -54,9 +55,9 @@ void loop() {
       guiMsg+=",tcolor=" +(tColor(mazeInfo));
     }
     Serial.println(guiMsg);
-    delay(20);
+   // delay(20);
 
-    }
+  //  }
  }
 }
 
@@ -64,23 +65,27 @@ void loop() {
 
 void setupRadio(){
   radio.begin();
+  
   // optionally, increase the delay between retries & # of retries
   radio.setRetries(15,15);
-  radio.setAutoAck(true);
+  
+  //radio.setAutoAck(true);
   // set the channel
-  radio.setChannel(0x50);
+  //radio.setChannel(0x50);
   // set the power
   // RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MED=-6dBM, and RF24_PA_HIGH=0dBm.
-  radio.setPALevel(RF24_PA_HIGH);
+  //radio.setPALevel(RF24_PA_MIN);
   //RF24_250KBPS for 250kbs, RF24_1MBPS for 1Mbps, or RF24_2MBPS for 2Mbps
-  radio.setDataRate(RF24_250KBPS);
-
+  //radio.setDataRate(RF24_250KBPS);
+  
+  radio.setPayloadSize(3);
   //RECEIVE CODE (RECEIVE)
+  
   radio.openWritingPipe(pipes[1]);
   radio.openReadingPipe(1,pipes[0]);
 
   radio.startListening();
-  radio.printDetails();
+  //radio.printDetails();
 }
 
 /**** GENERAL ****/
