@@ -34,10 +34,10 @@ RF24 radio(9, 10); // CE, CSN
 long long address = 0x0000000068LL;
 
 byte maze[9][9];
-bool onStack [9][9];
+//bool onStack [9][9];
 
 /* Robot starts in top left square of map, facing south */
-int posX = -1; // row
+int posX = 0; // row
 int posY = 0; // col
 
 /* Robot's orientation
@@ -59,79 +59,29 @@ class Stack{
    void push(Coordinate c){
     stack_x[i] = c.x;
     stack_y[i] = c.y;
-    onStack[c.x][c.y] = true;
     i = i+1;
    }
 
    Coordinate pop(){
-    if(i>0){
-      i = i-1;
-      onStack[stack_x[i]][stack_y[i]] = false;
+    if(i > 0){
+      i = i - 1;
       return Coordinate(stack_x[i], stack_y[i]);
     } 
     }
 
    Coordinate peep(){
-    if (i>0){
+    if (i > 0 ){
       return Coordinate(stack_x[i-1], stack_y[i-1]);
     }}
    
    bool isEmpty(){
-    return i<1; 
+    return i < 1; 
    }
 
-   byte isOnStack(Coordinate c){
-    // -1 < c.x < 9 && -1 < c.y < 9
-    return onStack[c.x][c.y] == true;
-   }
-
-  void bubbleUp(Coordinate c){
-    for(int j=0; j<i-1; j++){
-      if((stack_x[j] == c.x) && (stack_y[j] == c.y)){
-        // swap
-        byte tx, ty;
-        tx = stack_x[j];
-        ty = stack_y[j];
-        stack_x[j] = stack_x[j+1];
-        stack_y[j] = stack_y[j+1];
-        stack_x[j+1] = tx;
-        stack_y[j+1] = ty;
-      }
-    }
-  }
-  
   private:
     byte stack_x [50];
     byte stack_y [50];
     byte i = 0; 
-};
-
-
-class StackPath{
-  public:
-   void push(byte x){
-    stack[i] = x;
-    i = i+1;
-   }
-
-   byte pop(){
-    if (i>0){
-      i = i-1;
-      return stack[i];
-   }}
-
-   byte peep(){ 
-    if (i>0){
-      return stack[i-1];
-   }}
-   
-   boolean isEmpty(){
-    return i == 0;
-   }
-
-  private:
-    byte stack [81] = {};
-    byte i = 0;
 };
 
 /*********** MAIN ***************/
@@ -141,15 +91,13 @@ void setup() {
   setupWallSensors();
   setupRadio();
   resetMaze();
-  
-  stopMoving();
-  delay(3000);
-  dfs();
 }
 
 void loop() {
-//  stopMoving();
-//  while(!startSignalDetected()){} // Do not move until signal detected
+  stopMoving();
+  while(!startSignalDetected()){} // Do not move until signal detected
+  dfs();
+  while(1);
 }
 
 /*************** SET UP ****************/
@@ -217,28 +165,6 @@ boolean canTurnLeft() {
   return !digitalRead(leftWall);
 }
 
-bool canGoDir(byte dir){
-  int rem = dir - orientation;
-  switch(rem){
-    case -3: return canTurnRight();
-    case -1: return canTurnLeft();
-    case  0: return canMoveStraight();
-    case  1: return canTurnRight();
-    case  3: return canTurnLeft(); 
-    default: return false;
-  }
-}
-
-bool isDirectNeighbor(Coordinate c){
-  if ((posX == c.x) && (abs(abs(c.y) - abs(posY)) == 1)){
-    return true;
-  }else if ((posY == c.y) && (abs(abs(c.x) - abs(posX)) == 1)){
-    return true;
-  }else{
-    return false;
-  }
-}
-
 bool isVisited(Coordinate c){
   if ((c.y < 9 && c.y > -1) && (c.x < 9 && c.x > -1)){
     return !((maze[c.x][c.y] | 0b11110111) ^ 0b11111111);
@@ -257,35 +183,64 @@ int getDirection(Coordinate c){
   return dir;
 }
 
-int negateDirection(int d){
-  return (d+2)%4;
-}
-
-Coordinate getNeighbor(int select){
-  if (select == 0){
-    return Coordinate(posX-1, posY);
-  }else if(select == 1){
-    return Coordinate(posX, posY+1);
-  }else if(select == 2){
-    return Coordinate(posX+1, posY);
-  }else{
-    return Coordinate(posX, posY-1);
+/* Updates robot's position in maze */
+void updatePos(){
+  switch (orientation) {
+    case 0: posX--; break;
+    case 1: posY++; break;
+    case 2: posX++; break;
+    case 3: posY--; break;
+    default: break;
   }
 }
 
-Coordinate getFrontNeighbor(){
-  return getNeighbor(orientation); 
-}
-Coordinate getRightNeighbor(){
-  return getNeighbor(orientation+1);
-}
-Coordinate getBackNeighbor(){
-  return getNeighbor(orientation-2); 
-}
-Coordinate getLeftNeighbor(){
-  return getNeighbor(orientation-1); 
+/* Updates robot's orientation in maze 
+ *  param turn: 0 if straight, 1 if turned right, 
+ *              2 if turned back, 3 if turned left
+ */
+void updateOrientation(int turn){
+  // dont update orientation if went straight
+  if(turn == 1){ //Turned right
+    orientation = (orientation + 1) % 4;
+  } else if(turn == 2){ //Turned back
+    orientation = (orientation + 2) % 4;
+  }else if (turn == 3){ //Turned left
+    orientation--;
+    if (orientation == -1){
+      orientation = 3;
+    }
+  } 
 }
 
+Coordinate getFrontNeighbor(){
+  switch(orientation){
+    case 0: return Coordinate(posX - 1, posY);
+    case 1: return Coordinate(posX, posY + 1);
+    case 2: return Coordinate(posX + 1, posY);
+    case 3: return Coordinate(posX, posY - 1);
+    default: return Coordinate(-1,-1);
+  }
+}
+
+Coordinate getLeftNeighbor(){
+  switch(orientation){
+    case 0: return Coordinate(posX, posY - 1);
+    case 1: return Coordinate(posX - 1, posY);
+    case 2: return Coordinate(posX, posY + 1);
+    case 3: return Coordinate(posX + 1, posY);
+    default: return Coordinate(-1,-1);
+  }
+}
+
+Coordinate getRightNeighbor(){
+  switch(orientation){
+    case 0: return Coordinate(posX, posY + 1);
+    case 1: return Coordinate(posX + 1, posY);
+    case 2: return Coordinate(posX, posY - 1);
+    case 3: return Coordinate(posX - 1, posY);
+    default: return Coordinate(-1,-1);
+  }
+}
 
 /**** MOVEMEMENT ****/
 /* Follows the line and returns true when intersection found and false otherwise*/
@@ -356,36 +311,6 @@ void turnLeft(){
 
 /************ STEP MOVEMENTS **************/
 
-/* Updates robot's position in maze */
-void updatePos(){
-  switch (orientation) {
-    case 0: posX--; break;
-    case 1: posY++; break;
-    case 2: posX++; break;
-    case 3: posY--; break;
-    default: break;
-  }
-}
-
-/* Updates robot's orientation in maze 
- *  param turn: 0 if straight, 1 if turned right, 
- *              2 if turned back, 3 if turned left
- */
-void updateOrientation(int turn){
-  // dont update orientation if went straight
-  if(turn == 1){ //Turned right
-    orientation = (orientation + 1) % 4;
-  } else if(turn == 2){ //Turned back
-    orientation = (orientation + 2) % 4;
-  }else if (turn == 3){ //Turned left
-    orientation--;
-    if (orientation == -1){
-      orientation = 3;
-    }
-  } 
-}
-
-
 void goStraight(){
   leftWheel.write(130);
   rightWheel.write(40);
@@ -429,113 +354,37 @@ void goToDir(int dir){
   updatePos();
 }
 
-void processNeighbor(Stack* s, Coordinate neighbor){
-  //if not visited: if not on stack: push to stack -> buubleUp 
-  if(!isVisited(neighbor)){
-      if(!s->isOnStack(neighbor)){
-        s->push(neighbor);
-      }else{
-        s->bubbleUp(neighbor); 
-      } 
-   }
-}
-
-/********* DFS ************/
-/*
- * stack path = {};
- * stack gen = {x};
- * while gen !empty {
- *    u = gen.pop();
- *    
- *    while u !directNeighbor (currentX,Y){
- *      path.pop();
- *      backprop();
- *    }
- *    
- *    if(!isVisited(u)){
- *      u.visit();
- *      path.push(~dir);
- *      mapMaze();
- *    }
- *      
- *    for each neightbor of u {
- *      if each !visited{ 
- *        if !onStack{
- *          gen.push(each);
- *        }else{
- *          s.bubbleUp(each)
- *        }
- *      }
- *    }
- * }
- * 
- * 
- * init stack
- * push start
- * set start visited
- * while stack not empty
- *    curr = peek.notVisited 
- *    if curr not null
- *        push curr
- *        set curr visited
- *    else
- *        pop 
- * 
- */
+Coordinate getNotVisited(Coordinate src) {
+  if(!isVisited(getRightNeighbor()) && canTurnRight()) { return getRightNeighbor(); }
+  else if (!isVisited(getFrontNeighbor()) && canMoveStraight()) { return getFrontNeighbor(); }
+  else if (!isVisited(getLeftNeighbor()) && canTurnLeft()) { return getLeftNeighbor(); }
+  // Should not need to check behind 
+  else {
+    return Coordinate(-1,-1); // no unvisited neighbors
+  }
+}  
 
 void dfs(){
 
   Stack s;
-  s.push(Coordinate(0,0));
-  // TODO: mark visited
-
+  s.push(Coordinate(0,0)); // TODO: check
+  mapMaze();
   while(!s.isEmpty()){
-    Coordinate curr = s.peek().getNotVisited(); // TODO: create method
-
-    if ( curr != NULL ) {
+    Coordinate curr = getNotVisited(s.peep());
+    Serial.print("X: ");
+    Serial.print(curr.x);
+    Serial.print(" Y: ");
+    Serial.println(curr.y);
+    if ( curr.x != -1 && curr.y != -1 ) { // Curr x and y are -1 if there are no nodes to visit
         s.push(curr);
-        // TODO: set as visited / visit it / mapMaze() 
+        goToDir(getDirection(curr));
+        mapMaze(); 
     } else {
-        // TODO: come back to it before popping
         s.pop();
+        goToDir(getDirection(s.peep()));
     }
   }
   
-//  Stack s;
-//  s.push(Coordinate(0,0));
-//  StackPath path;
-//  
-//  while(!s.isEmpty()){
-//    Coordinate u = s.pop();
-//    
-//    while(!isDirectNeighbor(u) && !canGoDir(getDirection(u))){
-//      int dir = path.pop();
-//      goToDir(dir);  
-//    }
-//
-//    if(!isVisited(u)){
-//      int dir = getDirection(u);
-//      goToDir(dir);
-//      path.push(negateDirection(dir));
-//      mapMaze();
-//    }
-//    
-//    // For all neighbors, process them
-//    processNeighbor(&s, getBackNeighbor()); //maybe not needed
-//    
-//    if (canTurnLeft()){
-//      processNeighbor(&s, getLeftNeighbor());
-//    }
-//
-//    if (canTurnRight()){
-//      processNeighbor(&s, getRightNeighbor());
-//    }
-//    
-//    if (canMoveStraight()){
-//      processNeighbor(&s, getFrontNeighbor());
-//    }
-    
-  }
 }
 
 /**************** GENERAL *********************/
