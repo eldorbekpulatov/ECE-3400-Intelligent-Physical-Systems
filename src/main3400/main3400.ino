@@ -68,7 +68,8 @@ class Stack{
       i = i-1;
       onStack[stack_x[i]][stack_y[i]] = false;
       return Coordinate(stack_x[i], stack_y[i]);
-    }}
+    } 
+    }
 
    Coordinate peep(){
     if (i>0){
@@ -76,7 +77,7 @@ class Stack{
     }}
    
    bool isEmpty(){
-    return i<1;
+    return i<1; 
    }
 
    byte isOnStack(Coordinate c){
@@ -148,7 +149,7 @@ void setup() {
 
 void loop() {
 //  stopMoving();
-//  while(!startSignalDetected()){} // Do not move untill signal detected
+//  while(!startSignalDetected()){} // Do not move until signal detected
 }
 
 /*************** SET UP ****************/
@@ -203,15 +204,28 @@ void resetMaze() {
 
 
 /**** MAZE TRAVERSAL ****/
+
+boolean canTurnRight() {
+  return !digitalRead(rightWall);
+}
+
+boolean canMoveStraight() {
+  return !digitalRead(frontWall);
+}
+
+boolean canTurnLeft() {
+  return !digitalRead(leftWall);
+}
+
 bool canGoDir(byte dir){
   int rem = dir - orientation;
   switch(rem){
-    case -3: canTurnRight(); break;
-    case -1: canTurnLeft(); break;
-    case 0: canMoveStraight; break;
-    case 1: canTurnRight(); break;
-    case 3: canTurnLeft(); break; 
-    default: break;
+    case -3: return canTurnRight();
+    case -1: return canTurnLeft();
+    case  0: return canMoveStraight();
+    case  1: return canTurnRight();
+    case  3: return canTurnLeft(); 
+    default: return false;
   }
 }
 
@@ -362,7 +376,7 @@ void updateOrientation(int turn){
   if(turn == 1){ //Turned right
     orientation = (orientation + 1) % 4;
   } else if(turn == 2){ //Turned back
-    orientation = (orientation+2)%4;
+    orientation = (orientation + 2) % 4;
   }else if (turn == 3){ //Turned left
     orientation--;
     if (orientation == -1){
@@ -376,7 +390,7 @@ void goStraight(){
   leftWheel.write(130);
   rightWheel.write(40);
   delay(200);
-  updateOrientation(0); //went straight
+  //updateOrientation(0); //went straight
   while(!followLine()){} 
   stopMoving();
 }
@@ -454,42 +468,72 @@ void processNeighbor(Stack* s, Coordinate neighbor){
  *      }
  *    }
  * }
+ * 
+ * 
+ * init stack
+ * push start
+ * set start visited
+ * while stack not empty
+ *    curr = peek.notVisited 
+ *    if curr not null
+ *        push curr
+ *        set curr visited
+ *    else
+ *        pop 
+ * 
  */
 
 void dfs(){
+
   Stack s;
   s.push(Coordinate(0,0));
-  StackPath path;
-  
+  // TODO: mark visited
+
   while(!s.isEmpty()){
-    Coordinate u = s.pop();
-    
-    while(!isDirectNeighbor(u) && !canGoDir(getDirection(u))){
-      int dir = path.pop();
-      goToDir(dir);  
-    }
+    Coordinate curr = s.peek().getNotVisited(); // TODO: create method
 
-    if(!isVisited(u)){
-      int dir = getDirection(u);
-      goToDir(dir);
-      path.push(negateDirection(dir));
-      mapMaze();
+    if ( curr != NULL ) {
+        s.push(curr);
+        // TODO: set as visited / visit it / mapMaze() 
+    } else {
+        // TODO: come back to it before popping
+        s.pop();
     }
-    
-    // For all neighbors, process them
-    processNeighbor(&s, getBackNeighbor()); //maybe not needed
-    
-    if (canTurnLeft()){
-      processNeighbor(&s, getLeftNeighbor());
-    }
-
-    if (canTurnRight()){
-      processNeighbor(&s, getRightNeighbor());
-    }
-    
-    if (canMoveStraight()){
-      processNeighbor(&s, getFrontNeighbor());
-    }
+  }
+  
+//  Stack s;
+//  s.push(Coordinate(0,0));
+//  StackPath path;
+//  
+//  while(!s.isEmpty()){
+//    Coordinate u = s.pop();
+//    
+//    while(!isDirectNeighbor(u) && !canGoDir(getDirection(u))){
+//      int dir = path.pop();
+//      goToDir(dir);  
+//    }
+//
+//    if(!isVisited(u)){
+//      int dir = getDirection(u);
+//      goToDir(dir);
+//      path.push(negateDirection(dir));
+//      mapMaze();
+//    }
+//    
+//    // For all neighbors, process them
+//    processNeighbor(&s, getBackNeighbor()); //maybe not needed
+//    
+//    if (canTurnLeft()){
+//      processNeighbor(&s, getLeftNeighbor());
+//    }
+//
+//    if (canTurnRight()){
+//      processNeighbor(&s, getRightNeighbor());
+//    }
+//    
+//    if (canMoveStraight()){
+//      processNeighbor(&s, getFrontNeighbor());
+//    }
     
   }
 }
@@ -550,8 +594,6 @@ void mapMaze(){
         default:
           break;
   }
-  // Update neighbor squares if possible
-  // TODO: Is it necessary?
 
   // TODO: Fix treasure
   squareInfo = squareInfo & 0b11111000; // Resets last three bits
@@ -595,18 +637,6 @@ void transmitMsg(){
 }
 
 /*********** SENSORS **********/
-
-boolean canTurnRight() {
-  return !digitalRead(rightWall);
-}
-
-boolean canMoveStraight() {
-  return !digitalRead(frontWall);
-}
-
-boolean canTurnLeft() {
-  return !digitalRead(leftWall);
-}
 
 /* Samples the robot detect method and stores in detectState every (detection rate) calls, returns detectionState
  * Need this workaround because otherwise constantly doing fft makes robot react too slow 
