@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+
+  </head>
+  <body>
+    <!-- Site Header -->
+    <div class="site-header-bg">
+        <div class="container">
+            <div class="row">
+                <div style="height:50px;">
+                    <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                </div>
+                <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <section id="header" class="main-header lab-header inner-header">
+        <div class="container">
+
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="site-nav-bar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contract.html">Contract</a></li>
+                            <li class="active"><a href="labs.html">Labs</a></li>
+                            <li><a href="milestone.html">Milestones</a></li>
+                            <li><a href="#">Tutorials</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <h1>Lab 2: Analog Circuitry and FFTs</h1>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <!-- Lab02 -->
+    <section class="shop">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-left" style="font-size:1.2em;">
+                        
+                        <h3>Objectives:</h3>
+                        <ul>
+                          <li>Add additional sensors to our robot. </li>
+                          <li>Learn about Open Music Labs FFT.</li>
+                          <li>Make a microphone analog circuit that will detect a 660Hz whistle blow signifying the beginning of our maze mapping.</li>
+                          <li>Make an analog circuit to capture inputs from an IR sensor to detect nearby robots emitting IR at 6.08kHz, and distinguish them from decoys emitting at 18kHz.</li>
+                        </ul>
+                        <br>
+              
+                        <h3>Teams</h3>
+                        <p>Traditionally there are two teams working in parallel, an acoustic team working on the microphone and an optical team working on the IR sensor. Instead, we had one team (Eldor Bekpulatov, Joseph Primmer, and Vicente Caycedo) working on both acoustics and optics. </p>
+                        <br>
+              
+                        <h3>Open Music Labs FFT library</h3>
+                        <p>First we hooked up the function generator to the arduino, then we used the example serial fft program from the library to figure out what frequencies correspond to what bins.</p>
+              
+                        <h4>Whistle Detection</h4>
+                        <p>In order to detect the 660Hz signal we used an online <a href="http://sim.okawa-denshi.jp/en/OPtazyuBakeisan.htm">tool</a> to help us calculate the values for a multiple feedback Hi-Q bandpass filter.</p>
+                        <p>We used the following circuit with calculated component values as part of our microphone circuit.</p>
+                        <img src="lab02/images/op_amp_circ.png" alt="op_amp" style="width:100%;">
+              
+                        <p>On top of multiple feedback bandpass filter, we also added an envelope detector, which uses a diode to half-wave rectify the output from the filter. Then, we used a passive low pass filter to smooth-out the waveform into a DC value. This way, we were able to get a DC output proportional to the amplitude of the output signal of the filter circuit. We read our output signal on the arduino with an analogRead(). We know the 660Hz is playing once the DC value that is read crosses a certain threshold. Note: We will determine this threshold once we learn the specifics of what speakers we will be using at competition and how far we will hold these from the robot.</p>
+                        <br>
+              
+                        <h4>Circuit Schematic:</h4>
+                        <img src="lab02/images/mic_circuit.png" alt="mic_circuit" style="width:100%;">
+                        <br><br>
+                        <p>After designing the circuit we then breadboarded the circuit to make sure everything worked:</p>
+                        <img src="lab02/images/mic_breadboard.png" alt="mic_breadboard" style="width:100%;">
+                        <br><br>
+                        <p>We then transferred everything over to a protoboard:</p>
+                        <img src="lab02/images/mic_protoboard.png" alt="mic_protoboard" style="width:100%;">
+                        <p>Here is our circuuit in action next to the speakers:</p>
+                        <iframe src="https://drive.google.com/file/d/1ZR3ECvjgEv6aohfUy_1KQwy_kLW4glpc/preview" width="640" height="480"></iframe>
+                        <br>
+                        <p>Here is our circuuit in action 2 feet away from speakers:</p>
+                        <iframe src="https://drive.google.com/file/d/1eCcMmPSRWES9QRMbmboHjCHh_iJ2AX4_/preview" width="640" height="480"></iframe>
+                        <br><br>
+                        <p>From the frequency sweep one can see that the filter isn’t absolutely perfect (the frequency band with the max gain is 520-620Hz), but from the two videos before we can see that this filter should definitely be good enough and will filter out the majority of other noises.</p>
+                        <iframe src="https://drive.google.com/file/d/11_MW1ChI9G-P-6uyT8mhj4lugYfw-tJY/preview" width="640" height="480"></iframe>
+                        <br>
+              
+                        <h3>Robot Detection</h3>
+                        <p>Once we assembled our IR circuit, we uploaded a modified version of the example fft serial example sketch. We added these lines of code to figure out which buckets have the largest values when the IR hat is close to the robot:</p>
+                        <pre class="brush: cpp">
+                          if(fft_log_out[i] > 60){
+                              Serial.print("bucket ");
+                              Serial.print(i);
+                              Serial.print(" ");
+                              Serial.println(fft_log_out[i]);
+                          }
+                        </pre>
+                        <p>This code will only serial print the buckets with values greater than 60.</p>
+                        <br>
+              
+                        <p>From the video below we can see that the main culprit is bucket 42:</p>
+                        <iframe src="https://drive.google.com/file/d/1vyNJhmGwefYcyAyTC4f1Vl37ZXSriykG/preview" width="640" height="480"></iframe>
+                        <br>
+                        <p>Using this same method we found that the 18kHz decoy did not fall in this bucket and instead fell in the 81 bucket. This means our circuit will not pick up decoys if we are just looking in the 42 bucket.</p>
+                        <p>We then removed the for loop from the example and added these lines of code to indicate when a robot has been detected:</p>
+                        <pre>
+                          if(fft_log_out[42] > 50){
+                            Serial.println("ROBOT");
+                          }else{
+                            Serial.println("NO ROBOT");
+                          }
+                        </pre>
+                        <br>
+                        <p>Here's the code in use:</p>
+                        <iframe src="https://drive.google.com/file/d/1DEeR7DQwYWacjtv5NscRGUv9_L21b7i5/preview" width="640" height="480"></iframe>
+                        <br>
+                        <p>Here is the final code from our integrated system with that can detect both the 660Hz start signal and 6.08kHz IR signals from other robots:</p>
+                        <pre class="brush: cpp">
+                          #define LOG_OUT 1 // use the log output function
+                          #define FFT_N 256 // set to 256 point fft
+                          #include &ltFFT.h&gt // include the library
+                          const int micInputPin = A1;
+                          int micValue = 0;
+                          void setup() {
+                            Serial.begin(115200); // use the serial port
+                            TIMSK0 = 0; // turn off timer0 for lower jitter
+                            ADCSRA = 0xe5; // set the adc to free running mode
+                            ADMUX = 0x40; // use adc0
+                            DIDR0 = 0x01; // turn off the digital input for adc0
+                          }
+                          void loop() {
+                            while(1) { // reduces jitter
+                              cli();  // UDRE interrupt slows this way down on arduino1.0
+                              for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+                                while(!(ADCSRA & 0x10)); // wait for adc to be ready
+                                ADCSRA = 0xf5; // restart adc
+                                byte m = ADCL; // fetch adc data
+                                byte j = ADCH;
+                                int k = (j << 8) | m; // form into an int
+                                k -= 0x0200; // form into a signed int
+                                k <<= 6; // form into a 16b signed int
+                                fft_input[i] = k; // put real data into even bins
+                                fft_input[i+1] = 0; // set odd bins to 0
+                              }
+                              fft_window(); // window the data for better frequency response
+                              fft_reorder(); // reorder the data before doing the fft
+                              fft_run(); // process the data in the fft
+                              fft_mag_log(); // take the output of the fft
+                              sei();
+                              //Serial.println("start");
+                                if(fft_log_out[42] > 50){
+                                  Serial.println("ROBOT");
+                                }else{
+                                  Serial.println("NO ROBOT");
+                                }
+                                micValue = analogRead(micInputPin);
+                                if(micValue > 550){
+                                  Serial.println("START");
+                                }
+                            }
+                          }
+              
+                        </pre>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="boxed">
+                </div>
+            </div>
+        </div>
+    </section>
+
+      
+    <!-- Footer -->
+    <section id="footer-widget" class="footer-widget">
+        <div class="container header-bg">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h3>External Links</h3>
+                    <ul>
+                    <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                    <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
+  </body>
+</html>
