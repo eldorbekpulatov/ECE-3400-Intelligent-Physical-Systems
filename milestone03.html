@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    <!-- Site Header -->
+      <div class="site-header-bg">
+          <div class="container">
+              <div class="row">
+                  <div style="height:50px;">
+                      <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                  </div>
+                  <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Header -->
+          <section id="header" class="main-header milestone-header inner-header">
+              <div class="container">
+
+                  <div class="row">
+                      <nav class="navbar navbar-default">
+                          <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                          </div>
+
+                          <div class="collapse navbar-collapse" id="site-nav-bar">
+                              <ul class="nav navbar-nav">
+                                  <li><a href="index.html">Home</a></li>
+                                  <li><a href="about.html">About</a></li>
+                                  <li><a href="contract.html">Contract</a></li>
+                                  <li><a href="labs.html">Labs</a></li>
+                                  <li class="active"><a href="milestone.html">Milestones</a></li>
+                                  <li><a href="#">Tutorials</a></li>
+                              </ul>
+                          </div>
+                      </nav>
+                  </div>
+
+                  <div class="intro row">
+                      <div class="overlay"></div>
+                      <div class="col-sm-12">
+                          <h1>Milestone 3</h1>
+                      </div>
+                  </div> <!-- /.intro.row -->
+              </div> <!-- /.container -->
+              <div class="nutral"></div>
+          </section> <!-- /#header -->
+
+        <section class="shop">
+            <div class="container page-bgc">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text-left" style="font-size:1.2em;">
+                            <h3>Objectives</h3>
+                            <ul>
+                                <li>Robot capable of maze exploration using DFS, BFS, Dijkstra, or A*</li>
+                                <li>Robot is also able to update the GUI</li>
+                            </ul>
+                            
+                            <h3>Determining Search Algorithm</h3>
+                            <p>
+                                For milestone 3, the objectives are to successfully traverse the maze using one the following algorithms: DFS, BFS, Dijkstra, or A*, while also radio transmitting information about the maze in order to map it to a screen.
+                            </p>
+                            <p>
+                                Considering that our objective in this competition is mapping much of the maze as possible, it wasn’t hard for us to conclude DFS is the best algorithm to complete this task.With DFS, our robot will continue along a path until it cannot continue, then backpropodate until it can see unexplored paths. This method is best for mazes with deep or circular branches, and weakest for those with a lot of dead-ends. 
+                            </p>
+                            <p>
+                                We first developed the pseudocode for the algorithm.
+                            </p>
+                            <pre class="brush: cpp">
+                                Stack s = {}
+                                s.push(Node(0,0))
+                                mapMaze()
+                                  
+                                while(s not isEmpty()){
+                                    // look at the top element w/o removing from stack and
+                                    // get its first available unexplored node (in right-to-left priority)
+                                    Node neighbor = getUnvisited( s.peek()) 
+                                      
+                                    if (neighbor not NULL){  // if unexplored neighbor exists
+                                        // add the neighbor to stack and go to that neighbor/set explored
+                                        s.push(neighbor)
+                                        goTo(neighbor)
+                                        mapMaze()
+                                    }else{  // if unexplored neighbor does not exist
+                                        // remove from stack and go there
+                                        s.pop()
+                                        goTo(s.peep())
+                                    }
+                                }   
+                            </pre>
+                            <br>
+
+                            <h3>Implement the DFS</h3>
+                            <p>
+                                In order to turn a theoretically abstract idea to a functional algorithm, we had to start by creating supporting classes/data structures and functions executable by our Arduino robot. 
+                            </p>
+                            <p>Here is our Node class.</p>
+                            <pre class="brush: cpp">
+                                struct Coordinate{
+                                    Coordinate(int x, int y){this->x = x; this->y = y;}
+                                    int x, y;
+                                };                                    
+                            </pre>
+                            <br>
+
+                            <p>Here is our Stack class that stores Nodes.</p>
+                            <pre>
+                                class Stack{
+                                    public:
+                                        void push(Coordinate c){
+                                        stack_x[i] = c.x;
+                                        stack_y[i] = c.y;
+                                        i = i+1;
+                                        }
+                              
+                                    Coordinate pop(){
+                                        if(i > 0){
+                                            i = i - 1;
+                                            return Coordinate(stack_x[i], stack_y[i]);
+                                        } 
+                                    }
+                                
+                                    Coordinate peep(){
+                                        if (i > 0 ){
+                                            return Coordinate(stack_x[i-1], stack_y[i-1]);
+                                        }
+                                    }
+                                    
+                                    bool isEmpty(){
+                                        return i < 1; 
+                                    }
+                                
+                                    private:
+                                        byte stack_x [50];
+                                        byte stack_y [50];
+                                        byte i = 0; 
+                                };
+                            </pre>
+                            <br>
+                            <p>To build on top of the Radio-Communication lab, we decided to keep the coordinate and  relative cardinal orientation convention. We selected the cardinal direction method because it is conceptually more clear to debug.</p>
+                            <!-- <img src="" alt="">  TODO -->
+                            <br>
+
+                            <p>We then had to implement unit-step movement functions such as those shown below:</p>
+                            <pre class="brush: cpp">
+                                /* Functional methods */
+                                void updateOrientation(int turn);
+                                void updatePos();
+                                
+                                /* Does exactly what it says and updates orientation. */
+                                void stopMoving();
+                                void turnAround();
+                                void turnRight();
+                                void turnLeft();
+                                boolean followLine();
+                                
+                                /* Turns and follows the line until intersection is reached then stops. */
+                                void goStraight();
+                                void goLeft();
+                                void goRight();
+                                void goBack();
+                                
+                                /* Given coordinate identify relative direction, go there and update position. */
+                                byte getDirection();
+                                void goToDir(int dir);
+                                void mapMaze();      
+                            </pre>
+                            <br>
+                            
+                            <p>
+                                Once we tested each step-function independently, we implemented the full depth-first-search as follows:
+                            </p>
+                            <pre class="brush: cpp">
+                                /* Traverse the Map. */
+                                void dfs(){
+                                    Stack s;
+                                    s.push(Coordinate(0,0));
+                                    mapMaze();
+                                    while(!s.isEmpty()){
+                                        Coordinate curr = getNotVisited(s.peep());
+                                        if ( curr.x != -1 && curr.y != -1 ) { // Curr x and y are -1 if there are no nodes to visit
+                                            s.push(curr);
+                                            goToDir(getDirection(curr));
+                                            mapMaze(); 
+                                        } else {
+                                            s.pop();
+                                            goToDir(getDirection(s.peep()));
+                                        }
+                                    } 
+                                }
+                            </pre>
+                            <br>
+
+                            <h3>Traversing the Map</h3>
+                            <p>
+                                Since we were confident in our DFS algorithm, we chose not to simulate the algorithm on a computer with randomly generate mazes. Rather, we implemented and tested our algo on the robot. 
+                            </p>
+
+                            <p>Here is our robot completing a 4x5 maze:</p>
+                            <!-- <img src="" alt=""> TODO-->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxed">
+                        </div>
+                    </div>
+              </div>
+        </section>
+
+ 
+    <!-- Footer -->
+      <section id="footer-widget" class="footer-widget">
+          <div class="container header-bg">
+              <div class="row">
+                  <div class="col-sm-3">
+                      <h3>External Links</h3>
+                      <ul>
+                        <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                        <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                      </ul>
+                  </div>
+
+              </div>
+          </div>
+      </section>
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
+  </body>
+</html>
