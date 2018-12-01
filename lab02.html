@@ -113,17 +113,45 @@
                         <h4>Circuit Schematic:</h4>
                         <img src="lab02/images/mic_circuit.png" alt="mic_circuit" style="width:100%;">
                         <br><br>
-                        <p>After designing the circuit we then breadboarded the circuit to make sure everything worked:</p>
-                        <img src="lab02/images/mic_breadboard.png" alt="mic_breadboard" style="width:100%;">
-                        <br><br>
-                        <p>We then transferred everything over to a protoboard:</p>
-                        <img src="lab02/images/mic_protoboard.png" alt="mic_protoboard" style="width:100%;">
-                        <p>Here is our circuuit in action next to the speakers:</p>
-                        <iframe src="https://drive.google.com/file/d/1ZR3ECvjgEv6aohfUy_1KQwy_kLW4glpc/preview" width="640" height="480"></iframe>
-                        <br>
-                        <p>Here is our circuuit in action 2 feet away from speakers:</p>
-                        <iframe src="https://drive.google.com/file/d/1eCcMmPSRWES9QRMbmboHjCHh_iJ2AX4_/preview" width="640" height="480"></iframe>
-                        <br><br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img src="lab02/images/mic_breadboard.png" alt="mic_breadboard" style="width:100%;">
+                                    <div class="caption">
+                                    <p>After designing the circuit we then breadboarded the circuit to make sure everything worked.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img src="lab02/images/mic_protoboard.png" alt="mic_protoboard" style="width:100%;">
+                                    <div class="caption">
+                                    <p>We then transferred everything over to a protoboard.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                        
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <iframe src="https://drive.google.com/file/d/1ZR3ECvjgEv6aohfUy_1KQwy_kLW4glpc/preview" style="width:100%;" height="400"></iframe>
+                                    <div class="caption">
+                                        <p>Here is our circuuit in action next to the speakers.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <iframe src="https://drive.google.com/file/d/1eCcMmPSRWES9QRMbmboHjCHh_iJ2AX4_/preview" style="width:100%;" height="400"></iframe>
+                                    <div class="caption">
+                                        <p>Here is our circuuit in action 2 feet away from speakers.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+
                         <p>From the frequency sweep one can see that the filter isn’t absolutely perfect (the frequency band with the max gain is 520-620Hz), but from the two videos before we can see that this filter should definitely be good enough and will filter out the majority of other noises.</p>
                         <iframe src="https://drive.google.com/file/d/11_MW1ChI9G-P-6uyT8mhj4lugYfw-tJY/preview" width="640" height="480"></iframe>
                         <br>
@@ -131,12 +159,12 @@
                         <h3>Robot Detection</h3>
                         <p>Once we assembled our IR circuit, we uploaded a modified version of the example fft serial example sketch. We added these lines of code to figure out which buckets have the largest values when the IR hat is close to the robot:</p>
                         <pre class="brush: cpp">
-                          if(fft_log_out[i] > 60){
-                              Serial.print("bucket ");
-                              Serial.print(i);
-                              Serial.print(" ");
-                              Serial.println(fft_log_out[i]);
-                          }
+                            if(fft_log_out[i] > 60){
+                                Serial.print("bucket ");
+                                Serial.print(i);
+                                Serial.print(" ");
+                                Serial.println(fft_log_out[i]);
+                            }
                         </pre>
                         <p>This code will only serial print the buckets with values greater than 60.</p>
                         <br>
@@ -146,13 +174,15 @@
                         <br>
                         <p>Using this same method we found that the 18kHz decoy did not fall in this bucket and instead fell in the 81 bucket. This means our circuit will not pick up decoys if we are just looking in the 42 bucket.</p>
                         <p>We then removed the for loop from the example and added these lines of code to indicate when a robot has been detected:</p>
-                        <pre>
-                          if(fft_log_out[42] > 50){
-                            Serial.println("ROBOT");
-                          }else{
-                            Serial.println("NO ROBOT");
-                          }
+                        <pre class="brush: cpp">
+                            if(fft_log_out[42] > 50){
+                                Serial.println("ROBOT");
+                            }else{
+                                Serial.println("NO ROBOT");
+                            }
                         </pre>
+
+                        
                         <br>
                         <p>Here's the code in use:</p>
                         <iframe src="https://drive.google.com/file/d/1DEeR7DQwYWacjtv5NscRGUv9_L21b7i5/preview" width="640" height="480"></iframe>
@@ -201,9 +231,15 @@
                                   Serial.println("START");
                                 }
                             }
-                          }
-              
-                        </pre>
+                          }</pre>
+
+                          <h3>Work Distribution</h3>
+                          <ul>
+                            <li>Joseph Primmer: Pictures, Videos, and Code Snippets</li>
+                            <li>Francis Rayos del Sol & Vicente Caycedo: Lab Write Up</li>
+                            <li>Eldor Bekpulatov: Formatting and Publishing Lab Report Online</li>
+                          </ul>
+                          <br/>
                     </div>
                 </div>
             </div>
