@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    <!-- Site Header -->
+      <div class="site-header-bg">
+          <div class="container">
+              <div class="row">
+                  <div style="height:50px;">
+                      <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                  </div>
+                  <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Header -->
+          <section id="header" class="main-header milestone-header inner-header">
+              <div class="container">
+
+                  <div class="row">
+                      <nav class="navbar navbar-default">
+                          <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                          </div>
+
+                          <div class="collapse navbar-collapse" id="site-nav-bar">
+                              <ul class="nav navbar-nav">
+                                  <li><a href="index.html">Home</a></li>
+                                  <li><a href="about.html">About</a></li>
+                                  <li><a href="contract.html">Contract</a></li>
+                                  <li><a href="labs.html">Labs</a></li>
+                                  <li class="active"><a href="milestone.html">Milestones</a></li>
+                                  <li><a href="#">Tutorials</a></li>
+                              </ul>
+                          </div>
+                      </nav>
+                  </div>
+
+                  <div class="intro row">
+                      <div class="overlay"></div>
+                      <div class="col-sm-12">
+                          <h1>Milestone 1</h1>
+                      </div>
+                  </div> <!-- /.intro.row -->
+              </div> <!-- /.container -->
+              <div class="nutral"></div>
+          </section> <!-- /#header -->
+
+        <section class="shop">
+            <div class="container page-bgc">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text-left" style="font-size:1.2em;">
+                            <h3>Objectives</h3>
+                            <ul>
+                                <li>Robot that successfully circles an arbitrary set of walls through right hand wall following.</li>
+                                <li>Robot that successfully avoids other robots simultaneously.</li>
+                            </ul>
+            
+                            <h3>Circling Arbitrary Set of Walls and Avoiding Robot</h3>
+                            <p>When implementing sensor detection, we used 3 Sharp GP2Y0A41SK0F IR distance sensors. Since these are analog sensors that output a voltage proportional to the distance detected, we used 3 comparators that all used a voltage reference that could be changed via a potentiometer. The voltage divider with a potentiometer set a voltage threshold that defined whether the comparators should output a 1 (HIGH) or a 0 (LOW). By changing the resistance of the potentiometer we could fine tune what distance we want the sensors to detect without using any extra analog pins:</p>
+                            <img src="milestone02/diagram.JPG" alt="diagram" style="width:100%">
+                            <br><br>
+            
+                            <p>Once the wall sensors were working, we integrated the microphone and IR circuits. This entailed adding a connector to the protoboard containing these circuits and another connector to the arduino protoboard shield:</p>
+                            <img src="milestone02/protoboard1.JPG" alt="protoboard" style="width:100%">
+                            <br><br>
+            
+                            <p>In order to get these sensors working we had to make modifications to our original system:</p>
+                            <ul>
+                                <li>
+                                    <p>
+                                        For the Mic sensor circuit we found that the wall sensors caused excessive noise on the mic sensors circuit power supply that leaks into the output of the mic circuit itself. To remedy this, first, we low pass filtered the power going into the mic sensor circuit (added a 22uF capacitor in parallel)  and then we implemented a digital FIR filter on the code side to reduce noise.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        For the IR sensor circuit we found that we could not have the FFT run on every loop of our program, otherwise the robots processing speed would slow to a crawl. Therefore, instead we only called our FFT every 100 cycles through our program. This was still fast enough to catch any IR hats that came in front of our robot while also not impeding other processes of our robot (in latter versions of the code we plan to implement this using timers and interrupts).
+                                    </p>
+                                </li>
+                            </ul>
+                            <br>
+            
+                            <p>To circle an arbitrary set of walls, we chose to implement right hand wall following. To do this, every time the robot reaches an intersection, it checks if it can make a right turn. If there is no wall or robot obstructing its path, it turns right. If the path is obstructed, the robot attempts to continue moving forward. If the path forward is not clear, the robot attempts to turn left. If this is unsuccessful, the robot stops moving. In future labs, the robot will instead turn around instead of stopping completely. After a decision is made, the robot follows the line until another intersection is reached or a competing robot is detected. In this first implementation, detecting robots results in our robot simply stopping. Future implementations will contain more advanced decision making. </p>
+                            <br>
+            
+                            <p>Implementation in code:</p>
+                            <pre>
+                                /**
+                                * TEAM CAPTCHA FALL 2018
+                                * Joseph Primmer   | Vicente Caycedo
+                                * Eldor Bekpulatov | Francis Rayos del Sol
+                                */
+            
+                                #define LOG_OUT 1 // use the log output function
+                                #define FFT_N 256 // set to 256 point fft
+                                #include &ltServo.h&gt
+                                #include &ltFFT.h&gt
+                                #define rightSensorPin A0
+                                #define leftSensorPin A1
+                                #define micInputPin A3
+                                #define leftWall 4
+                                #define frontWall 3
+                                #define rightWall 2
+                                #define lineSensorThreshold 930
+                                #define FIRsampRate 20
+                                #define FIRwindowSize 60
+                                #define DetectionRate 100
+            
+                                Servo rightWheel;
+                                Servo leftWheel;
+            
+                                void setup() {
+                                Serial.begin(115200);
+                                setupMotors();
+                                setupWallSensors();
+                                }
+            
+                                void loop() {
+                                stopMoving();
+                                while(!startSignalDetected()){}
+                                while(true) {
+                                    rightHandFollow();
+                                }
+                                }
+            
+                                /**** SET UP ****/
+            
+                                /* Sets up left and right motors for movement*/
+                                void setupMotors() {
+                                pinMode(leftSensorPin, INPUT);
+                                pinMode(rightSensorPin, INPUT);
+                                leftWheel.attach(5);
+                                rightWheel.attach(6);
+                                pinMode(10, OUTPUT);
+                                pinMode(11, OUTPUT);
+                                }
+            
+                                void setupWallSensors() {
+                                pinMode(leftWall, INPUT);
+                                pinMode(frontWall, INPUT);
+                                pinMode(rightWall, INPUT);
+                                }
+            
+                                /**** MAZE TRAVERSAL ****/
+            
+                                /* Circles maze by keeping right hand on wall */
+            
+                                void rightHandFollow(){
+                                if(followLine()){ // Keep moving straight until intersection is reached
+                                if(canTurnRight()){
+                                    turnRight();
+                                    followLine();
+                                } else if(canMoveStraight()){
+                                    followLine();
+                                } else if(canTurnLeft()){
+                                    turnLeft();
+                                    followLine();
+                                } else {
+                                    stopMoving(); // FIXME: do 180 deg turn
+                                }
+                                }
+                                }
+            
+                                /**** GENERAL ****/
+            
+                                /* Returns true if start whistle detected */
+                                int samples[FIRwindowSize];
+                                int sIndex = 0;
+                                int sRateCount = 0;
+                                boolean startSignalDetected(){
+                                if(sRateCount >= FIRsampRate){
+                                    samples[sIndex] = analogRead(micInputPin);
+                                    sRateCount = 0;
+                                    sIndex++;
+                                }else{
+                                    delay(1);
+                                    sRateCount++;
+                                }
+                                if(sIndex > FIRwindowSize){
+                                    sIndex = 0;
+                                }long sum = 0;
+                                for(int i = 0; i < FIRwindowSize; i++){
+                                    sum += samples[i];
+                                }
+                                int output = sum/FIRwindowSize;
+                                Serial.println(output);
+                                if(output > 589)return true;
+                                else return false;
+                                }
+            
+                                /**** MOVEMEMENT ****/
+            
+                                /* Stops servo motors */
+                                void stopMoving(){
+                                rightWheel.write(90);
+                                leftWheel.write(90);
+                                }
+            
+                                /* Turns right */
+                                void turnRight(){
+                                delay(100);
+                                leftWheel.write(130);
+                                rightWheel.write(90);
+                                delay(800);
+                                int rightLine = analogRead(rightSensorPin);
+                                while(rightLine > lineSensorThreshold){
+                                    rightLine = analogRead(rightSensorPin);
+                                }
+                                }
+            
+                                /* Turns left */
+                                void turnLeft(){
+                                delay(100);
+                                leftWheel.write(90);
+                                rightWheel.write(40);
+                                delay(800);
+                                int leftLine = analogRead(leftSensorPin);
+                                while(leftLine > lineSensorThreshold){
+                                    leftLine = analogRead(leftSensorPin);
+                                }
+                                }
+            
+                                /* Follows the line and returns true when intersection found and false otherwise*/
+                                boolean followLine(){
+                                int rightLine = analogRead(rightSensorPin);
+                                int leftLine = analogRead(leftSensorPin);
+                                    if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
+                                    return true; // Intersection encountered
+                                } else if(sampleRobotDetect()){
+                                    rightWheel.write(90); //Stand still if a robot is seen
+                                    leftWheel.write(90);
+                                }
+                                else if(leftLine < lineSensorThreshold) {
+                                    // Left sensor white
+                                    rightWheel.write(90); //nudge left
+                                    leftWheel.write(130);
+                                } else if(rightLine < lineSensorThreshold) {
+                                    // Right sensor white
+                                    rightWheel.write(40); //nudge right
+                                    leftWheel.write(90);
+                                } else {
+                                    // Both sensors black
+                                    leftWheel.write(130);
+                                    rightWheel.write(40);
+                                }
+                                    return false;
+                                }
+            
+                                /**** SENSORS ****/
+            
+                                boolean canTurnRight() {
+                                return !digitalRead(rightWall);
+                                }
+            
+                                boolean canMoveStraight() {
+                                return !digitalRead(frontWall);
+                                }
+            
+                                boolean canTurnLeft() {
+                                return !digitalRead(leftWall);
+                                }
+            
+            
+                                /*Samples the robot detect method and stores in detectState every (detection rate) calls, returns detectionState*/
+                                /*need this workaround because otherwise constantly doing fft makes robot react too slo*/
+                                int detectCount = 0;
+                                boolean detectState = false;
+                                boolean sampleRobotDetect(){
+                                    if(detectCount > DetectionRate){
+                                    if(robotDetect()){
+                                    detectState = true;
+                                    }else{
+                                    detectState = false;
+                                    }
+                                    detectCount = 0;
+                                }detectCount++;
+                                return detectState;
+                                }
+            
+                                /* Returns true if robot detected */
+                                boolean robotDetect(){
+                                    ADMUX = 0x42;
+                                    int init_adcsra = ADCSRA;
+                                    ADCSRA = 0xe5;
+                                    cli();  // UDRE interrupt slows this way down on arduino1.0
+                                    for (int i = 0 ; i < 512 ; i += 2) { // save 256 samples
+                                    while(!(ADCSRA & 0x10)); // wait for adc to be ready
+                                    ADCSRA = 0xf5; // restart adc
+                                    byte m = ADCL; // fetch adc data
+                                    byte j = ADCH;
+                                    int k = (j << 8) | m; // form into an int
+                                    k -= 0x0200; // form into a signed int
+                                    k <<= 6; // form into a 16b signed int
+                                    fft_input[i] = k; // put real data into even bins
+                                    fft_input[i+1] = 0; // set odd bins to 0
+                                    }
+                                    fft_window(); // window the data for better frequency response
+                                    fft_reorder(); // reorder the data before doing the fft
+                                    fft_run(); // process the data in the fft
+                                    fft_mag_log(); // take the output of the
+                                    ADCSRA = init_adcsra;
+                                    sei();
+                                    if(fft_log_out[42] > 50){
+                                        return true;
+                                    }else{
+                                        return false;
+                                    }
+                                }
+                            </pre>
+            
+                            <p>Robot executing decisions in real time:</p>
+                            <iframe src="https://drive.google.com/file/d/1D2C_kMEFwFFopX-DfClk5-dMo5twLqDV/preview" style="width:100%"></iframe>
+                            <p>Video of robot navigating maze and avoiding other robots.</p>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxed">
+                        </div>
+                    </div>
+              </div>
+        </section>
+
+ 
+    <!-- Footer -->
+      <section id="footer-widget" class="footer-widget">
+          <div class="container header-bg">
+              <div class="row">
+                  <div class="col-sm-3">
+                      <h3>External Links</h3>
+                      <ul>
+                        <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                        <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                      </ul>
+                  </div>
+
+              </div>
+          </div>
+      </section>
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
+  </body>
+</html>
