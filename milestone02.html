@@ -117,81 +117,32 @@
                             <br>
             
                             <p>Implementation in code:</p>
-                            <pre>
-                                /**
-                                * TEAM CAPTCHA FALL 2018
-                                * Joseph Primmer   | Vicente Caycedo
-                                * Eldor Bekpulatov | Francis Rayos del Sol
-                                */
-            
-                                #define LOG_OUT 1 // use the log output function
-                                #define FFT_N 256 // set to 256 point fft
-                                #include &ltServo.h&gt
-                                #include &ltFFT.h&gt
-                                #define rightSensorPin A0
-                                #define leftSensorPin A1
-                                #define micInputPin A3
-                                #define leftWall 4
-                                #define frontWall 3
-                                #define rightWall 2
-                                #define lineSensorThreshold 930
-                                #define FIRsampRate 20
-                                #define FIRwindowSize 60
-                                #define DetectionRate 100
-            
-                                Servo rightWheel;
-                                Servo leftWheel;
-            
-                                void setup() {
-                                Serial.begin(115200);
-                                setupMotors();
-                                setupWallSensors();
-                                }
-            
+                            <pre class="brush: cpp">
                                 void loop() {
-                                stopMoving();
-                                while(!startSignalDetected()){}
-                                while(true) {
-                                    rightHandFollow();
+                                    stopMoving();
+                                    while(!startSignalDetected()){}
+                                    while(true) {
+                                        rightHandFollow();
+                                    }
                                 }
-                                }
-            
-                                /**** SET UP ****/
-            
-                                /* Sets up left and right motors for movement*/
-                                void setupMotors() {
-                                pinMode(leftSensorPin, INPUT);
-                                pinMode(rightSensorPin, INPUT);
-                                leftWheel.attach(5);
-                                rightWheel.attach(6);
-                                pinMode(10, OUTPUT);
-                                pinMode(11, OUTPUT);
-                                }
-            
-                                void setupWallSensors() {
-                                pinMode(leftWall, INPUT);
-                                pinMode(frontWall, INPUT);
-                                pinMode(rightWall, INPUT);
-                                }
-            
+        
                                 /**** MAZE TRAVERSAL ****/
-            
+
                                 /* Circles maze by keeping right hand on wall */
-            
                                 void rightHandFollow(){
-                                if(followLine()){ // Keep moving straight until intersection is reached
-                                if(canTurnRight()){
-                                    turnRight();
-                                    followLine();
-                                } else if(canMoveStraight()){
-                                    followLine();
-                                } else if(canTurnLeft()){
-                                    turnLeft();
-                                    followLine();
-                                } else {
-                                    stopMoving(); // FIXME: do 180 deg turn
-                                }
-                                }
+                                    if(followLine()){ // Keep moving straight until intersection is reached
+                                        if(canTurnRight()){
+                                            turnRight();
+                                            followLine();
+                                        } else if(canMoveStraight()){
+                                            followLine();
+                                        } else if(canTurnLeft()){
+                                            turnLeft();
+                                            followLine();
+                                        } else {
+                                            stopMoving(); // FIXME: do 180 deg turn
+                                        }
+                                    }
                                 }
             
                                 /**** GENERAL ****/
@@ -216,86 +167,14 @@
                                     sum += samples[i];
                                 }
                                 int output = sum/FIRwindowSize;
-                                Serial.println(output);
+
                                 if(output > 589)return true;
                                 else return false;
                                 }
             
-                                /**** MOVEMEMENT ****/
-            
-                                /* Stops servo motors */
-                                void stopMoving(){
-                                rightWheel.write(90);
-                                leftWheel.write(90);
-                                }
-            
-                                /* Turns right */
-                                void turnRight(){
-                                delay(100);
-                                leftWheel.write(130);
-                                rightWheel.write(90);
-                                delay(800);
-                                int rightLine = analogRead(rightSensorPin);
-                                while(rightLine > lineSensorThreshold){
-                                    rightLine = analogRead(rightSensorPin);
-                                }
-                                }
-            
-                                /* Turns left */
-                                void turnLeft(){
-                                delay(100);
-                                leftWheel.write(90);
-                                rightWheel.write(40);
-                                delay(800);
-                                int leftLine = analogRead(leftSensorPin);
-                                while(leftLine > lineSensorThreshold){
-                                    leftLine = analogRead(leftSensorPin);
-                                }
-                                }
-            
-                                /* Follows the line and returns true when intersection found and false otherwise*/
-                                boolean followLine(){
-                                int rightLine = analogRead(rightSensorPin);
-                                int leftLine = analogRead(leftSensorPin);
-                                    if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
-                                    return true; // Intersection encountered
-                                } else if(sampleRobotDetect()){
-                                    rightWheel.write(90); //Stand still if a robot is seen
-                                    leftWheel.write(90);
-                                }
-                                else if(leftLine < lineSensorThreshold) {
-                                    // Left sensor white
-                                    rightWheel.write(90); //nudge left
-                                    leftWheel.write(130);
-                                } else if(rightLine < lineSensorThreshold) {
-                                    // Right sensor white
-                                    rightWheel.write(40); //nudge right
-                                    leftWheel.write(90);
-                                } else {
-                                    // Both sensors black
-                                    leftWheel.write(130);
-                                    rightWheel.write(40);
-                                }
-                                    return false;
-                                }
-            
-                                /**** SENSORS ****/
-            
-                                boolean canTurnRight() {
-                                return !digitalRead(rightWall);
-                                }
-            
-                                boolean canMoveStraight() {
-                                return !digitalRead(frontWall);
-                                }
-            
-                                boolean canTurnLeft() {
-                                return !digitalRead(leftWall);
-                                }
-            
             
                                 /*Samples the robot detect method and stores in detectState every (detection rate) calls, returns detectionState*/
-                                /*need this workaround because otherwise constantly doing fft makes robot react too slo*/
+                                /*need this workaround because otherwise constantly doing fft makes robot react too slow*/
                                 int detectCount = 0;
                                 boolean detectState = false;
                                 boolean sampleRobotDetect(){
@@ -342,7 +221,7 @@
                             </pre>
             
                             <p>Robot executing decisions in real time:</p>
-                            <iframe src="https://drive.google.com/file/d/1D2C_kMEFwFFopX-DfClk5-dMo5twLqDV/preview" style="width:100%"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1D2C_kMEFwFFopX-DfClk5-dMo5twLqDV/preview" style="width:100%; height:600px;"></iframe>
                             <p>Video of robot navigating maze and avoiding other robots.</p>
                         
                         </div>
