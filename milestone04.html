@@ -96,15 +96,15 @@
 
                             <h3>Shape Segmentation</h3>
                             <p>In order to distinguish a shape of a certain color on a white background we used a thresholding method. The basic idea is that we create a filter that lets through a given pixel if 1. The RGB component of the color we are looking for is above a certain threshold and 2. The other RGB components (the stuff that would indicate the pixel is white) is below a certain threshold. </p>
-                            <br>
                             <p>For example:</p>
                             <pre>
-                                if(temp[2:0] > 3'b0 & DATA_2_RAM[4:2] < (AVG[2:0]) & DATA_2_RAM[7:5] < (AVG[2:0])) begin
+                                if(temp[2:0] > 3'b0 & DATA_2_RAM[4:2] < (AVG[2:0]) & DATA_2_RAM[7:5] < (AVG[2:0])) 
+                                begin
                                     //...stuff...
-                                    Temp[2:0] is the blue rgb component and we check if it is greater than zero
-                                    DATA_2_RAM[2:0] and [7:5] are the green and red rgb components, and we check if it is lower than a certain threshold value based on the average brightness of the whole photo (the color white changes with brightness!)
-                            </pre>  
-                            <br>
+                                end 
+                            </pre>
+                            <p>Temp[2:0] is the blue rgb component and we check if it is greater than zero</p> 
+                            <p>DATA_2_RAM[2:0] and [7:5] are the green and red rgb components, and we check if it is lower than a certain threshold value based on the average brightness of the whole photo (the color white changes with brightness!)</p> 
                             <p>Here is what some of the Shape segmentation outputs looked like:</p>
                             
                             <div class="row">
@@ -157,6 +157,8 @@
                             <p>Here is our edge detection in action (to make things easy we made red edges green and blue edges white):</p>
                             <iframe src="https://drive.google.com/file/d/1rolPkHERifWncuV6c6wZRkoGsFKoI074/preview" width="640" height="480"></iframe>
                             <br>
+                            <br>
+
                             <p>Here is the combined (or’d) outputs of the edge detection and shape segmentation: </p>
                             <div class="row">
                                 <div class="col-md-6">
@@ -176,13 +178,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
 
                             <h3>Characterization and Classification</h3>
-                            <h5>Treasure Detection:</h5>
+                            <h4>Treasure Detection:</h4>
                             <p>Distinguishing whether a shape is there or not is as simple as seeing how many pixels were segmented out for an edge. If this is below some threshold for all the different sections of an image (allowing for some noise), we know that there is no treasure detected. </p>
                             <br>
-                            <h5>Color Detection:</h5>
+                            <h4>Color Detection:</h4>
                             <p>We accumulate the amount of segmented red and segmented blue and compare these values against each other in this block:</p>
                             <pre>
                                 if((redAccumulator < 18'd5000) & (blueAccumulator < 18'd5000))
@@ -196,11 +197,10 @@
                                 else 
                                     begin
                                         redOrBlueOrNaught <= 2'b10;
-                                    end
-                            </pre>
+                                    end</pre>
                             <br>
 
-                            <h5>Shape Detection:</h5>
+                            <h4>Shape Detection:</h4>
                             <p>In order to detect shapes we grab the X values of the rightmost edge that was detected on each row. Then we average the X values in the top half of the screen, bottom half, and middle section. If the average X value for the middle section is greater than the top and bottom averages, we know the shape is a diamond. If the bottom is greater than the middle and the middle is greater than the top we know the shape is a triangle. Finally if the averages are all within some threshold value of one another we know the shape is a square:</p>
                             <pre>
                                 smolDistTopBot = (topAVG - botAVG < 16'd12) | (botAVG - topAVG < 16'd12);
@@ -209,9 +209,9 @@
                                 shapeResult[7] = (botAVG > midAVG) & (midAVG > topAVG) & ~shapeResult[5]; //triangle
                                 shapeResult[6] = (midAVG > topAVG) & (midAVG > botAVG) & ~shapeResult[5]; //diamond
                                 shapeResult[0] = (edgesTopStore < 8'd15)|(edgesMidStore < 8'd35)|(edgesBotStore < 8'd15); 
-                                shapeResult[3:2] = redOrBlueOrNaught; //Red or Blue
-                            </pre>
+                                shapeResult[3:2] = redOrBlueOrNaught; //Red or Blue</pre>
                             <br>
+                            
                             <p>In this code we make sure that the shape is not a square when checking the other shapes (otherwise any small skew in the picture of the square could cause these shapes to trigger as well).</p>
                             <p>To ease the demonstration of this milestone we mapped the FPGA LEDs directly to shapeResult. These are the outputs:</p>
                             <pre>
@@ -220,21 +220,45 @@
                                 LED[5] -> square detected when ON
                                 LED[3] -> blue detected when ON
                                 LED[2] -> red detected when ON
-                                LED[0] -> Shape NOT detected when ON (right most LED)
-                            </pre>
+                                LED[0] -> Shape NOT detected when ON (right most LED)</pre>
                             <p>(these can easily be encoded into three bits that can be sent over to the arduino in parallel)</p>
                             <br>
 
-                            <!-- <blue_diamond_detect> LED[6] and LED[3] ON
-                            <red_triangle_detect> LED[7] and LED[2] ON
-                            <blue_square_detect> LED[5] and LED[3] ON
-                            <red_diamond_detect> LED[6] and LED[2] ON -->
-                                    
-                            <iframe src="https://drive.google.com/file/d/19Vf36plv3XhFK2utve97CqAhT_2lDfqG/preview" width="640" height="480"></iframe>
-                            <iframe src="https://drive.google.com/file/d/1S3zpy3nvVEE1XYWl6OjuFie_hxVx9HuU/preview" width="640" height="480"></iframe>
-                            <iframe src="https://drive.google.com/file/d/1P2Fhedc8Uu4Uj4agadohOVfOxZtx-cU8/preview" width="640" height="480"></iframe>
-                            <iframe src="https://drive.google.com/file/d/1UwQZhzbh13jrMR6UYjKb3gWR0CpN8AJp/preview" width="640" height="480"></iframe>
-                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <iframe src="https://drive.google.com/file/d/19Vf36plv3XhFK2utve97CqAhT_2lDfqG/preview" style="width:100%" height="480"></iframe>
+                                        <div class="caption">
+                                        <p>Red Triangle Detection</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <iframe src="https://drive.google.com/file/d/1S3zpy3nvVEE1XYWl6OjuFie_hxVx9HuU/preview" style="width:100%" height="480"></iframe>
+                                        <div class="caption">
+                                        <p>Red Diamond Detection</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <iframe src="https://drive.google.com/file/d/1P2Fhedc8Uu4Uj4agadohOVfOxZtx-cU8/preview" style="width:100%" height="480"></iframe>
+                                        <div class="caption">
+                                        <p>Blue Square Detection</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <iframe src="https://drive.google.com/file/d/1UwQZhzbh13jrMR6UYjKb3gWR0CpN8AJp/preview" style="width:100%" height="480"></iframe>
+                                        <div class="caption">
+                                        <p>Blue Diamond Detection</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+
                         </div>
                     </div>
                 </div>
