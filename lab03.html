@@ -97,7 +97,7 @@
                             <h3>Radio Communication</h3>
                               <h5>Data Scheme</h5>
                               <p>We needed to transmit information about the physical location of our robot and some other properties like walls, treasures detected by our sensors in the most efficient/appropriate format so that we can easily decompose the message at the base station. We decided to continuously send three bytes of information at each cell/intersection, two designated for x- and y- coordinates of the robot, and one to encode information about the robots surroundings. So, we came up with a data scheme to encode information about each cell the following way:</p>
-                              <img src="lab03/data-diag.png" height=300px width=500px alt="data-scheme">
+                              <img src="lab03/data-diag.png" style="width:100%" alt="data-scheme">
                   
                               <h5>Radio Connectivity</h5>
                               <p>To start, we wired-up the RF transmitters to our arduinos. In order to regulate voltage down to the 3.3V we used a LM317 general voltage regulator. We chose resistor values of 240 and 390 to use in our regulator circuit to give us a voltage around 3.4V.</p>
