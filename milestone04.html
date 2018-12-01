@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+  </head>
+  <body>
+    <!-- Site Header -->
+      <div class="site-header-bg">
+          <div class="container">
+              <div class="row">
+                  <div style="height:50px;">
+                      <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                  </div>
+                  <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Header -->
+          <section id="header" class="main-header milestone-header inner-header">
+              <div class="container">
+
+                  <div class="row">
+                      <nav class="navbar navbar-default">
+                          <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                          </div>
+
+                          <div class="collapse navbar-collapse" id="site-nav-bar">
+                              <ul class="nav navbar-nav">
+                                  <li><a href="index.html">Home</a></li>
+                                  <li><a href="about.html">About</a></li>
+                                  <li><a href="contract.html">Contract</a></li>
+                                  <li><a href="labs.html">Labs</a></li>
+                                  <li class="active"><a href="milestone.html">Milestones</a></li>
+                                  <li><a href="#">Tutorials</a></li>
+                              </ul>
+                          </div>
+                      </nav>
+                  </div>
+
+                  <div class="intro row">
+                      <div class="overlay"></div>
+                      <div class="col-sm-12">
+                          <h1>Milestone 3</h1>
+                      </div>
+                  </div> <!-- /.intro.row -->
+              </div> <!-- /.container -->
+              <div class="nutral"></div>
+          </section> <!-- /#header -->
+
+        <section class="shop">
+            <div class="container page-bgc">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text-left" style="font-size:1.2em;">
+                            <h3>Objectives</h3>
+                            <ul>
+                                <li>Robot which can detect when there are/are not treasures</li>
+                                <li>Robot which can successfully distinguish between red and blue treasures</li>
+                                <li>Robot which can successfully distinguish a square, triangle, and diamond shape</li>
+                            </ul>
+                            
+                            <h3>Intro</h3>
+                            <p>For milestone 4 the objectives are to successfully detect whether or not there is a treasure (a shape) and be able to distinguish characteristics of this treasure (whether it is blue or red and whether it is a triangle, square, or diamond). In lab 4 we successfully implemented the ability to read in color images into memory. </p>
+                            <p>In milestone 4 we decided against using the image processor module provided as this did computation on information already stored in memory. We instead decided to implement all our computer vision algorithms in real time with our downsampler because we can then write our computer vision computations to the VGA output. This made it much easier to debug and fine tune our algorithms (doing stuff in real time / in parallel are what FPGAs are for, after all).</p>
+
+                            <h3>Shape Segmentation</h3>
+                            <p>In order to distinguish a shape of a certain color on a white background we used a thresholding method. The basic idea is that we create a filter that lets through a given pixel if 1. The RGB component of the color we are looking for is above a certain threshold and 2. The other RGB components (the stuff that would indicate the pixel is white) is below a certain threshold. </p>
+                            <br>
+                            <p>For example:</p>
+                            <pre>
+                                if(temp[2:0] > 3'b0 & DATA_2_RAM[4:2] < (AVG[2:0]) & DATA_2_RAM[7:5] < (AVG[2:0])) begin
+                                    //...stuff...
+                                    Temp[2:0] is the blue rgb component and we check if it is greater than zero
+                                    DATA_2_RAM[2:0] and [7:5] are the green and red rgb components, and we check if it is lower than a certain threshold value based on the average brightness of the whole photo (the color white changes with brightness!)
+                            </pre>  
+                            <br>
+                            <p>Here is what some of the Shape segmentation outputs looked like:</p>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <img src="milestone04/blue_square.JPG" alt="blue_square" style="width:100%">
+                                        <div class="caption">
+                                        <p>Blue Square</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <img src="milestone04/red_triangle.JPG" alt="red_triangle" style="width:100%">
+                                        <div class="caption">
+                                        <p>Red Triangle</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h3>Edge Detection</h3>
+                            <p>Once we have segmented out the shape we want to be able to detect the rightmost shape edge as this will give a 1 dimensional signal that will be easy to use to differentiate between different shapes. The simplest edge detection algorithm we could find is a method called “edge detection by subtraction”. The basic idea is to use a filter to smooth an image, then subtract away the original image:</p>
+                            <img src="milestone04/edge_by_subtract.png" alt="subtract method">
+                            <br>
+                            
+                            <p>We use a modified version of this algorithm where we have a running sum FIR filter: </p>
+                            <pre>y[n] = x[n]+x[n-1]+x[n-2]+x[n-3]</pre>
+                            
+                            <p>This FIR filter is implemented as a simple shift register in verilog:</p>
+                            <pre>
+                                redShift[3] <= redStuff[7:5];  //x[n]
+                                redShift[2] <= redShift[3];  //x[n-1]
+                                redShift[1] <= redShift[2]; //x[n-2]
+                                redShift[0] <= redShift[1]; //x[n-3]
+                                redSum = redShift[0]+redShift[1]+redShift[2]+redShift[3]; //add them up!
+                            </pre>
+                            <br>
+
+                            <p>We then compare the running sum to the current x[n] value:</p>
+                            <pre>
+                                if ((redSum > 8'b111) & ~(redShift[3] > 3'b0)) 
+                                    begin 
+                                        //stuff 
+                                    end
+                            </pre>
+                            <p>If the x[n] value and the running sum are greater than some threshold the effect is that they both subtract each other and nothing is outputted. However, if the x[n] is less than some threshold and the sum is greater than some threshold. We know the window is sitting over an edge, so the current x[n] is marked down as an edge point. </p>
+                            <br>
+
+                            <p>Here is our edge detection in action (to make things easy we made red edges green and blue edges white):</p>
+                            <iframe src="https://drive.google.com/file/d/1rolPkHERifWncuV6c6wZRkoGsFKoI074/preview" width="640" height="480"></iframe>
+                            <br>
+                            <p>Here is the combined (or’d) outputs of the edge detection and shape segmentation: </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <img src="milestone04/edge_blue_sqr.JPG" alt="edge_blue_sqr" style="width:100%">
+                                        <div class="caption">
+                                        <p>Red Triangle</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="thumbnail">
+                                        <img src="milestone04/edge_red_tri.JPG" alt="edge_red_tri" style="width:100%">
+                                        <div class="caption">
+                                        <p>Blue Square</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <h3>Characterization and Classification</h3>
+                            <h5>Treasure Detection:</h5>
+                            <p>Distinguishing whether a shape is there or not is as simple as seeing how many pixels were segmented out for an edge. If this is below some threshold for all the different sections of an image (allowing for some noise), we know that there is no treasure detected. </p>
+                            <br>
+                            <h5>Color Detection:</h5>
+                            <p>We accumulate the amount of segmented red and segmented blue and compare these values against each other in this block:</p>
+                            <pre>
+                                if((redAccumulator < 18'd5000) & (blueAccumulator < 18'd5000))
+                                    begin
+                                        redOrBlueOrNaught <= 2'b00; 
+                                    end
+                                else if ((((redAccumulator/3)*2) > blueAccumulator))
+                                    begin
+                                        redOrBlueOrNaught <= 2'b01;  
+                                    end
+                                else 
+                                    begin
+                                        redOrBlueOrNaught <= 2'b10;
+                                    end
+                            </pre>
+                            <br>
+
+                            <h5>Shape Detection:</h5>
+                            <p>In order to detect shapes we grab the X values of the rightmost edge that was detected on each row. Then we average the X values in the top half of the screen, bottom half, and middle section. If the average X value for the middle section is greater than the top and bottom averages, we know the shape is a diamond. If the bottom is greater than the middle and the middle is greater than the top we know the shape is a triangle. Finally if the averages are all within some threshold value of one another we know the shape is a square:</p>
+                            <pre>
+                                smolDistTopBot = (topAVG - botAVG < 16'd12) | (botAVG - topAVG < 16'd12);
+                                smolDistTopMid = (topAVG - midAVG < 16'd12) | (midAVG - topAVG < 16'd12);
+                                shapeResult[5] = smolDistTopBot & smolDistTopMid; //square
+                                shapeResult[7] = (botAVG > midAVG) & (midAVG > topAVG) & ~shapeResult[5]; //triangle
+                                shapeResult[6] = (midAVG > topAVG) & (midAVG > botAVG) & ~shapeResult[5]; //diamond
+                                shapeResult[0] = (edgesTopStore < 8'd15)|(edgesMidStore < 8'd35)|(edgesBotStore < 8'd15); 
+                                shapeResult[3:2] = redOrBlueOrNaught; //Red or Blue
+                            </pre>
+                            <br>
+                            <p>In this code we make sure that the shape is not a square when checking the other shapes (otherwise any small skew in the picture of the square could cause these shapes to trigger as well).</p>
+                            <p>To ease the demonstration of this milestone we mapped the FPGA LEDs directly to shapeResult. These are the outputs:</p>
+                            <pre>
+                                LED[7] -> triangle detected when ON (left most LED)
+                                LED[6] -> diamond detected when ON
+                                LED[5] -> square detected when ON
+                                LED[3] -> blue detected when ON
+                                LED[2] -> red detected when ON
+                                LED[0] -> Shape NOT detected when ON (right most LED)
+                            </pre>
+                            <p>(these can easily be encoded into three bits that can be sent over to the arduino in parallel)</p>
+                            <br>
+
+                            <!-- <blue_diamond_detect> LED[6] and LED[3] ON
+                            <red_triangle_detect> LED[7] and LED[2] ON
+                            <blue_square_detect> LED[5] and LED[3] ON
+                            <red_diamond_detect> LED[6] and LED[2] ON -->
+                                    
+                            <iframe src="https://drive.google.com/file/d/19Vf36plv3XhFK2utve97CqAhT_2lDfqG/preview" width="640" height="480"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1S3zpy3nvVEE1XYWl6OjuFie_hxVx9HuU/preview" width="640" height="480"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1P2Fhedc8Uu4Uj4agadohOVfOxZtx-cU8/preview" width="640" height="480"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1UwQZhzbh13jrMR6UYjKb3gWR0CpN8AJp/preview" width="640" height="480"></iframe>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxed">
+                        </div>
+                    </div>
+              </div>
+        </section>
+
+ 
+    <!-- Footer -->
+      <section id="footer-widget" class="footer-widget">
+          <div class="container header-bg">
+              <div class="row">
+                  <div class="col-sm-3">
+                      <h3>External Links</h3>
+                      <ul>
+                        <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                        <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                      </ul>
+                  </div>
+
+              </div>
+          </div>
+      </section>
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
+  </body>
+</html>

@@ -115,7 +115,7 @@
                                         goTo(neighbor)
                                         mapMaze()
                                     }else{  // if unexplored neighbor does not exist
-                                        // remove from stack and go there
+                                        // remove a node from stack and go to the node on top of the stack
                                         s.pop()
                                         goTo(s.peep())
                                     }
