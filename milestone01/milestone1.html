@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+
+  </head>
+  <body>
+    <!-- Site Header -->
+      <div class="site-header-bg">
+          <div class="container">
+              <div class="row">
+                  <div style="height:50px;">
+                      <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                  </div>
+                  <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Header -->
+          <section id="header" class="main-header milestone-header inner-header">
+              <div class="container">
+
+                  <div class="row">
+                      <nav class="navbar navbar-default">
+                          <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                          </div>
+
+                          <div class="collapse navbar-collapse" id="site-nav-bar">
+                              <ul class="nav navbar-nav">
+                                  <li><a href="index.html">Home</a></li>
+                                  <li><a href="about.html">About</a></li>
+                                  <li><a href="contract.html">Contract</a></li>
+                                  <li><a href="labs.html">Labs</a></li>
+                                  <li class="active"><a href="milestone.html">Milestones</a></li>
+                                  <li><a href="#">Tutorials</a></li>
+                              </ul>
+                          </div>
+                      </nav>
+                  </div>
+
+                  <div class="intro row">
+                      <div class="overlay"></div>
+                      <div class="col-sm-12">
+                          <h1>Milestones</h1>
+                      </div>
+                  </div> <!-- /.intro.row -->
+              </div> <!-- /.container -->
+              <div class="nutral"></div>
+          </section> <!-- /#header -->
+
+        <section class="shop">
+            <div class="container page-bgc">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="title-box">
+                            <p>Check Out Our</p>
+                            <h2 class="title mt0">Milestones</h2>
+                        </div>
+
+                        <h3>Objectives</h3>
+                        <ul>
+                            <li>Testing the line sensor</li>
+                            <li>Make robot go in figure eights</li>
+                        </ul>
+
+                        <h3>Line Sensor</h3>
+                        <p>We began by connecting the line sensors as follows.</p>
+                        <img src="milestone01/linesense_schem.PNG" alt="schematic" style="height:300px; width:500px;">
+                        <img src="milestone01/assembled.JPG" alt="assembled" style="height:300px; width:500px;">
+                        <p>
+                        We then proceeded to use analogRead to see how the values output by the sensor varied as the robot moved over different color segments of the grid. We chose thresholds for white and black based on the output we were reading in from the sensor, which depends on the grid, the sensor quality, and the distance between the sensor and the ground.
+                        </p>
+                        <img src="milestone01/line-sensor.gif" alt="sensor-data" style="height:300px; width:500px;">
+                        <br>
+
+                        <h3>Following A Line</h3>
+                        <p>
+                            To follow a line, we have a simple control loop that uses feedback from the sensors to keep the robot on the correct path. If the left sensor detects white, the right wheel speeds up to correct path and vice versa as seen in the code and video below.
+                        </p>
+                        <pre class="brush: cpp">
+                            void followLine(){
+                                int rightLine = analogRead(rightSense);
+                                int leftLine = analogRead(leftSense);
+                                
+                                if(rightLine < sensorThreshold && leftLine < sensorThreshold){
+                                    //This if statement contains actions the robot should take if there is an intersection encountered
+                                    topState = 1; //go to the next state in the top state machine
+                                }
+                                else if(leftLine < sensorThreshold){
+                                    rightWheel.write(90); //nudge left
+                                    leftWheel.write(130);
+                                }else if(rightLine < sensorThreshold){
+                                    rightWheel.write(40); //nudge right
+                                    leftWheel.write(90);
+                                }else{
+                                    leftWheel.write(130);
+                                    rightWheel.write(40);
+                                }
+                                }
+                        </pre>
+
+                        <img src="milestone01/line-follow.gif" alt="line-follow" style="height:300px; width:500px;">
+                        <br>
+
+                        <h3>Traversing Grid in Figure Eight</h3>
+                        <p>To traverse the grid in a figure eight, we developed the following finite state machine:</p>
+                        <img src="milestone01/fsm.png" alt="fsm" style="height:500px; width:800px;">
+                        <p>
+                            Turns are achieved by slowing one wheel down and speeding the other up. Through simple trial and error, the appropriate speed and delays can be found to suit your needs. The code can be seen below.
+                        </p>
+
+                        <pre class="brush: cpp">
+                            int topState = 0;
+                            int figure8State = 0;
+
+                            //top level state machine
+                            void loop() {
+                            if(topState == 0){
+                                followLine();
+                            }
+                            else{
+                                figureEight();
+                            }
+                            }
+
+                            //Method to turn robot right until line is sensed
+                            void turnRight(){
+                                delay(100);
+                                leftWheel.write(130);
+                                rightWheel.write(90);
+                                delay(800);
+                                int rightLine = analogRead(rightSense);
+                                while(rightLine > sensorThreshold){
+                                rightLine = analogRead(rightSense);
+                                leftWheel.write(130);
+                                rightWheel.write(90);
+                                }
+                            }
+
+                            //Method to turn robot left until line is sensed
+                            void turnLeft(){
+                                delay(100);
+                                leftWheel.write(90);
+                                rightWheel.write(40);
+                                delay(800);
+                                int leftLine = analogRead(leftSense);
+                                while(leftLine > sensorThreshold){
+                                leftLine = analogRead(leftSense);
+                                leftWheel.write(90);
+                                rightWheel.write(40);
+                                }
+                            }
+                            //Figure eight state machine
+                            void figureEight(){
+                                if(figure8State < 4){
+                                turnLeft();
+                                figure8State++;
+                                }else{
+                                turnRight();
+                                figure8State++;
+                                }
+                                if(figure8State > 7){
+                                figure8State = 0;
+                                }
+                                topState = 0;
+                            }
+                        </pre>
+
+                        <p>Here's our robot live.</p>
+                        <img src="milestone01/figure8.gif" alt="figure8" style="height:300px; width:500px;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="boxed">
+                        </div>
+                    </div>
+              </div>
+        </section>
+
+ 
+    <!-- Footer -->
+      <section id="footer-widget" class="footer-widget">
+          <div class="container header-bg">
+              <div class="row">
+                  <div class="col-sm-3">
+                      <h3>External Links</h3>
+                      <ul>
+                        <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                        <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                      </ul>
+                  </div>
+
+              </div>
+          </div>
+      </section>
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+  </body>
+</html>
