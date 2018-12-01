@@ -82,7 +82,7 @@
             <div class="container page-bgc">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="text-left" style="font-size:1.5em;">
+                        <div class="text-left" style="font-size:1.2em;">
                         <h3>Objectives</h3>
                         <ul>
                             <li><p>Testing the line sensors</p></li>
@@ -91,12 +91,12 @@
 
                         <h3>Line Sensor</h3>
                         <p>We began by connecting the line sensors as follows.</p>
-                        <img src="milestone01/linesense_schem.PNG" alt="schematic" style="height:300px; width:500px;">
-                        <img src="milestone01/assembled.JPG" alt="assembled" style="height:300px; width:500px;">
+                        <img src="milestone01/linesense_schem.PNG" alt="schematic" style="width:100%;">
+                        <img src="milestone01/assembled.JPG" alt="assembled" style="width:100%;">
                         <p>
                         We then proceeded to use analogRead to see how the values output by the sensor varied as the robot moved over different color segments of the grid. We chose thresholds for white and black based on the output we were reading in from the sensor, which depends on the grid, the sensor quality, and the distance between the sensor and the ground.
                         </p>
-                        <img src="milestone01/line-sensor.gif" alt="sensor-data" style="height:300px; width:500px;">
+                        <img src="milestone01/line-sensor.gif" alt="sensor-data" style="width:100%;">
                         <br>
 
                         <h3>Following A Line</h3>
@@ -125,12 +125,12 @@
                             }
                         </pre>
 
-                        <img src="milestone01/line-follow.gif" alt="line-follow" style="height:300px; width:500px;">
+                        <img src="milestone01/line-follow.gif" alt="line-follow" style="width:100%;">
                         <br>
 
                         <h3>Traversing Grid in Figure Eight</h3>
                         <p>To traverse the grid in a figure eight, we developed the following finite state machine:</p>
-                        <img src="milestone01/fsm.png" alt="fsm" style="height:500px; width:800px;">
+                        <img src="milestone01/fsm.png" alt="fsm" style="width:100%;">
                         <p>
                             Turns are achieved by slowing one wheel down and speeding the other up. Through simple trial and error, the appropriate speed and delays can be found to suit your needs. The code can be seen below.
                         </p>
@@ -193,7 +193,7 @@
                         </pre>
 
                         <p>Here's our robot live.</p>
-                        <img src="milestone01/figure8.gif" alt="figure8" style="height:300px; width:500px;">
+                        <img src="milestone01/figure8.gif" alt="figure8" style="width:100%;">
                         
                         </div>
                     </div>
