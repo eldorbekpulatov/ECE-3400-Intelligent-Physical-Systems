@@ -140,8 +140,7 @@
                                 redShift[2] <= redShift[3];  //x[n-1]
                                 redShift[1] <= redShift[2]; //x[n-2]
                                 redShift[0] <= redShift[1]; //x[n-3]
-                                redSum = redShift[0]+redShift[1]+redShift[2]+redShift[3]; //add them up!
-                            </pre>
+                                redSum = redShift[0]+redShift[1]+redShift[2]+redShift[3]; //add them up!</pre>
                             <br>
 
                             <p>We then compare the running sum to the current x[n] value:</p>
@@ -149,8 +148,8 @@
                                 if ((redSum > 8'b111) & ~(redShift[3] > 3'b0)) 
                                     begin 
                                         //stuff 
-                                    end
-                            </pre>
+                                    end</pre>
+
                             <p>If the x[n] value and the running sum are greater than some threshold the effect is that they both subtract each other and nothing is outputted. However, if the x[n] is less than some threshold and the sum is greater than some threshold. We know the window is sitting over an edge, so the current x[n] is marked down as an edge point. </p>
                             <br>
 
