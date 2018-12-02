@@ -91,10 +91,28 @@
 
                         <h3>Line Sensor</h3>
                         <p>We began by connecting the line sensors as follows.</p>
-                        <img src="milestone01/linesense_schem.PNG" alt="schematic" style="width:100%;">
-                        <img src="milestone01/assembled.JPG" alt="assembled" style="width:100%;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img src="milestone01/linesense_schem.PNG" alt="schematic" style="width:100%;">
+                                    <div class="caption">
+                                        <p>Diagram showing Arduino wiring. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img src="milestone01/assembled.JPG" alt="assembled" style="width:100%;">
+                                    <div class="caption">
+                                        <p>Wiring implemented on our robot.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        
                         <p>
-                        We then proceeded to use analogRead to see how the values output by the sensor varied as the robot moved over different color segments of the grid. We chose thresholds for white and black based on the output we were reading in from the sensor, which depends on the grid, the sensor quality, and the distance between the sensor and the ground.
+                            We then proceeded to use analogRead to see how the values output by the sensor varied as the robot moved over different color segments of the grid. We chose thresholds for white and black based on the output we were reading in from the sensor, which depends on the grid, the sensor quality, and the distance between the sensor and the ground.
                         </p>
                         <img src="milestone01/line-sensor.gif" alt="sensor-data" style="width:100%;">
                         <br>
