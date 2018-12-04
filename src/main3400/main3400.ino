@@ -258,26 +258,38 @@ Coordinate getRightNeighbor(){
 
 /**** MOVEMEMENT ****/
 /* Follows the line and returns true when intersection found and false otherwise*/
+int robotSeenSum = 0;
 boolean followLine(){
+  Serial.println(robotSeenSum);
   int rightLine = analogRead(rightSensorPin);
   int leftLine = analogRead(leftSensorPin);
   if(rightLine < lineSensorThreshold && leftLine < lineSensorThreshold){
     return true; // Intersection encountered
   } else if(sampleRobotDetect()){
-    stopMoving(); //Stand still if a robot is seen
+    robotSeenSum++;
+    if(robotSeenSum > 40){
+      stopMoving();
+      //robotSeenSum = 10;
+      delay(2);
+    }
+    //stopMoving(); //Stand still if a robot is seen
+    //delay(5);
   }
   else if(leftLine < lineSensorThreshold) {
+    if(robotSeenSum > 0)robotSeenSum--;
     // Left sensor white
-    rightWheel.write(90); //nudge left
-    leftWheel.write(130);
+    rightWheel.write(90); //nudge left //90
+    leftWheel.write(180);  //130
   } else if(rightLine < lineSensorThreshold) {
+    if(robotSeenSum > 0)robotSeenSum--;
     // Right sensor white
-    rightWheel.write(50); //nudge right
-    leftWheel.write(90);
+    rightWheel.write(0); //nudge right //50
+    leftWheel.write(90);  //90
   } else {
     // Both sensors black
-    leftWheel.write(130);
-    rightWheel.write(40);
+    if(robotSeenSum > 0)robotSeenSum--;
+    leftWheel.write(180);  //130
+    rightWheel.write(0);  //40
   }
   return false;
 }
@@ -396,6 +408,7 @@ void dfs(){
     } else {
         s.pop();
         goToDir(getDirection(s.peep()));
+        mapMaze();
     }
   }
   
@@ -555,7 +568,7 @@ boolean robotDetect(){
     fft_mag_log(); // take the output of the
     ADCSRA = init_adcsra;
     sei();
-    if(fft_log_out[42] > 50){
+    if(fft_log_out[42] > 30){
         return true;
      } else {
         return false;
