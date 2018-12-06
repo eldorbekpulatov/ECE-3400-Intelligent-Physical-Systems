@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team CAPTCHA</title>
+    <link rel="icon" href="static/images/favicon.ico">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+    <link href='static/css/bootstrap.min.css' rel="stylesheet">
+    <link href='static/css/magnific-popup.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.css' rel="stylesheet">
+    <link href='static/css/owl.carousel.theme.min.css' rel="stylesheet">
+    <link href='static/css/ionicons.css' rel="stylesheet">
+    <link href='static/css/main.css' rel="stylesheet">
+    <!-- Include syntax highlighter-->
+    <script type="text/javascript" src="static/js/shCore.js"></script>
+    <script type="text/javascript" src="static/js/shBrushJScript.js"></script>
+    <!-- For c -->
+    <script type="text/javascript" src="static/js/shBrushCpp.js"></script>
+    <link href="static/css/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="static/css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+
+  </head>
+  <body>
+    <!-- Site Header -->
+    <div class="site-header-bg">
+        <div class="container">
+            <div class="row">
+                <div style="height:50px;">
+                    <a href="index.html"><img src='static/images/logo.png' alt="logo" class="center"></a>
+                </div>
+                <div class="col-sm-3 col-sm-offset-3 text-right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <section id="header" class="main-header lab-header inner-header">
+        <div class="container">
+
+            <div class="row">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#site-nav-bar" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="site-nav-bar">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="contract.html">Contract</a></li>
+                            <li><a href="labs.html">Labs</a></li>
+                            <li><a href="milestone.html">Milestones</a></li>
+                            <li><a href="ethics.html">Ethics HW</a></li>
+                            <li class="active"><a href="final.html">Final Design</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="intro row">
+                <div class="overlay"></div>
+                <div class="col-sm-12">
+                    <h1>Final Robot Design</h1>
+                </div>
+            </div> <!-- /.intro.row -->
+        </div> <!-- /.container -->
+        <div class="nutral"></div>
+    </section> <!-- /#header -->
+
+    <!-- Lab02 -->
+    <section class="shop">
+        <div class="container page-bgc">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-left" style="font-size:1.2em;">
+                        
+                        <h3>Final System Design</h3>
+                        <img src="final/Final_Robot_pic.jpg" alt="final_design" style="width:100%;">
+                        <p>A lot of work beyond just what was expected of the labs and milestones went into our system for the final competition. Here are some of the highlights of our system design that helped make it more robust.</p>
+
+                        <h4>Filter Circuit:</h4>
+                        <img src="final/mic_circuit_schematic.JPG" alt="mic_circuit_schematic" style="width:100%;">
+                        <p>Though we described our filter circuit in lab 2, it is worth reiterating how robust it is. The filter circuit is a multiple feedback active filter circuit with a pass frequency centered around 660 hz. One of the advantages to our circuit’s design is that it uses an envelope detector circuit at its output to translate the magnitude of the output signal into a dc voltage that is proportional to that magnitude. This allows us to eliminate the need for using FFT or other signal processing methods, instead all that is needed on the software side is to detect when a threshold is crossed.</p>
+
+                        <h4>Radio Auto Reset:</h4>
+                        <p>To make our radio more robust we built in a time-out reset feature into our code. This means whenever the radio had too many packet retransmission attempts with no success the robot would reset its radio by calling the setupRadio method again. This ensured that the robot would never lose contact with the radio.</p>
+
+                        <h4>Larger Wheels:</h4>
+                        <p>As we neared competition we wanted to make our robot faster so we decided to install larger wheels. To ensure there was good traction we put rubber bands around the wheels to ensure the wheels wouldn’t slip and lose traction. Adding larger wheels increase our robot’s speed by a good amount and probably contributed to our robot’s success in the first round of the competition:</p>
+                        <img src="final/first_round_gui.JPG" alt="first_round_gui" style="width:100%;">
+
+                        <h4>Modified GUI:</h4>
+                        <p>To speed up our work efficiency we decided to rewrite parts of the GUI that was provided to us. Instead of using html and a set of… 1,000 something pictures? We decided to use the pygame library to render the GUI using vector graphics. Since we only rewrote the front end the API requirements are identical to the TA GUI.Our GUI code can be found <a href="https://github.com/JThr3e/ece3400-maze-gui">here</a>, it is a fork of the original GUI repo. Having a working GUI early was beneficial because we could do testing with larger mazes and treasures earlier on in the semester.</p>
+                        <img src="final/gui_full_mapped.JPG" alt="gui_full_mapped" style="width:100%;">
+
+                        <h4>Real Time Computer Vision:</h4>
+                        <p>Instead of using the provided image processing module template for our computer vision algorithms. We decided to implement them in real-time/in parallel with the down sampler. This allowed us to display outputs of our computer vision algorithms directly to the screen. This made it incredibly easy to debug and experiment around with different thresholds and filters thereby allowing us to develop a better implementation than we would of if we hadn’t had this ability.</p>
+
+                        <h4>Hardware Tunable Wall Sensors:</h4>
+                        <p>While most teams opted to use an analog multiplexer to handle their wall sensors. We decided to use a set of 3 comparators whose threshold values were set via a potentiometer. This way we could save 3 analog input pins and use 3 digital input pins instead. Having a potentiometer to tune the sensitivity of the wall sensors proved to be very useful. Instead of having to go into the code to modify the wall sensor thresholds all we needed to do was twist the potentiometer a few times. In fact we could have used this feature during the second round of competition when our robot was incorrectly detecting walls, however, we didn’t think of it at the time. Unfortunately our robot incorrectly detecting walls led to poor performance during the second round:</p>
+                        <img src="final/second_round_gui.JPG" alt="second_round_gui" style="width:100%;">
+
+                        <h4>IR Robot Detection Javelin:</h4>
+                        <p>To increase our robots chances of seeing another robot we put our IR robot sensor on the tip of a long plastic rod that was placed at exactly 5.5”. This way our IR sensor could detect another teams robot sooner than if the IR sensor was placed elsewhere. This means our robot could react faster in the event of another robot being detected.</p>
+                        <img src="final/ir_javelin.jpg" alt="ir_javelin" style="width:100%;">
+
+                        <h4>Our Robot Budget:</h4>
+                        <p>This is what our robot’s budget looked like:</p>
+                        <ul>
+                            <li><p>Line (grayscale) sensors - - - - - - - $3</p></li>
+                            <li><p>IR distance sensors - - - - - - - - -  $7</p></li>
+                            <li><p>Camera  - - - - - - - - - - - - - - - $14</p></li>
+                            <li><p>Parallax servos - - - - - - - - - - - $13</p></li>
+                            <li><p>Arduino Uno - - - - - - - - - - - - - $16</p></li>
+                            <li><p>Mechanical Robot Parts - - - - - - - - $0</p></li>
+                            <hr>
+                            <li><p>Total - - - - - - - - - - - - - - - - $53</p></li>
+                        </ul>
+
+                        <h4>Research and Development (R&D):</h4>
+                        <p>Cooperative Robot Design (The Legendary Spoonbot):</p>
+                        <p>One of our team members (Joseph) looked into the possibility of creating a cooperative maze mapping robot. Due to time constraints he was unable to finish his efforts, however this is what he managed to accomplish:</p>
+                        <img src="final/spoonbot_hand.JPG" alt="spoonbot_hand" style="width:100%;">
+                        <p>The Legendary Spoonbot is a small robot (small enough to fit in the palm of one's hand!) that has most of the capabilities of a regular 3400 robot. On board there are 3 IR obstacle sensors to avoid walls and robots, two line sensor for line following, an nrf24 radio, a microphone circuit with an LM386 amp, some LEDs + piezo, and a dual h-bridge motor driver controlling two motors. This is all controlled/used by the atmega328pb microcontroller. </p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="thumbnail">
+                                    <img src="final/spoonbot_schematic.PNG" alt="spoonbot_schematic" style="width:100%;">
+                                    <div class="caption">
+                                    <!-- <p>After designing the circuit we then breadboarded the circuit to make sure everything worked.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="final/spoonbot_layout.PNG" alt="spoonbot_layout" style="width:100%;">
+                                    <div class="caption">
+                                    <!-- <p>We then transferred everything over to a protoboard.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="final/spoon_pcb.JPG" alt="spoon_pcb" style="width:100%;">
+                                    <div class="caption">
+                                    <!-- <p>We then transferred everything over to a protoboard.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="final/spoon_line_sensors.JPG" alt="spoon_line_sensors" style="width:100%;">
+                                    <div class="caption">
+                                    <!-- <p>We then transferred everything over to a protoboard.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        
+                        <p>One of the possible visions for this robot were to be a cooperative robot that could scout ahead of our main robot to map out the maze while the main robot could be slower and spend its time taking the most optimal route (as communicated by the spoonbot) to locate treasures within the maze. Although this wasn’t achieved, basic functionalities were successfully implemented and tested such as obstacle avoidance and line following.</p>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="thumbnail">
+                                    <iframe src="https://www.youtube.com/embed/vUBKe5Xr4vk?ecver=2" style="width:100%;" ></iframe>
+                                    <div class="caption">
+                                    <!-- <p>After designing the circuit we then breadboarded the circuit to make sure everything worked.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <iframe src="https://www.youtube.com/embed/k4FIMlTqRDs?ecver=2" style="width:100%;"></iframe>
+                                    <div class="caption">
+                                    <!-- <p>We then transferred everything over to a protoboard.</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+
+                        <h4>Legendary Spoonbot Budget:</h4>
+                        <ul>
+                            <li><p>Digikey BOM - - - - - - - - - - - - - $15</p></li>
+                            <li><p>2 Drone Motors - - - - - - - - - - - - $5</p></li>
+                            <li><p>350 mah LiPo Battery - - - - - - - - - $4</p></li>
+                            <li><p>IR sensors - - - - - - - - - - - - - - $6</p></li>
+                            <li><p>Line sensors - - - - - - - - - - - - - $3</p></li>
+                            <li><p>Toy wheels - - - - - - - - - - - - - - $2</p></li>
+                            <li><p>NRF24  - - - - - - - - - - - - - - - - $2</p></li>
+                            <li><p>PCBs - - - - - - - - - - - - - - - - - $8</p></li>
+                            <hr>
+                            <li><p>Total - - - - - - - - - - - - - - - - $45</p></li>
+                        </ul>
+
+                        <h5>Total Budget: $98</h5>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="boxed">
+                </div>
+            </div>
+        </div>
+    </section>
+
+      
+    <!-- Footer -->
+    <section id="footer-widget" class="footer-widget">
+        <div class="container header-bg">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>External Links</h3>
+                    <ul>
+                    <li><a href="https://cei-lab.github.io/ece3400-2018/">ECE 3400 Website</a></li>
+                    <li><a href='https://github.com/eldorbekpulatov/ece3400'>Our GitHub Repo</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src='static/js/jquery-1.12.3.min.js'></script>
+    <script src='static/js/bootstrap.min.js'></script>
+    <script src='static/js/jquery.magnific-popup.min.js'></script>
+    <script src='static/js/owl.carousel.min.js'></script>
+    <script src='static/js/script.js'></script>
+    <script type="text/javascript">SyntaxHighlighter.all()</script>
+  </body>
+</html>
