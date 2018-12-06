@@ -90,32 +90,40 @@
                         <h3>Final System Design</h3>
                         <img src="final/Final_Robot_pic.jpg" alt="final_design" style="width:100%;">
                         <p>A lot of work beyond just what was expected of the labs and milestones went into our system for the final competition. Here are some of the highlights of our system design that helped make it more robust.</p>
+                        <br>
 
                         <h4>Filter Circuit:</h4>
                         <img src="final/mic_circuit_schematic.JPG" alt="mic_circuit_schematic" style="width:100%;">
                         <p>Though we described our filter circuit in lab 2, it is worth reiterating how robust it is. The filter circuit is a multiple feedback active filter circuit with a pass frequency centered around 660 hz. One of the advantages to our circuit’s design is that it uses an envelope detector circuit at its output to translate the magnitude of the output signal into a dc voltage that is proportional to that magnitude. This allows us to eliminate the need for using FFT or other signal processing methods, instead all that is needed on the software side is to detect when a threshold is crossed.</p>
+                        <br>
 
                         <h4>Radio Auto Reset:</h4>
                         <p>To make our radio more robust we built in a time-out reset feature into our code. This means whenever the radio had too many packet retransmission attempts with no success the robot would reset its radio by calling the setupRadio method again. This ensured that the robot would never lose contact with the radio.</p>
+                        <br>
 
                         <h4>Larger Wheels:</h4>
                         <p>As we neared competition we wanted to make our robot faster so we decided to install larger wheels. To ensure there was good traction we put rubber bands around the wheels to ensure the wheels wouldn’t slip and lose traction. Adding larger wheels increase our robot’s speed by a good amount and probably contributed to our robot’s success in the first round of the competition:</p>
                         <img src="final/first_round_gui.JPG" alt="first_round_gui" style="width:100%;">
+                        <br>
 
                         <h4>Modified GUI:</h4>
                         <p>To speed up our work efficiency we decided to rewrite parts of the GUI that was provided to us. Instead of using html and a set of… 1,000 something pictures? We decided to use the pygame library to render the GUI using vector graphics. Since we only rewrote the front end the API requirements are identical to the TA GUI.Our GUI code can be found <a href="https://github.com/JThr3e/ece3400-maze-gui">here</a>, it is a fork of the original GUI repo. Having a working GUI early was beneficial because we could do testing with larger mazes and treasures earlier on in the semester.</p>
                         <img src="final/gui_full_mapped.JPG" alt="gui_full_mapped" style="width:100%;">
+                        <br>
 
                         <h4>Real Time Computer Vision:</h4>
                         <p>Instead of using the provided image processing module template for our computer vision algorithms. We decided to implement them in real-time/in parallel with the down sampler. This allowed us to display outputs of our computer vision algorithms directly to the screen. This made it incredibly easy to debug and experiment around with different thresholds and filters thereby allowing us to develop a better implementation than we would of if we hadn’t had this ability.</p>
+                        <br>
 
                         <h4>Hardware Tunable Wall Sensors:</h4>
                         <p>While most teams opted to use an analog multiplexer to handle their wall sensors. We decided to use a set of 3 comparators whose threshold values were set via a potentiometer. This way we could save 3 analog input pins and use 3 digital input pins instead. Having a potentiometer to tune the sensitivity of the wall sensors proved to be very useful. Instead of having to go into the code to modify the wall sensor thresholds all we needed to do was twist the potentiometer a few times. In fact we could have used this feature during the second round of competition when our robot was incorrectly detecting walls, however, we didn’t think of it at the time. Unfortunately our robot incorrectly detecting walls led to poor performance during the second round:</p>
                         <img src="final/second_round_gui.JPG" alt="second_round_gui" style="width:100%;">
+                        <br>
 
                         <h4>IR Robot Detection Javelin:</h4>
                         <p>To increase our robots chances of seeing another robot we put our IR robot sensor on the tip of a long plastic rod that was placed at exactly 5.5”. This way our IR sensor could detect another teams robot sooner than if the IR sensor was placed elsewhere. This means our robot could react faster in the event of another robot being detected.</p>
                         <img src="final/ir_javelin.jpg" alt="ir_javelin" style="width:100%;">
+                        <br>
 
                         <h4>Our Robot Budget:</h4>
                         <p>This is what our robot’s budget looked like:</p>
@@ -129,6 +137,7 @@
                             <hr>
                             <li><p>Total - - - - - - - - - - - - - - - - $53</p></li>
                         </ul>
+                        <br>
 
                         <h4>Research and Development (R&D):</h4>
                         <p>Cooperative Robot Design (The Legendary Spoonbot):</p>
@@ -173,24 +182,25 @@
                         <p>One of the possible visions for this robot were to be a cooperative robot that could scout ahead of our main robot to map out the maze while the main robot could be slower and spend its time taking the most optimal route (as communicated by the spoonbot) to locate treasures within the maze. Although this wasn’t achieved, basic functionalities were successfully implemented and tested such as obstacle avoidance and line following.</p>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="thumbnail">
-                                    <iframe src="https://www.youtube.com/embed/vUBKe5Xr4vk?ecver=2" style="width:100%;" ></iframe>
+                                    <iframe src="https://www.youtube.com/embed/vUBKe5Xr4vk?ecver=2" style="width:100%; height: 600px;" ></iframe>
                                     <div class="caption">
                                     <!-- <p>After designing the circuit we then breadboarded the circuit to make sure everything worked.</p> -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="thumbnail">
-                                    <iframe src="https://www.youtube.com/embed/k4FIMlTqRDs?ecver=2" style="width:100%;"></iframe>
+                                    <iframe src="https://www.youtube.com/embed/k4FIMlTqRDs?ecver=2" style="width:100%; height: 600px;"></iframe>
                                     <div class="caption">
                                     <!-- <p>We then transferred everything over to a protoboard.</p> -->
                                     </div>
                                 </div>
                             </div>
                         </div>  
-
+                        <br>
+                        
                         <h4>Legendary Spoonbot Budget:</h4>
                         <ul>
                             <li><p>Digikey BOM - - - - - - - - - - - - - $15</p></li>
@@ -205,7 +215,8 @@
                             <li><p>Total - - - - - - - - - - - - - - - - $45</p></li>
                         </ul>
 
-                        <h5>Total Budget: $98</h5>
+                        <br><br>
+                        <h2>Total Budget: $98</h2>
 
 
                     </div>
